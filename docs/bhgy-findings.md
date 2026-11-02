@@ -25,6 +25,11 @@ into a cleaned copy, with a log of every change.
 | 14 | Split words, second round | the reviewed pairs joined with Hungarian spelling ("ösz-" / "szegére" → "összegére"), real hyphenated words put back on one line ("Rendőr-" / "főkapitányság") | 497 joins in 348 decisions |
 | 15 | False spaces | 13 of the 15 approved pairs ("n em", "k ésedelmi", "els őfokú") and three reviewed "gatlan" places; "pont ba" and "fordulat ba" were undone, as "ba)" is a sub-point label | 112 replacements and 3 fixes in 66 decisions |
 | 16 | Line starts, second round | the reviewed answers: lost first letters ("érleti" → "Bérleti"), whole words given by the reviewer ("ánya, 2006. május 25." → "Tatabánya, …" in the Tatabánya courts, "óvár" → "Mosonmagyaróvár"), split words joined to the line above ("kap" / "csolatos"), "e" / "körben" | 229 changes in 216 decisions |
+| 17 | Characters, second review | the reviewer's 578 character decisions with context rules, stored control characters, separator lines, "check" characters settled by the spell checker | 82,025 decisions (47.4 million no-break spaces) |
+| 18 | Quotation signs | "«" → '"' (it closes the inner quotation »…«, and "»" became '"'), "‘" → "'" (pairs with "’"), "‚" → "," ("barátját‚ majd"); first held back, as removing them would unbalance quotation marks or drop a comma | 4,162 replacements in 1,503 decisions |
+| 19 | Letter-spaced words and whitespace | spaced-out headings joined when Hunspell knows the word ("I n d o k o l á s" → "Indokolás", "A  M A G Y A R   K Ö Z T Á R S A S Á G" → "A MAGYAR KÖZTÁRSASÁG"); spaces at line ends and runs of spaces and tabs collapsed | 425,992 words joined in 174,755 decisions; 15.3 million lines tidied in 224,968 decisions |
+| 20 | Damaged spaced headings | what step 19 left: "I N D OKOL Á S" → "INDOKOLÁS", "I n d o k o 1 á s" → "Indokolás", "n d o k o l á s" → "Indokolás", "b ü n ö s" → "bűnös" | 2,096 headings in 1,918 decisions |
+| 21 | Letterhead residue | runs of accented letters left over from anonymised letterhead words, glued to the court name on the first line ("őáÍéőá... Ítélőtábla" → "... Ítélőtábla", "íööáóVAS MEGYEI BÍRÓSÁG"); found by the character language model pilot, as every character is a valid Hungarian letter | 3,020 decisions (2,091 runs of four or more letters) |
 
 Steps 4 and 5 together changed 2,649 files. The correction table of step 3 (step 11) was
 applied afterwards.
@@ -58,6 +63,46 @@ Cyrillic "Е", "Grüβen" with a Greek "β").
 
 Where the anonymisation tool had already lost a letter in the source (written as the
 Shift-JIS "・"), the text now shows "�": 145 such places in 21 decisions.
+
+## Characters, second review
+
+The reviewer decided on 578 unusual characters (keep, replace, remove, check). Applied
+with the context rules of `character_decisions` (see [the pipeline](pipeline.md)), the
+decisions changed 82,025 decisions; most changes are no-break spaces turned into ordinary
+spaces (47.4 million). Others:
+
+- 2,541 control characters repaired: the publisher's RTF writer had stored Shift-JIS
+  pairs as two characters ("\x81" + "˜" for "§", "\x81" + "h" for "”") and cp1252
+  signs as control characters ("\x96" for "–");
+- 586 decorative separator lines emptied: centred rows of one glyph from a symbol font
+  ("ججججججج", "ઋઋઋઋ", "ÒÒÒÒÒ"), mostly in the Miskolc courts;
+- 207 words settled by the spell checker for the "check" characters ("SZERZÔDÉS" →
+  "SZERZŐDÉS", "egészségbiztosĺtási" → "egészségbiztosítási"), while Romanian, Slovak,
+  Croatian and Polish names ("Bucureşti", "Pohotovosť", "Bodrožić", "Łódź") stayed;
+- Cyrillic "а" was replaced only on Hungarian lines: three Debrecen decisions on entry
+  refusals are bilingual, and their Ukrainian text stays.
+
+## The most garbled files
+
+Before these decisions were applied, the files were ranked by the share of damaged
+characters (letters of other scripts, stray accents, control characters, replacement
+characters); `review_hu_legal_clean/garbled_files_top50.csv` lists the 50 worst with
+the cause. Only 107 files had ten or more such characters. The causes:
+
+| Cause | Files in the top 50 |
+|---|---:|
+| decorative separator line drawn with a symbol font | 22 |
+| Shift-JIS pairs and cp1252 signs stored as control characters by the publisher's RTF writer | 14 |
+| real Ukrainian text (not damage) | 3 |
+| letters lost or swapped by the anonymisation tool, which read the text as Shift-JIS | 2 |
+| PDF-derived DOCX with separately stored accents ("ı" + acute) | 3 |
+| "º" used as a degree sign (not damage) | 2 |
+| other (Word equation in italic letters, "§" read as Arabic, UTF-8 quotes read as cp1250, OCR noise) | 4 |
+
+The anonymisation damage is the only kind that cannot be undone from the text: the tool
+treated a byte from 0xE0 up (most accented letters in cp1250) as the first half of a
+Japanese character and the next byte as its second half, so "íj" became "ú‡", "ír"
+became "úŹ" and some letters became the lost-letter mark "�".
 
 ## Western and symbol fonts
 
@@ -133,6 +178,10 @@ the first kind and keeps the others apart.
 
 ## Open points
 
+- About ten decisions keep a letterhead residue run, because the heading after it lost a
+  letter too ("...áővárosi Közigazgatási") or the run is not on the first line; these need
+  a person. Runs of one repeated letter ("ÉÉÉÉ tanú", "öööö") are placeholders and stay.
+- Empty table rows ("| | | |"): 5,534 rows in 1,490 decisions, from flattened tables.
 - "gatlan" stays "check" in the correction table: it needs a different fix per occurrence.
 - False spaces were reviewed on a sample of 300 decisions; the full corpus still needs a
   run of `find-false-spaces` and a review.
@@ -140,8 +189,12 @@ the first kind and keeps the others apart.
   does not yet recognise.
 - 22 joins were applied with a spelling the spell checker does not know (mostly typos in
   the source, e.g. "tárgyalá-" / "lon"); the word check will list them.
-- The Wingdings bullets and separators (private-use characters) need one decision:
-  keep, turn into "•" or "*", or remove.
-- 76 files keep combining marks without a composed form.
+- Some 2012 decisions (Esztergom, Budakörnyék, Fővárosi Törvényszék) are damaged at the
+  source: "búŹóság" for "bíróság", "munkadú‡" for "munkadíj" (see "The most garbled
+  files"); they need a repair table or a new copy from the publisher.
+- Letter-spaced runs left as they are: acronyms after an article ("a K H P") and
+  decorative rows ("o o o o o"); the misspelt and broken headings were repaired in step 20. About 80 joins wrote as one word a compound that is
+  normally written apart ("KÖZTÁRSASÁGNEVÉBEN" 45, "kijavítóvégzést" 8), because Hunspell
+  accepts the compound and the run had no double space to mark the boundary.
 - Greek symbols next to Latin letters ("μg/ml", "Δ9-THC") and the Cyrillic "Н" in "Нarketan"
   (which may stand for H or N) are left as they are.

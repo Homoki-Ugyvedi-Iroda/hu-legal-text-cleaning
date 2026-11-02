@@ -28,6 +28,7 @@ and the commands that carry it out.
 | 5 | Words split at line ends | `find-linebreaks` → `review-page` → `apply --joins` | candidates, answers, copy |
 | 6 | Lines that lost their first letter | `find-line-starts` → `review-page` → `apply --line-starts` | candidates, answers, copy |
 | 6b | Words split by a false space | `find-false-spaces` → `review-check-rows` → `apply --corrections` | candidate pairs, answers, copy |
+| 6c | Letter-spaced words, then whitespace | library only: `spacing.join_letter_spaced`, then `spacing.normalise_whitespace` | copy + log |
 | 7 | Word-level OCR errors | `check-words` → review → `apply --corrections` | word list, correction table, copy |
 | 8 | Abbreviations for sentence splitting | `audit-abbreviations` → review | abbreviation list |
 | 9 | Sentences | `split`, `evaluate-splitter` | segments with flags |
@@ -45,6 +46,9 @@ and the commands that carry it out.
   and similar picture fonts get the private-use code U+F0hh, as Word itself does, so a
   Wingdings arrow used as a bullet no longer reads as "Ř". OpenOffice's StarSymbol and
   OpenSymbol declare the symbol charset but use ordinary cp1252 signs at these bytes.
+- **Bytes stored as Unicode:** some RTF writers wrote a byte as a Unicode code point:
+  `\u150` for the cp1252 en dash, and Shift-JIS pairs as `\u129` + a character
+  (`\u129\u732` is "§", `\u129` + "h" is "”"). These go back among the text bytes.
 - **Wrongly declared fonts:** if a font of another script (Arabic, Shift-JIS, Greek,
   Cyrillic, ...) produces words that mix that script with Latin letters, the font was
   declared by mistake, and that stretch of text is decoded with the document's own code
@@ -95,7 +99,11 @@ See [ADR-2026-11-02-text-level-encoding-repair](decisions/ADR-2026-11-02-text-le
 - Soft hyphens (U+00AD, invisible "hyphenate here" marks) are removed: inside a word
   ("in" + soft hyphen + "gatlan") they make whole-word searches and the spell checker see
   two words. A soft hyphen at a line end is kept: it marks a split word for stage 5.
-- Unicode NFC joins a letter and a separately stored accent into one character.
+- Control characters U+0080 to U+009F, left by the stored bytes above in texts converted
+  by other tools, are turned back into "§", "”", "–" and so on; the leftovers of UTF-8
+  quotation marks read as cp1250 ("„€ž") are removed.
+- Unicode NFC joins a letter and a separately stored accent into one character; a
+  dotless "ı" with an accent (from PDF conversions) becomes "í".
   Marks without a composed form (strike-through, a doubled acute on a letter that has no
   such form) remain and are counted in the log.
 - õ and û, which do not exist in Hungarian, are replaced with ő and ű.
@@ -108,6 +116,14 @@ See [ADR-2026-11-02-text-level-encoding-repair](decisions/ADR-2026-11-02-text-le
   clean-up. With `--originals` the examples link to the original RTF or DOCX, where the
   reviewer can see how the character really looks; that comparison is what showed the
   Western and symbol font errors of stage 2.
+- The exported decisions are applied with `character_decisions.apply_character_decisions`,
+  which adds context rules: "remove" on a space variant gives an ordinary space; a
+  Cyrillic or Greek look-alike is replaced only on a line without other letters of that
+  script (Ukrainian text stays); a fraction replacing a letter ("Ľ" → "1/4") is used
+  only apart from letters; a line of one repeated symbol (a decorative separator drawn
+  with a symbol font) is emptied. Characters marked "check" are settled word by word:
+  a candidate letter is used only if exactly one candidate makes an unknown word known
+  to the spell checker ("egészségbiztosĺtási" → "egészségbiztosítási").
 - Not repaired automatically: ő and ű stored as a dotless ı (seen in PDF text layers of a
   competition authority), because ı may stand for either letter; this needs a dictionary
   decision per word.
@@ -170,6 +186,47 @@ are counted, so a person decides once per pair; approved pairs are added to the 
 table, which `apply --corrections` already applies. On a sample of 300 files the finder
 takes about 20 seconds and lists about 33 pairs; roughly two thirds are real splits, the rest
 are foreign words ("euro alapú") and need a "keep" decision.
+
+### Stage 6c: letter-spaced words and whitespace
+
+Headings are often spaced out letter by letter ("I n d o k o l á s", "í t é l e t e t",
+"b ű n ö s"). `join_letter_spaced` reads such a phrase as pieces separated by two or more
+spaces and joins a piece only if Hunspell knows the result, so initials and decorative rows
+("o o o o o", "A x M x S") stay. Neighbouring pieces are merged when the merged word is
+known ("í t é l  e t e t" → "ítéletet"), but two pieces that are words on their own are
+merged only if the merged form is common unspaced in the corpus: Hunspell also accepts
+compounds of words written apart on purpose ("kijavító végzést", "Köztársaság nevében").
+An unknown piece gets three more tries: a split before capitals ("M a g y a r K ö z t á r s
+a s á g" → "Magyar Köztársaság", each part at least three letters), "Í" for a leading "I"
+("I t é l e t e t" → "Ítéletet") and the article split off the end ("K ö t e l e z i a
+felperest"). The space before punctuation after a joined word goes too ("Indokolás :" →
+"Indokolás:"). As with the other dictionary steps, the candidate forms are collected first
+and Hunspell is asked once; a few frequent legal words Hunspell lacks ("ellenkérelmében",
+"védiratában") are accepted by their corpus count.
+
+`repair_spaced_headings` then handles what the join leaves at the start of a line: irregular
+gaps ("I N D OKOL Á S"), OCR confusions ("I n d o k o 1 á s"), a lost letter
+("n d o k o l á s") and "ü"/"ö" for "ű"/"ő" ("b ü n ö s"). The run is compared with a short
+list of heading words after folding those confusions, and replaced only on a match or
+when exactly one heading is one letter away; an extra letter at the end is not counted,
+as it is usually a numeral ("Indokolás I."). `repair_spaced_guilty` writes a spaced
+"b ü n ö s" as "bűnös" anywhere in a line.
+
+`normalise_whitespace` then removes spaces at the start and end of lines and collapses
+runs of spaces and tabs, keeping blank lines and CRLF line endings. It must run after the
+join, because the double space is the only sign of a word boundary in a spaced phrase.
+
+### Stage 6d: letterhead residue
+
+Some decisions start with a run of accented letters glued to the court name:
+"őáÍéőá... Ítélőtábla", "ááíóá... Járásbíróság", "íööáóVAS MEGYEI BÍRÓSÁG". The run holds
+exactly the accented letters of the letterhead words that were anonymised ("Fővárosi
+Ítélőtábla" gives ő, á, Í, é, ő, á). The RTF contains them as visible text, so the
+converter is not at fault; the tool that removed the words kept their accented characters.
+`remove_letterhead_residue` deletes such a run from the first non-empty line. It keeps one
+letter repeated four or more times ("ÉÉÉÉ tanú", an anonymisation placeholder), a run
+followed by a small letter (the heading itself is damaged: "...áővárosi") and up to three
+capitals before a capital ("ÍTÉLET").
 
 ### Stage 7: word-level errors
 

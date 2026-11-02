@@ -4,6 +4,7 @@ from hu_legal_cleaning.normalise import (
     fix_script_lookalikes,
     remove_nul,
     remove_soft_hyphens,
+    repair_control_characters,
     to_nfc,
 )
 
@@ -31,6 +32,7 @@ def test_clean_characters_runs_nfc_before_lookalike_repair():
     assert counts == {
         "nul_removed": 1,
         "soft_hyphens_removed": 0,
+        "control_characters_repaired": 0,
         "lookalikes_fixed": 1,
         "script_lookalikes_fixed": 0,
         "combining_marks_left": 0,
@@ -58,3 +60,14 @@ def test_remove_soft_hyphens_keeps_the_one_at_a_line_end():
         "ingatlan\nalkal\u00ad\nmazott",
         1,
     )
+
+
+def test_repair_control_characters():
+    text = "Ptk. 61. \x81˜-a, „loan payment\x81h, vezetői \x96 munka, „€žegy"
+    repaired, count = repair_control_characters(text)
+    assert repaired == "Ptk. 61. §-a, „loan payment”, vezetői – munka, „egy"
+    assert count == 4
+
+
+def test_to_nfc_joins_dotless_i_and_accent():
+    assert to_nfc("meghosszabbı́tás")[0] == "meghosszabbítás"

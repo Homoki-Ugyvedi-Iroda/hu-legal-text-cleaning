@@ -114,3 +114,11 @@ def test_rtf_to_text_reads_openoffice_symbol_font_as_cp1252(tmp_path):
         rb"{\f1\fcharset2 OpenSymbol;}}\f1\'95\f0  t\'e9tel}"
     )
     assert _convert(tmp_path, rtf) == "• tétel"
+
+
+def test_rtf_to_text_reads_bytes_stored_as_unicode(tmp_path):
+    rtf = (
+        rb"{\rtf1\ansi\ansicpg1250\deff0{\fonttbl{\f0\fcharset238 Times New Roman CE;}}"
+        rb"\f0 Ptk. 61. \u129?\u732?-a, payment\u129?h, vezet\u337?i \u150? munka}"
+    )
+    assert _convert(tmp_path, rtf) == "Ptk. 61. §-a, payment”, vezetői – munka"

@@ -120,6 +120,10 @@ FALLBACK_ERROR_HANDLER = "cp1252fallback"
 CONTROL_WORD = re.compile(rb"([a-zA-Z]+)(-?\d+)? ?")
 HEX_PAIR = re.compile(rb"[0-9a-fA-F]{2}")
 UNICODE_LIMIT = 65536
+# Control characters U+0080 to U+009F in a \uN are bytes the writer failed to decode.
+C1_CONTROL_RANGE = range(0x80, 0xA0)
+SHIFT_JIS_LEAD = b"\x81"
+STORED_BYTES_CODEC = "cp1252"
 
 
 def _cp1252_fallback(error: UnicodeDecodeError) -> tuple[str, int]:
@@ -213,7 +217,7 @@ def _decode_symbols(raw: bytes, codec: str) -> str:
     return "".join(characters)
 
 
-def _shift_jis_sign(pair: bytes) -> str | None:
+def shift_jis_sign(pair: bytes) -> str | None:
     """Return the sign a Shift-JIS byte pair stands for, or None for a Japanese letter."""
     try:
         sign = pair.decode(SHIFT_JIS_CODEC)
@@ -234,7 +238,7 @@ def _decode(raw: bytes, codec: str) -> str:
         return raw.decode(SHIFT_JIS_CODEC, "replace")
     pieces, start = [], 0
     for match in SHIFT_JIS_PAIR.finditer(raw):
-        sign = _shift_jis_sign(match.group(0))
+        sign = shift_jis_sign(match.group(0))
         if sign is None:
             continue
         pieces.append(raw[start : match.start()].decode(codec, FALLBACK_ERROR_HANDLER))
@@ -333,11 +337,34 @@ class _RtfReader:
             self.font = int(argument)
         elif word == "u" and argument:
             value = int(argument)
-            self.emit(chr(value + UNICODE_LIMIT if value < 0 else value))
+            character = chr(value + UNICODE_LIMIT if value < 0 else value)
+            stored_byte = self._stored_byte(character)
+            if stored_byte is None:
+                self.emit(character)
+            else:
+                self.pending.append(stored_byte)
             return self.skip_fallback(index)
         elif word == "uc" and argument:
             self.fallback_units = int(argument)
         return index
+
+    def _stored_byte(self, character: str) -> int | None:
+        r"""Return the byte a \uN character really stands for, or None if it is a character.
+
+        Some RTF writers stored bytes as Unicode code points: \u150 for the cp1252 byte
+        0x96 (an en dash), and Shift-JIS pairs as \u129 + a cp1252 character
+        (\u129\u732 is 0x81 0x98, "§"). Such bytes go back among the text bytes, where
+        the font's code page and the Shift-JIS pair rule decode them.
+        """
+        if ord(character) in C1_CONTROL_RANGE:
+            return ord(character)
+        if not self.pending.endswith(SHIFT_JIS_LEAD):
+            return None
+        try:
+            encoded = character.encode(STORED_BYTES_CODEC)
+        except UnicodeEncodeError:
+            return None
+        return encoded[0] if len(encoded) == 1 else None
 
     def backslash(self, index: int) -> int:
         """Handle the sequence that starts with a backslash; return the next position."""
