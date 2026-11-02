@@ -36,8 +36,15 @@ and the commands that carry it out.
 ### Stage 2: conversion
 
 - **RTF:** the code page is chosen per font. A font declared as Central European
-  (charset 238) is decoded as cp1250 even when the document declares cp1252. Fonts with
+  (charset 238) is decoded as cp1250 even when the document declares cp1252. A Western
+  font (charset 0, e.g. "Times New Roman" without "CE") is cp1252 even in a Hungarian
+  document: read as cp1250, its "¼", "³" and "º" became "Ľ", "ł" and "ş". Fonts with
   charset 128 are Shift-JIS: some anonymisation tools wrote "…" and "§" in such a font.
+- **Symbol fonts** draw their own picture for each byte, so the font name decides:
+  "Symbol" is mapped to Unicode (Greek letters, "®", "°", "•"); Wingdings, Webdings
+  and similar picture fonts get the private-use code U+F0hh, as Word itself does, so a
+  Wingdings arrow used as a bullet no longer reads as "Ř". OpenOffice's StarSymbol and
+  OpenSymbol declare the symbol charset but use ordinary cp1252 signs at these bytes.
 - **Wrongly declared fonts:** if a font of another script (Arabic, Shift-JIS, Greek,
   Cyrillic, ...) produces words that mix that script with Latin letters, the font was
   declared by mistake, and that stretch of text is decoded with the document's own code
@@ -98,7 +105,9 @@ See [ADR-2026-11-02-text-level-encoding-repair](decisions/ADR-2026-11-02-text-le
 - `review-characters` builds a page with every character that is neither ASCII nor a
   Hungarian letter: its count, a few examples in context and a decision (keep, replace,
   remove, check) with a note. It is the check that no damage was left in the character
-  clean-up.
+  clean-up. With `--originals` the examples link to the original RTF or DOCX, where the
+  reviewer can see how the character really looks; that comparison is what showed the
+  Western and symbol font errors of stage 2.
 - Not repaired automatically: ő and ű stored as a dotless ı (seen in PDF text layers of a
   competition authority), because ı may stand for either letter; this needs a dictionary
   decision per word.
@@ -113,8 +122,25 @@ otherwise a person decides. Two patterns are held back from automatic joining:
 - a role word at the end of a line followed by a verdict or a one-letter label on the
   next line ("vádlott-" / "bűnös"), which is a typographical convention.
 
-Pairs with a blank line between the two halves are not joined: the blank line may be a
-real paragraph break.
+Pairs with a blank line between the two halves are not joined automatically: the blank
+line may be a real paragraph break. A pair a person confirmed as a split word is joined
+across blank lines too, because a word cannot continue after a new paragraph.
+
+**Spelling of the joined word.** Putting the two halves together is not always enough:
+
+- a long two-letter consonant is split as two whole digraphs but written with one
+  doubled letter: "ösz-" / "szeg" → "összeg", "személy-" / "lyel" → "személlyel";
+- some hyphens must stay: the question particle ("megfelelnek-e"), a suffix after an
+  abbreviation ("Ft-ban", "ÁSZF-ben") and compounds of more than six syllables
+  ("ingatlan-nyilvántartás"); the spell checker knows these rules, so it decides between
+  the plain and the hyphenated form;
+- spelled-out numbers above two thousand take a hyphen after each group word
+  ("hetvenháromezer-nyolcszáz"), others are one word ("négymillió").
+
+A pair whose hyphen is right but whose line break is not ("Rendőr-" / "főkapitányság",
+"Ft-" / "ot", "állag-" / "és") is joined keeping the hyphen. Layout breaks stay: a role
+word or placeholder before a verdict ("vádlott-" / "bűnös", "XX-" / "bűnös"), a header
+("alperes ellen-" / "közigazgatási ügyben") and dashes ("tényre-" / "bizonyítékra").
 
 ### Stage 6: lost first letters
 
@@ -125,6 +151,13 @@ follow a finished sentence (the line above ends in `. ! ? : ;` or is blank) are 
 a line that continues the sentence above ("…, amely" / "mellett az …") is a normal wrap.
 The remaining false candidates usually follow a page or paragraph break and are removed
 in the review.
+
+The review also finds line-start words that did not lose a letter but are the second
+half of a word split at the line above, often without a hyphen ("sze" / "rint"). They
+get the decision `join`: `join_line_start` puts them back on the previous non-empty
+line when the spell checker knows the joined word. When the reviewer gives a whole word
+("óvár" → "Mosonmagyaróvár"), the lines are joined if the line above ends with the
+missing part, and the word is replaced otherwise.
 
 ### Stage 6b: false spaces
 

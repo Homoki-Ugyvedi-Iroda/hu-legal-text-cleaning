@@ -48,6 +48,7 @@ function show() {
   h += '<div class="word-box"><b>Decision for the whole word</b><br><select id="wordDecision"><option value="">-</option>';
   for (const [value, label] of WORD_OPTIONS) h += '<option value="' + value + '"' + (wordEntry.decision === value ? " selected" : "") + ">" + esc(label) + "</option>";
   h += '</select><textarea id="wordComment" placeholder="Comment on the word">' + esc(wordEntry.comment) + "</textarea></div>";
+  if (!w.occurrences.length) h += '<p class="meta"><b>No examples left in the corpus:</b> an earlier step already fixed this word, so there is nothing to decide.</p>';
   w.occurrences.forEach((o, n) => {
     const e = entry(occKey(w, n));
     h += '<div class="occ"><div class="meta"><a href="' + esc(o.link) + '">' + esc(o.source) + "</a> line " + o.line_number + "</div>";

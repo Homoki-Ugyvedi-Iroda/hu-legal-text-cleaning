@@ -27,7 +27,7 @@ elhárithatatlan,elháríthatatlan,accent,yes,31,1,2007,2007,elháríthatatlan,3
 aluminium,alumínium,accent,yes,31,2,2005,2013,alumínium,31,
 kivül,kívül,accent,yes,30,10,1999,2022,kívül | kiül | kiviül | kiévül,30,
 berleti,bérleti,accent,yes,30,1,2018,2018,bérleti | bereti | beőrleti | beöleti,30,
-gatlan,ingatlan,line-end hyphenation fragment (join with the previous line),check,30,1,2005,2005,gótlan | gallan | katlan,30,"Second half of ""in gatlan"" or ""in-"" + line break + ""gatlan"": delete the space or line break before it instead of replacing the word. Words with an invisible soft hyphen between "in" and "gatlan" are correct."
+gatlan,ingatlan,line-end hyphenation fragment (join with the previous line),check,30,1,2005,2005,gótlan | gallan | katlan,30,"Second half of ""in gatlan"" or ""in-"" + line break + ""gatlan"": delete the space or line break before it instead of replacing the word. Words with an invisible soft hyphen between in"" and ""gatlan"" are correct."" Review of 2 November 2026: fix only in context; the three reviewed occurrences were corrected one by one."
 szűntette,szüntette,accent,yes,27,20,2005,2026,szüntette | szűnhette,27,
 bekezdese,bekezdése,accent,yes,27,2,2018,2022,bekezdesse | bekezdése | bekezdésé | bekezdess,27,
 megszűntetését,megszüntetését,accent,yes,26,19,2004,2026,megszüntetését,26,
@@ -46,7 +46,7 @@ gazdasa,(normalise the text to NFC),"Unicode form (decomposed accent), not a typ
 lli,(normalise the text to NFC),"Unicode form (decomposed accent), not a typo",no,21,0,,,éli | léi | leli | elli,21,
 üzletrészadásvételi,üzletrész-adásvételi,one character,yes,21,1,2024,2024,üzletrész-adásvételi,21,
 továbbikan,továbbikban,one character,yes,21,1,2020,2020,továbbinak | továbbikban | továbbikat | továbbikon,21,
-els,első,one character,check,21,7,2004,2013,les | el | elás | első,21,Mostly words split by a false space (els ő); some come from encoding damage; one is a product name.
+els,első,one character,no,21,7,2004,2013,les | el | elás | első,21,"Replaced by the false-space rows 'els ő', 'els őfokú' and 'els ősorban': the fix is to delete the space, not to replace the word."
 előirt,előírt,accent,yes,20,12,1998,2025,előírt | előirtó | előirts | előárt,20,
 felbújtó,felbujtó,accent,yes,20,8,2001,2019,felbujtó | felbújót | felbújt | felbújó,20,
 szerződes,szerződés,accent,yes,17,1,2018,2018,szerződés | szerződet | szerződős,17,
@@ -111,3 +111,18 @@ v ádlottat,vádlottat,letter cut off by a space,yes,4,1,2004,2004,vádlottat,0,
 í téletet,ítéletet,letter cut off by a space,yes,3,3,2004,2010,ítéletet,0,
 k özbizalom,közbizalom,letter cut off by a space,yes,3,1,2004,2004,közbizalom,0,
 t ényálláshoz,tényálláshoz,letter cut off by a space,yes,3,1,2004,2004,tényálláshoz,0,
+n em,nem,false space,yes,,,,,,,Reviewed on 2 November 2026 on a sample of 300 decisions.
+közgyógy ellátásban,közgyógyellátásban,false space,yes,,,,,,,Reviewed on 2 November 2026 on a sample of 300 decisions.
+id őközben,időközben,false space,yes,,,,,,,Reviewed on 2 November 2026 on a sample of 300 decisions.
+els ő,első,false space,yes,,,,,,,Reviewed on 2 November 2026 on a sample of 300 decisions.
+els őfokú,elsőfokú,false space,yes,,,,,,,Reviewed on 2 November 2026 on a sample of 300 decisions.
+els ősorban,elsősorban,false space,yes,,,,,,,"Reviewed on 2 November 2026 on a sample of 300 decisions. Same split as 'els ő', found in the full corpus."
+m árcius,március,false space,yes,,,,,,,Reviewed on 2 November 2026 on a sample of 300 decisions.
+k ét,két,false space,yes,,,,,,,Reviewed on 2 November 2026 on a sample of 300 decisions.
+k ésedelmi,késedelmi,false space,yes,,,,,,,Reviewed on 2 November 2026 on a sample of 300 decisions.
+s íróság,Bíróság,false space,yes,,,,,,,Reviewed on 2 November 2026 on a sample of 300 decisions. Reviewer's correction: the first letter is a damaged B.
+szerinti nél,szerintinél,false space,yes,,,,,,,Reviewed on 2 November 2026 on a sample of 300 decisions.
+közeli ben,közeliben,false space,yes,,,,,,,Reviewed on 2 November 2026 on a sample of 300 decisions.
+bekezdés értélménben,bekezdés értelmében,false space,yes,,,,,,,Reviewed on 2 November 2026 on a sample of 300 decisions. Reviewer's correction: also a typo.
+pont ba,pontba,false space,no,,,,,,,"Approved on the sample, but in the full corpus almost every occurrence is a sub-point label ('b) pont ba) alpontja'), so it must not be applied. The replacements of 2 November 2026 were undone."
+fordulat ba,fordulatba,false space,no,,,,,,,"Approved on the sample, but in the full corpus almost every occurrence is a sub-point label ('b) pont ba) alpontja'), so it must not be applied. The replacements of 2 November 2026 were undone."

@@ -68,3 +68,49 @@ def test_rtf_to_text_keeps_real_greek_text(tmp_path):
     path = tmp_path / "d.rtf"
     path.write_bytes(rtf)
     assert rtf_to_text(path) == "λόγος"
+
+
+def _convert(tmp_path, rtf: bytes) -> str:
+    path = tmp_path / "d.rtf"
+    path.write_bytes(rtf)
+    return rtf_to_text(path)
+
+
+def test_rtf_to_text_reads_western_font_as_cp1252(tmp_path):
+    rtf = (
+        rb"{\rtf1\ansi\ansicpg1250\deff0{\fonttbl{\f0\fcharset238 Times New Roman CE;}"
+        rb"{\f1\fcharset0 Times New Roman;}}\f0 a lak\'e1s \f1\'bc\f0  r\'e9sze, 5 m\f1\'b3}"
+    )
+    assert _convert(tmp_path, rtf) == "a lakás ¼ része, 5 m³"
+
+
+def test_rtf_to_text_keeps_greek_symbol_next_to_latin_letter(tmp_path):
+    rtf = (
+        rb"{\rtf1\ansi\ansicpg1250\deff0{\fonttbl{\f0\fcharset238 Times New Roman CE;}"
+        rb"{\f1\fcharset161 Times New Roman Greek;}}\f0 2,24\f1  \'ecg/ml}"
+    )
+    assert _convert(tmp_path, rtf) == "2,24 μg/ml"
+
+
+def test_rtf_to_text_maps_symbol_font_to_unicode(tmp_path):
+    rtf = (
+        rb"{\rtf1\ansi\ansicpg1250\deff0{\fonttbl{\f0\fcharset238 Arial CE;}"
+        rb"{\f1\fcharset238 Symbol;}}\f0 KING \f1\'d2\f0  MILANO, 5 \f1 m\f0 g}"
+    )
+    assert _convert(tmp_path, rtf) == "KING ® MILANO, 5 μg"
+
+
+def test_rtf_to_text_gives_picture_font_private_use_codes(tmp_path):
+    rtf = (
+        rb"{\rtf1\ansi\ansicpg1250\deff0{\fonttbl{\f0\fcharset238 Arial CE;}"
+        rb"{\f2\fnil\fcharset2 Wingdings;}}\f2\'d8\tab\f0 t\'e9tel}"
+    )
+    assert _convert(tmp_path, rtf) == "\ttétel"
+
+
+def test_rtf_to_text_reads_openoffice_symbol_font_as_cp1252(tmp_path):
+    rtf = (
+        rb"{\rtf1\ansi\ansicpg1250\deff0{\fonttbl{\f0\fcharset238 Arial CE;}"
+        rb"{\f1\fcharset2 OpenSymbol;}}\f1\'95\f0  t\'e9tel}"
+    )
+    assert _convert(tmp_path, rtf) == "• tétel"

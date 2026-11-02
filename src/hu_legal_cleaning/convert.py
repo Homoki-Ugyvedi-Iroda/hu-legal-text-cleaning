@@ -15,7 +15,11 @@ import unicodedata
 import zipfile
 from pathlib import Path
 
-from hu_legal_cleaning.encoding_repair import is_mixed_script, repair_document
+from hu_legal_cleaning.encoding_repair import (
+    HUNGARIAN_ACCENTED,
+    is_mixed_script,
+    repair_document,
+)
 
 # --- DOCX ---------------------------------------------------------------------
 
@@ -67,14 +71,36 @@ RTF_SPECIAL_CHARACTERS = {
     "emspace": " ", "enspace": " ", "qmspace": " ",
 }  # fmt: skip
 RTF_LINE_BREAKS = {"par", "line", "sect", "row"}
-# RTF font character set number -> Python codec. 238 is Central European (Hungarian);
-# 128 is Japanese Shift-JIS, which some anonymisation tools used for "…" and "§".
+# RTF font character set number -> Python codec. 0 is Western ("Times New Roman" without
+# "CE"): its bytes are cp1252 even in a Hungarian document, so 0xBC is "¼", not "Ľ".
+# 238 is Central European (Hungarian); 128 is Japanese Shift-JIS, which some anonymisation
+# tools used for "…" and "§".
 FONT_CHARSET_CODECS = {
-    238: "cp1250", 128: "cp932", 204: "cp1251", 161: "cp1253", 162: "cp1254",
+    0: "cp1252", 238: "cp1250", 128: "cp932", 204: "cp1251", 161: "cp1253", 162: "cp1254",
     186: "cp1257", 163: "cp1258", 177: "cp1255", 178: "cp1256", 129: "cp949",
     134: "gb2312", 136: "cp950", 222: "cp874",
 }  # fmt: skip
 SHIFT_JIS_CODEC = "cp932"
+# Symbol fonts (charset 2) draw their own pictures for each byte, so no code page applies.
+# Read with cp1250, a Wingdings arrow bullet (0xD8) became "Ř" and a row of separators
+# "ŇŇŇ". "Symbol" has Unicode equivalents (Greek letters, "®", "°"); the picture fonts
+# (Wingdings, Webdings, ...) get the private-use code U+F0hh, as Word itself does.
+SYMBOL_CHARSET = 2
+SYMBOL_FONT_CODEC = "symbol"
+PICTURE_FONT_CODEC = "picture-font"
+OTHER_SYMBOL_FONT_CODEC = "cp1252"
+SYMBOL_FONT_NAMES = {"symbol"}
+PICTURE_FONT_NAMES = {"wingdings", "wingdings 2", "wingdings 3", "webdings", "marlett"}
+PRIVATE_USE_SYMBOL_BASE = 0xF000
+SYMBOL_GREEK_UPPER = "ΑΒΧΔΕΦΓΗΙϑΚΛΜΝΟΠΘΡΣΤΥςΩΞΨΖ"
+SYMBOL_GREEK_LOWER = "αβχδεφγηιϕκλμνοπθρστυϖωξψζ"
+SYMBOL_FONT_SIGNS = {
+    0xA2: "′", 0xA3: "≤", 0xA5: "∞", 0xA7: "♣", 0xA8: "♦", 0xA9: "♥", 0xAA: "♠",
+    0xAC: "←", 0xAD: "↑", 0xAE: "→", 0xAF: "↓", 0xB0: "°", 0xB1: "±", 0xB2: "″",
+    0xB3: "≥", 0xB4: "×", 0xB7: "•", 0xB8: "÷", 0xB9: "≠", 0xBB: "≈", 0xBC: "…",
+    0xC3: "℘", 0xC6: "∅", 0xD2: "®", 0xD3: "©", 0xD4: "™", 0xD6: "√", 0xD8: "¬",
+    0xDE: "⇒", 0xE2: "®", 0xE3: "©", 0xE4: "™", 0xE5: "∑", 0xF2: "∫",
+}  # fmt: skip
 # Signs written as Shift-JIS byte pairs ("§" is 0x81 0x98, "…" is 0x81 0x63), also seen in
 # fonts that are not declared as Shift-JIS. Only lead bytes that are unused in cp1250 are
 # taken, so that "„" (0x84) followed by a letter is never read as a pair.
@@ -113,11 +139,11 @@ def _default_codec(data: bytes) -> str:
     return "cp" + (declared.group(1).decode() if declared else "1250")
 
 
-def _font_codecs(data: bytes, default: str) -> dict[int, str]:
-    """Return font number -> codec, read from the charset of each font in the font table."""
+def _font_table(data: bytes) -> bytes:
+    r"""Return the {\fonttbl ...} group of an RTF file, or b"" if there is none."""
     start = re.search(rb"\{\\fonttbl", data)
     if not start:
-        return {}
+        return b""
     depth, index = 0, start.start()
     while index < len(data):
         character = data[index : index + 1]
@@ -130,16 +156,61 @@ def _font_codecs(data: bytes, default: str) -> dict[int, str]:
         elif character == b"\\":
             index += 1
         index += 1
+    return data[start.start() : index]
+
+
+def _font_name(entry: bytes) -> str:
+    r"""Return the lowercase name of a font table entry such as "\f2\fcharset2 Wingdings;"."""
+    entry = re.sub(rb"\{\\\*[^{}]*\}", b"", entry)
+    entry = re.sub(rb"\\[a-z]+-?\d* ?", b"", entry)
+    return entry.split(b";", 1)[0].strip(b" {}").decode("latin-1").lower()
+
+
+def _font_codec(entry: bytes, default: str) -> str:
+    """Return the codec of one font table entry, from its charset and, for symbols, its name."""
+    name = _font_name(entry)
+    charset = re.search(rb"\\fcharset(\d+)", entry)
+    charset_number = int(charset.group(1)) if charset else None
+    # The name decides, not the charset: some files declare "Symbol" with a text charset,
+    # and OpenOffice's StarSymbol and OpenSymbol declare the symbol charset although
+    # their glyphs at these bytes are the ordinary cp1252 signs ("•", "–").
+    if name in SYMBOL_FONT_NAMES:
+        return SYMBOL_FONT_CODEC
+    if name in PICTURE_FONT_NAMES:
+        return PICTURE_FONT_CODEC
+    if charset_number == SYMBOL_CHARSET:
+        return OTHER_SYMBOL_FONT_CODEC
+    return FONT_CHARSET_CODECS.get(charset_number, default)
+
+
+def _font_codecs(data: bytes, default: str) -> dict[int, str]:
+    """Return font number -> codec, read from each font in the font table."""
+    table = _font_table(data)
+    starts = list(re.finditer(rb"\\f(\d+)(?![0-9a-zA-Z])", table))
     codecs_by_font: dict[int, str] = {}
-    font = None
-    table = data[start.start() : index]
-    for token in re.finditer(rb"\\f(\d+)(?![0-9a-zA-Z])|\\fcharset(\d+)", table):
-        if token.group(1) is not None:
-            font = int(token.group(1))
-            codecs_by_font.setdefault(font, default)
-        elif font is not None:
-            codecs_by_font[font] = FONT_CHARSET_CODECS.get(int(token.group(2)), default)
+    for position, start in enumerate(starts):
+        end = starts[position + 1].start() if position + 1 < len(starts) else len(table)
+        codecs_by_font[int(start.group(1))] = _font_codec(table[start.end() : end], default)
     return codecs_by_font
+
+
+def _decode_symbols(raw: bytes, codec: str) -> str:
+    """Decode bytes of a symbol font: Unicode signs for "Symbol", private-use codes otherwise."""
+    characters = []
+    for value in raw:
+        if value == ord(" "):
+            characters.append(" ")
+        elif codec == SYMBOL_FONT_CODEC and ord("A") <= value <= ord("Z"):
+            characters.append(SYMBOL_GREEK_UPPER[value - ord("A")])
+        elif codec == SYMBOL_FONT_CODEC and ord("a") <= value <= ord("z"):
+            characters.append(SYMBOL_GREEK_LOWER[value - ord("a")])
+        elif codec == SYMBOL_FONT_CODEC and value in SYMBOL_FONT_SIGNS:
+            characters.append(SYMBOL_FONT_SIGNS[value])
+        elif codec == SYMBOL_FONT_CODEC and value < 0x80:
+            characters.append(chr(value))
+        else:
+            characters.append(chr(PRIVATE_USE_SYMBOL_BASE + value))
+    return "".join(characters)
 
 
 def _shift_jis_sign(pair: bytes) -> str | None:
@@ -157,6 +228,8 @@ def _shift_jis_sign(pair: bytes) -> str | None:
 
 def _decode(raw: bytes, codec: str) -> str:
     """Decode text bytes, keeping the signs written as Shift-JIS byte pairs."""
+    if codec in (SYMBOL_FONT_CODEC, PICTURE_FONT_CODEC):
+        return _decode_symbols(raw, codec)
     if codec == SHIFT_JIS_CODEC:
         return raw.decode(SHIFT_JIS_CODEC, "replace")
     pieces, start = [], 0
@@ -177,14 +250,23 @@ def _decode_run(raw: bytes, codec: str, default_codec: str) -> str:
     If a font of another script yields words that mix Latin letters with that script
     ("hatلrozat", "bekezd駸"), the font's charset was declared by mistake and the run is
     decoded with the document's own code page instead. Real Greek or Japanese text does
-    not mix scripts inside words, so it keeps its font's code page.
+    not mix scripts inside words, so it keeps its font's code page. A symbol next to a
+    Latin letter ("μg/ml") is real too: read with the document's code page it gives no
+    Hungarian letter ("ěg/ml"), so it also keeps its font's code page.
     """
     text = _decode(raw, codec)
     if codec not in NON_LATIN_CODECS or codec == default_codec:
         return text
     if not any(is_mixed_script(word) for word in text.split()):
         return text
-    return _decode(raw, default_codec)
+    redecoded = _decode(raw, default_codec)
+    if _hungarian_letter_count(redecoded) <= _hungarian_letter_count(text):
+        return text
+    return redecoded
+
+
+def _hungarian_letter_count(text: str) -> int:
+    return sum(1 for character in text if character in HUNGARIAN_ACCENTED)
 
 
 class _RtfReader:

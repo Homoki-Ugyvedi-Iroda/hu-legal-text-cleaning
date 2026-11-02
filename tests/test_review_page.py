@@ -1,4 +1,10 @@
-from hu_legal_cleaning.review_page import Context, ReviewItem, build_review_page, file_link
+from hu_legal_cleaning.review_page import (
+    Context,
+    ReviewItem,
+    build_review_page,
+    file_link,
+    original_of,
+)
 
 
 def test_build_review_page_embeds_items_safely():
@@ -12,3 +18,11 @@ def test_build_review_page_embeds_items_safely():
 
 def test_file_link(tmp_path):
     assert file_link(tmp_path / "a b.txt").startswith("file:///")
+
+
+def test_original_of_finds_the_source_document(tmp_path):
+    originals = tmp_path / "originals"
+    (originals / "2006").mkdir(parents=True)
+    (originals / "2006" / "P.1_2006.rtf").write_bytes(b"{\rtf1}")
+    assert original_of("2006/P.1_2006.txt", originals) == originals / "2006" / "P.1_2006.rtf"
+    assert original_of("2006/P.2_2006.txt", originals) is None

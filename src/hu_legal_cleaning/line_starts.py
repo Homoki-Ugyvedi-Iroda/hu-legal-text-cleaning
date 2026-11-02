@@ -17,6 +17,7 @@ A person then reviews the candidates; `fix_line_starts` applies the approved one
 
 import re
 from collections import Counter
+from collections.abc import Callable
 from dataclasses import dataclass
 
 LETTERS = "A-Za-zÁÉÍÓÖŐÚÜŰáéíóöőúüű"
@@ -148,3 +149,79 @@ def fix_line_starts(lines: list[str], replacements: dict[str, str]) -> tuple[lis
             changed += 1
         result.append(line)
     return result, changed
+
+
+LAST_WORD = re.compile(r"([" + LETTERS + r"]+)(-?)[ \t]*$")
+
+
+def join_line_start(
+    lines: list[str],
+    fragment: str,
+    is_known: Callable[[str], bool],
+    expected: str | None = None,
+    with_space: bool = False,
+) -> tuple[list[str], list[str]]:
+    """Join lines whose first word is the second half of a word split at the line above.
+
+    Some line breaks split a word without a hyphen ("sze" / "rint") or with one that the
+    line-break step did not join. A reviewer marks such line-start words; this function
+    puts each one back on the previous non-empty line.
+
+    Args:
+        lines: The lines of one text.
+        fragment: The line-start word, e.g. "rint".
+        is_known: Returns True for a word the spell checker knows; the joined word must
+            be known, otherwise the line is left alone. With `with_space` it is asked
+            about the two words ("e körben"), so the caller can limit such joins.
+        expected: The whole word the reviewer gave, e.g. "Mosonmagyaróvár" for "óvár".
+            If the line above ends with the missing part ("Mosonmagyar-"), the lines are
+            joined; if it does not, the line-start word is replaced by this word.
+        with_space: Join with a space instead of putting the halves together, for a
+            line that only continues the sentence above ("e" / "körben").
+
+    Returns:
+        The new lines and the written form of each change, e.g. ["szerint"].
+    """
+    result = list(lines)
+    changes = []
+    # From the bottom up, so that deleting lines does not shift the indexes still to do.
+    for index in range(len(result) - 1, 0, -1):
+        first = FIRST_WORD.match(result[index])
+        if not first or first.group(1) != fragment:
+            continue
+        previous = index - 1
+        while previous > 0 and not result[previous].strip():
+            previous -= 1
+        last = LAST_WORD.search(result[previous])
+        written = _joined_form(last, fragment, is_known, expected, with_space)
+        if written is None:
+            if expected:
+                start, end = first.span(1)
+                result[index] = result[index][:start] + expected + result[index][end:]
+                changes.append(expected)
+            continue
+        rest = result[index].lstrip(" \t")[len(fragment) :]
+        result[previous] = result[previous][: last.start()] + written + rest
+        del result[previous + 1 : index + 1]
+        changes.append(written)
+    return result, changes
+
+
+def _joined_form(
+    last: re.Match[str] | None,
+    fragment: str,
+    is_known: Callable[[str], bool],
+    expected: str | None,
+    with_space: bool,
+) -> str | None:
+    """Return how the last word above and the fragment are written together, or None."""
+    if last is None:
+        return None
+    word = last.group(1)
+    if with_space:
+        spaced = f"{word} {fragment}"
+        return spaced if is_known(spaced) else None
+    forms = [word + fragment, f"{word}-{fragment}"]
+    if expected:
+        return next((form for form in forms if form.lower() == expected.lower()), None)
+    return forms[0] if is_known(forms[0]) else None

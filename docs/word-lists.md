@@ -7,11 +7,11 @@ a person's check.
 
 | File | Content | Rows | Status |
 |---|---|---:|---|
-| `correction_table.csv` | OCR errors and typos with the correction, the error type and whether it is safe to apply | 112 | reviewed |
+| `correction_table.csv` | OCR errors, typos and false spaces with the correction, the error type and whether it is safe to apply | 127 | reviewed |
 | `words_unknown_to_hunspell.csv` | words Hunspell does not know but that a reviewer accepted, with a category | 372 | reviewed |
 | `abbreviations_court_decisions.csv` | dotted words measured in 30,000 decisions, with category and meaning | 846 | reviewed |
 | `abbreviations_statutes_njt.txt` | statute short names of the National Legislation Database (NJT) | 375 | as published |
-| `line_start_fixes.csv` | damaged line-start words with their correction and the reviewer's decision | 118 | 68 answered |
+| `line_start_fixes.csv` | damaged line-start words with their correction, the reviewer's decision (apply, join, no) and a note | 118 | reviewed |
 | `hyphen_join_decisions.csv` | split words the spell checker could not decide, with the reviewer's decision | 140 | reviewed |
 | `sentence_gold.jsonl` | 40 passages with their correct sentence split | 40 | reviewed |
 | `review_page_template.html` | template of the review page (not a list) | | |
@@ -24,19 +24,23 @@ Columns: `wrong`, `proposed`, `type`, `safe_to_apply`, `occurrences`, `decisions
 `review_note`.
 
 - `yes`: the wrong form is never a correct word; apply everywhere.
-- `check`: usually wrong but may be correct in some contexts; look at each case. After
-  the review of 2 November 2026 two rows remain: "gatlan" (the second half of "in gatlan"
-  or "in-" / "gatlan", where the space or line break should go rather than the word) and
-  "els" (mostly "els ő" split by a false space). `review_note` says what was found.
+- `check`: usually wrong but may be correct in some contexts; look at each case. One row
+  remains: "gatlan" (the second half of "in gatlan" or "in-" / "gatlan", where the space
+  or line break should go rather than the word). `review_note` says what was found.
 - `no`: kept for reference: the "error" disappears with NFC normalisation, or the
   occurrences need different corrections ("elk").
 
-Current counts: 104 `yes`, 6 `no`, 2 `check`. The 104 `yes` rows were applied to the BHGY
+Current counts: 117 `yes`, 9 `no`, 1 `check`. "pont ba" and "fordulat ba" were approved on the sample but set to `no`: in the full corpus "ba)" is almost always a sub-point label ("b) pont ba) alpontja"). The 104 `yes` rows were applied to the BHGY
 cleaned copy on 2 November 2026: 46,173 replacements in 18,216 files. The 35 former `check` rows were reviewed
 with `hu-legal-clean review-check-rows` (six examples per word with ten lines of context):
-32 became `yes`, 1 became `no`, 2 stayed `check`.
+32 became `yes`, 1 became `no`, 2 stayed `check`. Of those two, "els" was closed when the
+review of the false spaces showed that the fix is to delete the space ("els ő" → "első").
 
-Error types: accent (65), one character (18), letter cut off by a space (10), two
+The 15 rows of type `false space` hold two words separated by a false space ("n em",
+"k ésedelmi", "els őfokú"); they were approved on a sample of 300 decisions
+(`find-false-spaces`) and are applied like the other rows, as whole words.
+
+Error types: accent (65), one character (18), false space (15), letter cut off by a space (10), two
 characters (5), decomposed accent (5), missing space (4), doubled letter (2), letter lost
 (1), hyphenation fragment (1), brand-name capitals (1).
 

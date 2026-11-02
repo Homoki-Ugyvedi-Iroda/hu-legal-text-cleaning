@@ -33,3 +33,19 @@ def test_build_character_page_contains_the_data(tmp_path):
     write_text(root / "2010" / "a.txt", "szöveg „ jel\n")
     page = characters.build_character_page(characters.scan_characters(root), "my_key")
     assert "U+201E" in page and "my_key" in page
+
+
+def test_build_character_page_carries_earlier_answers(tmp_path):
+    answers = tmp_path / "answers.csv"
+    answers.write_text(
+        "character,code,name,kind,count,documents,decision,replacement,comment\n"
+        "Ľ,U+013D,x,y,1,1,replace,¼,looks like 1/4\n"
+        "ä,U+00E4,x,y,1,1,,,\n",
+        encoding="utf-8",
+    )
+    earlier = characters.load_answers(answers)
+    assert earlier == {
+        "Ľ": {"decision": "replace", "replacement": "¼", "comment": "looks like 1/4"}
+    }
+    page = characters.build_character_page({}, "key", earlier)
+    assert '"Ľ": {"decision": "replace"' in page

@@ -82,8 +82,10 @@ def _review_check_rows(args: argparse.Namespace) -> None:
 
 
 def _review_characters(args: argparse.Namespace) -> None:
-    stats = characters.scan_characters(args.source, args.examples)
-    args.out.write_text(characters.build_character_page(stats, args.out.stem), encoding="utf-8")
+    stats = characters.scan_characters(args.source, args.examples, args.originals)
+    earlier = characters.load_answers(args.answers) if args.answers else None
+    page = characters.build_character_page(stats, args.out.stem, earlier)
+    args.out.write_text(page, encoding="utf-8")
     print(f"Overview of {len(stats)} unusual characters: {args.out}")
 
 
@@ -186,6 +188,10 @@ def build_parser() -> argparse.ArgumentParser:
     step.add_argument("source", type=Path, help="folder of text files")
     step.add_argument("out", type=Path, help="HTML file to write")
     step.add_argument("--examples", type=int, default=characters.DEFAULT_EXAMPLES)
+    step.add_argument(
+        "--originals", type=Path, help="folder of the original RTF/DOCX files, for the links"
+    )
+    step.add_argument("--answers", type=Path, help="exported decisions of an earlier review")
     step.set_defaults(run=_review_characters)
 
     step = steps.add_parser("apply", help="apply approved fixes to a copy")

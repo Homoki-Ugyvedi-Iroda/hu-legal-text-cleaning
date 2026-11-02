@@ -187,7 +187,9 @@ def build_check_page(rows: dict[str, CheckRow], storage_key: str, title: str = P
         The HTML page, which is self-contained.
     """
     template = Path(str(resources.files("hu_legal_cleaning") / "data" / "check_rows_template.html"))
-    words = json.dumps([asdict(row) for row in rows.values()], ensure_ascii=False)
+    # Words without examples go last: a page that opens on an empty word looks broken.
+    ordered = sorted(rows.values(), key=lambda row: not row.occurrences)
+    words = json.dumps([asdict(row) for row in ordered], ensure_ascii=False)
     # "</" inside the JSON would end the script block early.
     words = words.replace("</", "<\\/")
     return (

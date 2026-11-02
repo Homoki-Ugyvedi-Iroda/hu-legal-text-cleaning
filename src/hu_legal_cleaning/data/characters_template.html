@@ -28,11 +28,13 @@ until you export them.</p>
 const CHARACTERS = /*CHARACTERS*/[];
 const DECISIONS = ["keep", "replace", "remove", "check"];
 const STORE = "<!--STORAGE-KEY-->";
+// Decisions from an earlier review of the same corpus, used until the reviewer changes them.
+const PRESET = /*PRESET*/{};
 let saved = {};
 try { saved = JSON.parse(localStorage.getItem(STORE) || "{}"); } catch (e) {}
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function save() { try { localStorage.setItem(STORE, JSON.stringify(saved)); } catch (e) {} }
-function entry(c) { return saved[c.character] || (saved[c.character] = {decision: "", replacement: "", comment: ""}); }
+function entry(c) { return saved[c.character] || (saved[c.character] = Object.assign({decision: "", replacement: "", comment: ""}, PRESET[c.character] || {})); }
 function visible(c) {
   // Invisible and combining characters are shown with their code, or they would not show at all.
   if (/^(combining mark|invisible format character|control character|space variant|private use)/.test(c.kind)) return "⟨" + c.code + "⟩";
@@ -40,7 +42,9 @@ function visible(c) {
 }
 function context(c, e) {
   const ch = /^(combining mark)/.test(c.kind) ? c.character : visible(c);
-  const link = '<a href="' + esc(e.link) + '">' + esc(e.source.split("/").pop()) + "</a> line " + e.line_number;
+  // The link opens the original document; its name is shown, the line number is the text file's.
+  const name = decodeURIComponent(e.link.split("/").pop());
+  const link = '<a href="' + esc(e.link) + '">' + esc(name) + "</a> (text line " + e.line_number + ")";
   return '<div class="ctx">' + esc(e.before) + "<mark>" + esc(ch) + "</mark>" + esc(e.after) + '</div><div class="meta">' + link + "</div>";
 }
 function render() {
@@ -85,7 +89,7 @@ document.getElementById("export").onclick = () => {
   const q = s => '"' + String(s).replace(/"/g, '""') + '"';
   const rows = [["character", "code", "name", "kind", "count", "documents", "decision", "replacement", "comment"].join(",")];
   for (const c of CHARACTERS) {
-    const e = saved[c.character] || {decision: "", replacement: "", comment: ""};
+    const e = entry(c);
     rows.push([q(c.character), q(c.code), q(c.name), q(c.kind), c.count, c.documents, q(e.decision), q(e.replacement), q(e.comment)].join(","));
   }
   const blob = new Blob(["﻿" + rows.join("\n")], {type: "text/csv"});

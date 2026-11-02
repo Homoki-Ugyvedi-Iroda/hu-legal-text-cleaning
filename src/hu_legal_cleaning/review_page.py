@@ -95,3 +95,25 @@ def build_review_page(
 def file_link(path: Path) -> str:
     """Return a file:// link that opens a local file from the review page."""
     return path.resolve().as_uri()
+
+
+ORIGINAL_SUFFIXES = (".rtf", ".docx", ".doc", ".pdf")
+
+
+def original_of(relative_text: str, originals: Path) -> Path | None:
+    """Return the original document a converted text file was made from, if it exists.
+
+    Args:
+        relative_text: Path of the text file relative to its corpus folder, e.g.
+            "2006/Court/P.123.txt".
+        originals: Folder of the original documents, with the same layout.
+
+    Returns:
+        The original file with the same stem (.rtf, .docx, ...), or None.
+    """
+    stem = originals / Path(relative_text).with_suffix("")
+    for suffix in ORIGINAL_SUFFIXES:
+        candidate = stem.with_name(stem.name + suffix)
+        if candidate.exists():
+            return candidate
+    return None

@@ -7,6 +7,7 @@ each such character, shows a few examples in context and lets a person decide wh
 with it. The decisions are an input for the next clean-up, not applied by this module.
 """
 
+import csv
 import json
 import re
 import unicodedata
@@ -15,7 +16,7 @@ from dataclasses import asdict, dataclass, field
 from importlib import resources
 from pathlib import Path
 
-from hu_legal_cleaning.review_page import file_link
+from hu_legal_cleaning.review_page import file_link, original_of
 from hu_legal_cleaning.text_files import list_text_files, read_text
 
 HUNGARIAN_LETTERS = "áéíóöőúüűÁÉÍÓÖŐÚÜŰ"
@@ -28,6 +29,11 @@ PAGE_TITLE = "Unusual characters"
 NEWLINE_SIGN = "⏎"
 
 REPLACEMENT_CHARACTER = "�"
+# Unicode names that start a letter-like symbol rather than name a script, e.g. "MICRO SIGN".
+LETTER_LIKE_SYMBOL_NAMES = {
+    "Masculine", "Feminine", "Micro", "Mathematical", "Modifier", "Caron", "Superscript",
+    "Script", "Halfwidth", "Fullwidth", "Double-Struck", "Subscript",
+}  # fmt: skip
 KIND_BY_CATEGORY = {
     "Mn": "combining mark",
     "Mc": "combining mark",
@@ -46,7 +52,8 @@ class Example:
 
     Attributes:
         source: Path of the file relative to the corpus folder.
-        link: A file:// link to the file.
+        link: A file:// link to the original document, or to the text file if there is
+            no original.
         line_number: Line of the character, counted from 1.
         year: The first folder of the path, which is the year in the BHGY layout.
         before: Text before the character on its line.
@@ -105,15 +112,22 @@ def kind_of(character: str) -> str:
     script = name.split(" ", 1)[0].title() if name else "Unknown"
     if script == "Latin":
         return "Latin letter outside Hungarian"
+    if script in LETTER_LIKE_SYMBOL_NAMES:
+        return "letter-like symbol"
     return f"other script letter ({script})"
 
 
-def scan_characters(root: Path, examples: int = DEFAULT_EXAMPLES) -> dict[str, CharacterStats]:
+def scan_characters(
+    root: Path, examples: int = DEFAULT_EXAMPLES, originals: Path | None = None
+) -> dict[str, CharacterStats]:
     """Count the unusual characters of a corpus and collect examples.
 
     Args:
         root: Folder of text files.
         examples: How many examples to keep per character.
+        originals: Folder of the original RTF/DOCX files with the same layout. The
+            examples then link to the original, where the person can see how the
+            character really looks.
 
     Returns:
         Character -> statistics.
@@ -125,6 +139,8 @@ def scan_characters(root: Path, examples: int = DEFAULT_EXAMPLES) -> dict[str, C
         if not found:
             continue
         relative = path.relative_to(root).as_posix()
+        original = original_of(relative, originals) if originals else None
+        link = file_link(original or path)
         for character, count in found.items():
             entry = stats.get(character)
             if entry is None:
@@ -134,12 +150,12 @@ def scan_characters(root: Path, examples: int = DEFAULT_EXAMPLES) -> dict[str, C
             entry.count += count
             entry.documents += 1
             if len(entry.examples) < examples:
-                _add_example(entry, text, character, relative, path)
+                _add_example(entry, text, character, relative, link)
     return stats
 
 
 def _add_example(
-    entry: CharacterStats, text: str, character: str, relative: str, path: Path
+    entry: CharacterStats, text: str, character: str, relative: str, link: str
 ) -> None:
     """Add the first occurrence in a file as an example, unless its year is already shown."""
     year = relative.split("/", 1)[0]
@@ -152,16 +168,22 @@ def _add_example(
     before = text[max(line_start, index - CONTEXT_WIDTH) : index]
     after = text[index + 1 : min(line_end, index + 1 + CONTEXT_WIDTH)]
     entry.examples.append(
-        Example(relative, file_link(path), text.count("\n", 0, index) + 1, year, before, after)
+        Example(relative, link, text.count("\n", 0, index) + 1, year, before, after)
     )
 
 
-def build_character_page(stats: dict[str, CharacterStats], storage_key: str) -> str:
+def build_character_page(
+    stats: dict[str, CharacterStats],
+    storage_key: str,
+    earlier_answers: dict[str, dict[str, str]] | None = None,
+) -> str:
     """Build the HTML overview.
 
     Args:
         stats: The result of `scan_characters`.
         storage_key: Name under which the browser keeps the decisions.
+        earlier_answers: Character -> {"decision", "replacement", "comment"} from an
+            earlier review (see `load_answers`), shown until the reviewer changes them.
 
     Returns:
         The HTML page, which is self-contained.
@@ -171,9 +193,28 @@ def build_character_page(stats: dict[str, CharacterStats], storage_key: str) -> 
     data = json.dumps([asdict(entry) for entry in ordered], ensure_ascii=False)
     # "</" inside the JSON would end the script block early.
     data = data.replace("</", "<\\/")
+    preset = json.dumps(earlier_answers or {}, ensure_ascii=False).replace("</", "<\\/")
     return (
         template.read_text(encoding="utf-8")
         .replace("<!--TITLE-->", PAGE_TITLE)
         .replace("<!--STORAGE-KEY-->", storage_key)
         .replace("/*CHARACTERS*/[]", data)
+        .replace("/*PRESET*/{}", preset)
     )
+
+
+def load_answers(path: Path) -> dict[str, dict[str, str]]:
+    """Read the decisions exported from an overview page (only the decided characters).
+
+    Args:
+        path: The exported CSV.
+
+    Returns:
+        Character -> {"decision", "replacement", "comment"}.
+    """
+    with path.open(encoding="utf-8-sig", newline="") as handle:
+        return {
+            row["character"]: {key: row[key] for key in ("decision", "replacement", "comment")}
+            for row in csv.DictReader(handle)
+            if row["decision"] or row["comment"]
+        }

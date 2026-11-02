@@ -21,6 +21,10 @@ into a cleaned copy, with a log of every change.
 | 10 | Soft hyphens | invisible hyphens inside words ("in" + soft hyphen + "gatlan") removed; 54 at line ends kept, as they mark split words | 9,630 removed in 1,618 decisions |
 | 11 | Correction table | the 104 "yes" rows applied | 46,173 replacements in 18,216 files |
 | 12 | Look-alike letters | Cyrillic and Greek letters inside Latin words replaced ("ЕU", "Citroёn", "Kӓrcher") | 47 words in 39 files |
+| 13 | Western and symbol fonts | characters of Western fonts read as cp1250 ("Ľ" for "¼", "ł" for "³") and of symbol fonts read as letters ("Ř" for a Wingdings arrow bullet); corrected character by character from the source | 83,456 characters in 9,966 decisions |
+| 14 | Split words, second round | the reviewed pairs joined with Hungarian spelling ("ösz-" / "szegére" → "összegére"), real hyphenated words put back on one line ("Rendőr-" / "főkapitányság") | 497 joins in 348 decisions |
+| 15 | False spaces | 13 of the 15 approved pairs ("n em", "k ésedelmi", "els őfokú") and three reviewed "gatlan" places; "pont ba" and "fordulat ba" were undone, as "ba)" is a sub-point label | 112 replacements and 3 fixes in 66 decisions |
+| 16 | Line starts, second round | the reviewed answers: lost first letters ("érleti" → "Bérleti"), whole words given by the reviewer ("ánya, 2006. május 25." → "Tatabánya, …" in the Tatabánya courts, "óvár" → "Mosonmagyaróvár"), split words joined to the line above ("kap" / "csolatos"), "e" / "körben" | 229 changes in 216 decisions |
 
 Steps 4 and 5 together changed 2,649 files. The correction table of step 3 (step 11) was
 applied afterwards.
@@ -54,6 +58,28 @@ Cyrillic "Е", "Grüβen" with a Greek "β").
 
 Where the anonymisation tool had already lost a letter in the source (written as the
 Shift-JIS "・"), the text now shows "�": 145 such places in 21 decisions.
+
+## Western and symbol fonts
+
+A review of the unusual characters against the original RTF files showed a second kind
+of code-page error, this time in our own converter: it decoded every font that was not
+declared as Central European with cp1250. Two kinds of font suffered:
+
+| Font | Byte | Read as | Really | Characters corrected |
+|---|---|---|---|---:|
+| Western ("Times New Roman", charset 0) | 0xBD, 0xBC, 0xBE, 0xB2, 0xB3, 0xBA | ˝ Ľ ľ ˛ ł ş | ½ ¼ ¾ ² ³ º | 22,726 |
+| Symbol (Greek letters, signs) | 0xB7, 0xD2, 0x6D | · Ň m | • ® μ | 50,918 |
+| Wingdings and similar picture fonts | 0xD8, 0xA7, 0x76, 0x6C | Ř § v l | bullets and separators | 9,812 |
+
+The Wingdings bullets had been especially misleading: "§" and "v" at the start of list
+items looked like a section sign and a letter. They are now private-use characters
+(U+F0D8 and so on), so they can be told apart and replaced in one decision. The same
+review found that a Greek "μ" in "μg/ml" had turned into "ě" through the repair of
+wrongly declared fonts, which now keeps a symbol next to a Latin letter.
+
+Some odd characters are in the publisher's own files and were left alone: an
+OCR-damaged DOCX ("papír alapŮ vagy elektrot)ikus"), a bullet exported as "Ø" without
+its Wingdings font, and "ô" typed for "ő" in some 2002–2008 decisions.
 
 ## Error profile by year
 
@@ -107,15 +133,15 @@ the first kind and keeps the others apart.
 
 ## Open points
 
-- Two correction-table rows stay "check": "gatlan" and "els", which need a different fix per
-  occurrence.
-- Words split by a false space ("els ő", "elk övetési") are a separate error type, found
-  during the review; no step looks for them yet.
+- "gatlan" stays "check" in the correction table: it needs a different fix per occurrence.
+- False spaces were reviewed on a sample of 300 decisions; the full corpus still needs a
+  run of `find-false-spaces` and a review.
 - 54 soft hyphens at line ends (50 decisions) mark split words that the line-break step
   does not yet recognise.
-- 25 hyphen pairs are on hold (number words, role labels) and 134 joins across blank
-  lines were not applied.
-- 50 line-start candidates are still unanswered in `line_start_fixes.csv`.
+- 22 joins were applied with a spelling the spell checker does not know (mostly typos in
+  the source, e.g. "tárgyalá-" / "lon"); the word check will list them.
+- The Wingdings bullets and separators (private-use characters) need one decision:
+  keep, turn into "•" or "*", or remove.
 - 76 files keep combining marks without a composed form.
 - Greek symbols next to Latin letters ("μg/ml", "Δ9-THC") and the Cyrillic "Н" in "Нarketan"
   (which may stand for H or N) are left as they are.

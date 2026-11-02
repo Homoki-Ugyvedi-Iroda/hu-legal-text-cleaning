@@ -1,119 +1,119 @@
-﻿damaged,correction,decision,lines_in_corpus
-ővárosi,Fővárosi,apply,1439
-érelmezte,Sérelmezte,apply,173
-íregyháza,Nyíregyháza,apply,139
-écsi,Pécsi,apply,116
-ékesfehérvári,Székesfehérvári,apply,108
-őriné,Győriné,apply,86
-mellett,Emellett,no,72
-áltozatlanul,Változatlanul,apply,59
-érték,Kérték,apply,56
-körben,Ekörben,no,30
-érelmezték,Sérelmezték,apply,30
-ádlott,Vádlott,apply,25
-öngyösiné,Gyöngyösiné,apply,25
-értett,Sértett,apply,21
-mikor,Amikor,no,20
-özös,Közös,apply,19
-éves,Téves,no,18
-érte,Kérte,no,11
-közben,Eközben,no,11
-áros,Város,apply,11
-vább,tovább (should be no break),no,10
-hogyan,Ahogyan,no,7
-ármely,Bármely,apply,7
-ajtó,Sajtó,no,6
-ékéscsaba,Békéscsaba,apply,6
-ékés,Békés,apply,5
-udapest,Budapest,apply,5
-mennyiben,Amennyiben,no,5
-rettségi,Érettségi,apply,4
-dott,Adott,no,4
-ületési,Születési,apply,4
-érelemdíj,Sérelemdíj,apply,4
-zakértő,Szakértő,apply,3
-ejér,Fejér,apply,3
-lyen,Ilyen,apply,3
-ámlaszám,Számlaszám,apply,3
-ktatószám,Iktatószám,apply,3
-óhelye,lakóhelye,apply,142
-álinkásné,Pálinkásné,apply,104
-ánya,Lánya,unsure,87
-rőre,manual linebreak,no,50
-ólyomváriné,Sólyomváriné,apply,43
-árdi,Bárdi,apply,39
-ányai,Tatabányai,apply,30
-rint,manual linebreak,no,25
-ózkodási,tartózkodási,apply,25
-rinti,"manual linebreak, usually ""szerinti""",no,20
-össz,Jössz,no,16
-ödöllői,Gödöllői,apply,16
-zett,"manual linebreak (bejegyzett, végzett, érettségizett)",no,15
-előhaszonbérleti,Telőhaszonbérleti,no,13
-ásné,Sásné,no,12
-tólagosan,"manual linebreak ""folytatólagosan""",no,12
-átori,Sátori,no,12
-érelmezi,Sérelmezi,apply,10
-úböszörményi,Hajdúböszörményi,apply,10
-albetét,Dalbetét,no,9
-tendő,"manual linebreak ""büntetendő""",no,9
-zott,"manual linebreak (megbízott, megfogalmazott, nyilatkozott)",no,9
-ászberényi,Jászberényi,apply,8
-átészalkai,Mátészalkai,apply,8
-lott,"manual linebreak (vádlott, ajánlott)",no,8
-áckevei,Ráckevei,apply,8
-ófoki,Siófoki,apply,8
-szonyból,manual linebreak (jogviszonyból),no,6
-rnapi,Úrnapi,no,6
-sének,Asének,,6
-galmi,Ágalmi,,6
-ákozdiné,Pákozdiné,yes,6
-ésszerűen,Résszerűen,no,6
-zösség,Őzösség,,5
-gezte,Egezte,,5
-badság,Szabadság,,5
-éres,Téres,,5
-üskiné,Püskiné,,5
-óvár,Sóvár,,5
-özösségi,Közösségi,,5
-tetendő,Etetendő,,5
-áradi,Váradi,,5
-ronikus,Ironikus,,5
-árdai,Zárdai,,4
-rányt,Arányt,,4
-áltozatlan,Változatlan,,4
-óhely,Tóhely,,4
-csolatos,Ácsolatos,,4
-érleti,Bérleti,,4
-őrösi,Kőrösi,,4
-állalkozói,Vállalkozói,,4
-kedett,Kétkedett,,4
-avádlottat,Favádlottat,,4
-hető,Ehető,,4
-misítás,Hamisítás,,4
-mail,Email,,4
-tének,Útének,,4
-sítás,Ásítás,,4
-ásárosnaményi,Vásárosnaményi,,4
-leti,Életi,,3
-áradiné,Váradiné,,3
-tával,Étával,,3
-érelmesnek,Sérelmesnek,,3
-árdos,Bárdos,,3
-ékési,Békési,,3
-állalkozási,Vállalkozási,,3
-üspökladányi,Püspökladányi,,3
-tésre,Ütésre,,3
-kozott,Okozott,,3
-ápai,Lápai,,3
-tására,Etására,,3
-tetésre,Etetésre,,3
-rettségizett,Érettségizett,,3
-ódmezővásárhelyi,Hódmezővásárhelyi,,3
-álaszában,Válaszában,,3
-mailt,Emailt,,3
-tést,Ütést,,3
-kezett,Ékezett,,3
-tése,Ütése,,3
-hogy,Ahogy,no,561
-szerint,Eszerint,no,165
+﻿damaged,correction,decision,lines_in_corpus,note
+ővárosi,Fővárosi,apply,1439,
+érelmezte,Sérelmezte,apply,173,
+íregyháza,Nyíregyháza,apply,139,
+écsi,Pécsi,apply,116,
+ékesfehérvári,Székesfehérvári,apply,108,
+őriné,Győriné,no,86,Reviewed 2 November 2026.
+mellett,Emellett,no,72,Reviewed 2 November 2026.
+áltozatlanul,Változatlanul,apply,59,
+érték,Kérték,no,56,Reviewed 2 November 2026.
+körben,,join,30,"Reviewed 2 November 2026. Join with a space, only after 'a' or 'e' ('e körben')."
+érelmezték,Sérelmezték,apply,30,
+ádlott,Vádlott,apply,25,
+öngyösiné,Gyöngyösiné,apply,25,
+értett,Sértett,no,21,Reviewed 2 November 2026.
+mikor,Amikor,no,20,Reviewed 2 November 2026.
+özös,Közös,apply,19,
+éves,Téves,no,18,Reviewed 2 November 2026.
+érte,Kérte,no,11,Reviewed 2 November 2026.
+közben,Eközben,no,11,Reviewed 2 November 2026.
+áros,Város,apply,11,
+vább,,join,10,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+hogyan,Ahogyan,no,7,Reviewed 2 November 2026.
+ármely,Bármely,apply,7,
+ajtó,Sajtó,no,6,Reviewed 2 November 2026.
+ékéscsaba,Békéscsaba,apply,6,
+ékés,Békés,apply,5,
+udapest,Budapest,apply,5,
+mennyiben,Amennyiben,no,5,Reviewed 2 November 2026.
+rettségi,Érettségi,apply,4,
+dott,,join,4,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+ületési,Születési,apply,4,
+érelemdíj,Sérelemdíj,apply,4,
+zakértő,Szakértő,apply,3,
+ejér,Fejér,apply,3,
+lyen,Ilyen,apply,3,Reviewed 2 November 2026.
+ámlaszám,Számlaszám,apply,3,
+ktatószám,Iktatószám,apply,3,
+óhelye,lakóhelye,apply,142,
+álinkásné,Pálinkásné,apply,104,
+ánya,Tatabánya,apply,87,"Reviewed 2 November 2026. Join if the line above ends with the missing part, otherwise replace. Only in the signature lines of the Tatabánya courts."
+rőre,manual linebreak,no,50,
+ólyomváriné,Sólyomváriné,apply,43,
+árdi,Bárdi,apply,39,
+ányai,Tatabányai,apply,30,
+rint,,join,25,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+ózkodási,tartózkodási,apply,25,
+rinti,,join,20,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+össz,Jössz,no,16,Reviewed 2 November 2026.
+ödöllői,Gödöllői,apply,16,
+zett,"manual linebreak (bejegyzett, végzett, érettségizett)",per occurrence,15,Reviewed 2 November 2026. Fixed occurrence by occurrence.
+előhaszonbérleti,Telőhaszonbérleti,no,13,Reviewed 2 November 2026.
+ásné,Barabásné,apply,12,"Reviewed 2 November 2026. Join if the line above ends with the missing part, otherwise replace."
+tólagosan,"manual linebreak ""folytatólagosan""",no,12,
+átori,Bátori,apply,12,"Reviewed 2 November 2026. Join if the line above ends with the missing part, otherwise replace."
+érelmezi,Sérelmezi,apply,10,
+úböszörményi,Hajdúböszörményi,apply,10,
+albetét,Dalbetét,no,9,Reviewed 2 November 2026.
+tendő,,join,9,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+zott,,join,9,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+ászberényi,Jászberényi,apply,8,
+átészalkai,Mátészalkai,apply,8,
+lott,,join,8,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+áckevei,Ráckevei,apply,8,
+ófoki,Siófoki,apply,8,
+szonyból,,join,6,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+rnapi,Úrnapi,no,6,Reviewed 2 November 2026.
+sének,Asének,,6,No line-start occurrences left after the earlier steps.
+galmi,,join,6,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+ákozdiné,Pákozdiné,apply,6,Reviewed 2 November 2026.
+ésszerűen,Résszerűen,no,6,Reviewed 2 November 2026.
+zösség,,join,5,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+gezte,,join,5,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+badság,,join,5,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+éres,Béres,apply,5,"Reviewed 2 November 2026. Join if the line above ends with the missing part, otherwise replace."
+üskiné,Püskiné,apply,5,Reviewed 2 November 2026.
+óvár,Mosonmagyaróvár,apply,5,"Reviewed 2 November 2026. Join if the line above ends with the missing part, otherwise replace."
+özösségi,Közösségi,apply,5,Reviewed 2 November 2026.
+tetendő,,join,5,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+áradi,Váradi,apply,5,Reviewed 2 November 2026.
+ronikus,,join,5,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+árdai,Kisvárdai,apply,4,"Reviewed 2 November 2026. Join if the line above ends with the missing part, otherwise replace."
+rányt,,join,4,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+áltozatlan,Változatlan,apply,4,Reviewed 2 November 2026.
+óhely,lakóhely,apply,4,"Reviewed 2 November 2026. Join if the line above ends with the missing part, otherwise replace."
+csolatos,,join,4,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+érleti,Bérleti,apply,4,Reviewed 2 November 2026.
+őrösi,Nagykőrösi,apply,4,"Reviewed 2 November 2026. Join if the line above ends with the missing part, otherwise replace."
+állalkozói,Vállalkozói,apply,4,Reviewed 2 November 2026.
+kedett,,join,4,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+avádlottat,A vádlottat,apply,4,"Reviewed 2 November 2026. Join if the line above ends with the missing part, otherwise replace."
+hető,,join,4,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+misítás,Hamisítás,,4,No line-start occurrences left after the earlier steps.
+mail,Email,per occurrence,4,Reviewed 2 November 2026. Fixed occurrence by occurrence.
+tének,,join,4,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+sítás,Ásítás,,4,No line-start occurrences left after the earlier steps.
+ásárosnaményi,Vásárosnaményi,apply,4,Reviewed 2 November 2026.
+leti,Életi,,3,No line-start occurrences left after the earlier steps.
+áradiné,Váradiné,apply,3,Reviewed 2 November 2026.
+tával,Étával,,3,No line-start occurrences left after the earlier steps.
+érelmesnek,Sérelmesnek,apply,3,Reviewed 2 November 2026.
+árdos,Bárdos,apply,3,Reviewed 2 November 2026.
+ékési,Békési,apply,3,Reviewed 2 November 2026.
+állalkozási,Vállalkozási,apply,3,Reviewed 2 November 2026.
+üspökladányi,Püspökladányi,apply,3,Reviewed 2 November 2026.
+tésre,,join,3,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+kozott,Okozott,,3,No line-start occurrences left after the earlier steps.
+ápai,Lápai,apply,3,Reviewed 2 November 2026.
+tására,,join,3,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+tetésre,Etetésre,,3,No line-start occurrences left after the earlier steps.
+rettségizett,,join,3,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+ódmezővásárhelyi,Hódmezővásárhelyi,apply,3,Reviewed 2 November 2026.
+álaszában,Válaszában,apply,3,Reviewed 2 November 2026.
+mailt,e-mailt,apply,3,Reviewed 2 November 2026.
+tést,,join,3,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+kezett,,join,3,Reviewed 2 November 2026. Second half of a word split at the line above: join with the previous non-empty line.
+tése,Ütése,,3,No line-start occurrences left after the earlier steps.
+hogy,Ahogy,no,561,Reviewed 2 November 2026. It's good as it is.
+szerint,Eszerint,no,165,Reviewed 2 November 2026. good as it is
