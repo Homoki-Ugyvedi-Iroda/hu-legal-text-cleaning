@@ -8,8 +8,8 @@ a person's check.
 | File | Content | Rows | Status |
 |---|---|---:|---|
 | `correction_table.csv` | OCR errors and typos with the correction, the error type and whether it is safe to apply | 112 | reviewed |
-| `words_unknown_to_hunspell.csv` | words Hunspell does not know but that a reviewer accepted, with a category | 372 | words reviewed; categories draft |
-| `abbreviations_court_decisions.csv` | dotted words measured in 30,000 decisions, with category and meaning | 846 | draft |
+| `words_unknown_to_hunspell.csv` | words Hunspell does not know but that a reviewer accepted, with a category | 372 | reviewed |
+| `abbreviations_court_decisions.csv` | dotted words measured in 30,000 decisions, with category and meaning | 846 | reviewed |
 | `abbreviations_statutes_njt.txt` | statute short names of the National Legislation Database (NJT) | 375 | as published |
 | `line_start_fixes.csv` | damaged line-start words with their correction and the reviewer's decision | 118 | 68 answered |
 | `hyphen_join_decisions.csv` | split words the spell checker could not decide, with the reviewer's decision | 140 | reviewed |
@@ -31,7 +31,8 @@ Columns: `wrong`, `proposed`, `type`, `safe_to_apply`, `occurrences`, `decisions
 - `no`: kept for reference: the "error" disappears with NFC normalisation, or the
   occurrences need different corrections ("elk").
 
-Current counts: 104 `yes`, 6 `no`, 2 `check`. The 35 former `check` rows were reviewed
+Current counts: 104 `yes`, 6 `no`, 2 `check`. The 104 `yes` rows were applied to the BHGY
+cleaned copy on 2 November 2026: 46,173 replacements in 18,216 files. The 35 former `check` rows were reviewed
 with `hu-legal-clean review-check-rows` (six examples per word with ten lines of context):
 32 became `yes`, 1 became `no`, 2 stayed `check`.
 
@@ -71,11 +72,12 @@ copy, plus a short hand list. Columns: `token` (lowercase, without the final dot
 | `initials` | 228 | K.J., Sz.L. (initials of anonymised persons) |
 | `party_numbering` | 56 | I.r., II.r., XXIII.r. (numbered parties) |
 | `company_form` | 28 | Kft., Zrt., Bt., Nyrt., GmbH, s.r.o. |
-| `placeholder` | 22 | neve., címe., szám. (not abbreviations: the dot may end a sentence) |
+| `placeholder` | 22 | neve., címe., szám. (anonymisation artefacts, not abbreviations: the dot may end a sentence) |
 
-The legal and general categories and the meanings were assigned by an AI assistant;
-meanings marked "to confirm" are guesses. Some forms are artefacts: "neveI.r", "azI.r"
-and "vádlottVI.r" are a placeholder or a word glued to a party number.
+The categories and meanings were drafted by an AI assistant and reviewed by a person on
+2 November 2026. 22 abbreviations have no meaning yet (e.g. "hb.", "gyk.", "iü.",
+"nyá."). Some forms are artefacts: "neveI.r", "azI.r" and "vádlottVI.r" are a
+placeholder or a word glued to a party number.
 
 ## Statute short names (NJT)
 

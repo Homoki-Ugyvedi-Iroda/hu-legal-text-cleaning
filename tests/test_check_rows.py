@@ -43,3 +43,12 @@ def test_build_check_page_contains_words_and_key(tmp_path):
     page = check_rows.build_check_page(rows, "my_key")
     assert '"wrong": "elk"' in page
     assert "my_key" in page
+
+
+def test_find_occurrences_line_start_only(tmp_path):
+    root = tmp_path / "in"
+    write_text(root / "2004" / "a.txt", "prev\n  elk szerint\nnem elk itt\n")
+    rows = check_rows.load_check_rows(_write_table(tmp_path))
+    check_rows.find_occurrences(root, rows, examples=5, context_lines=1, line_start_only=True)
+    assert [occurrence.line_number for occurrence in rows["elk"].occurrences] == [2]
+    assert rows["elk"].count == 1

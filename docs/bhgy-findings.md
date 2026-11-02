@@ -19,9 +19,11 @@ into a cleaned copy, with a log of every change.
 | 8 | Unaccented typing | decisions typed mostly without accents | very rare: 2 in a sample of about 5,900 |
 | 9 | Wrong code page | Hungarian text in a font declared as Arabic, Shift-JIS, Greek or Hebrew ("hatلrozat", "bekezd駸"); re-converted from the source | 617 decisions, about 89,000 damaged words |
 | 10 | Soft hyphens | invisible hyphens inside words ("in" + soft hyphen + "gatlan") removed; 54 at line ends kept, as they mark split words | 9,630 removed in 1,618 decisions |
+| 11 | Correction table | the 104 "yes" rows applied | 46,173 replacements in 18,216 files |
+| 12 | Look-alike letters | Cyrillic and Greek letters inside Latin words replaced ("ЕU", "Citroёn", "Kӓrcher") | 47 words in 39 files |
 
-Steps 4 and 5 together changed 2,649 files. The correction table of step 3 has not yet
-been applied to the cleaned copy.
+Steps 4 and 5 together changed 2,649 files. The correction table of step 3 (step 11) was
+applied afterwards.
 
 ## Wrong code pages
 
@@ -105,8 +107,7 @@ the first kind and keeps the others apart.
 
 ## Open points
 
-- Apply the "yes" rows of the correction table (104 after the review of the "check"
-  rows). Two rows stay "check": "gatlan" and "els", which need a different fix per
+- Two correction-table rows stay "check": "gatlan" and "els", which need a different fix per
   occurrence.
 - Words split by a false space ("els ő", "elk övetési") are a separate error type, found
   during the review; no step looks for them yet.
@@ -116,5 +117,5 @@ the first kind and keeps the others apart.
   lines were not applied.
 - 50 line-start candidates are still unanswered in `line_start_fixes.csv`.
 - 76 files keep combining marks without a composed form.
-- Look-alike letters of other scripts ("ЕU" with a Cyrillic "Е") are listed by
-  `find-encoding-damage` but not repaired.
+- Greek symbols next to Latin letters ("μg/ml", "Δ9-THC") and the Cyrillic "Н" in "Нarketan"
+  (which may stand for H or N) are left as they are.

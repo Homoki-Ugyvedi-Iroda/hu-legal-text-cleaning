@@ -18,6 +18,20 @@ COMBINING_MARK = re.compile("[̀-ͯ]")
 # read with the Western European code page (Latin-1 or cp1252).
 LATIN1_LOOKALIKES = str.maketrans({"õ": "ő", "û": "ű", "Õ": "Ő", "Û": "Ű"})
 LOOKALIKE_LETTERS = "õûÕÛ"
+# Cyrillic and Greek letters that look like a Latin letter. They get into Latin words by
+# mistake (a Cyrillic "Е" in "ЕU"). The Cyrillic "Н" is left out because it can stand for
+# an H or an N.
+SCRIPT_LOOKALIKES = str.maketrans(
+    {
+        **dict(zip("АВЕКМОРСТХ", "ABEKMOPCTX", strict=True)),
+        **dict(zip("аеорсухіјѕ", "aeopcyxijs", strict=True)),
+        **dict(zip("ёӓї", "ëäï", strict=True)),
+        **dict(zip("ΑΒΕΖΗΙΚΜΝΟΡΤΥΧ", "ABEZHIKMNOPTYX", strict=True)),
+        **dict(zip("οβ", "oß", strict=True)),
+    }
+)
+SCRIPT_LOOKALIKE_LETTERS = {chr(code) for code in SCRIPT_LOOKALIKES}
+LETTER_SEQUENCE = re.compile(r"[^\W\d_]+")
 
 
 def remove_nul(text: str) -> tuple[str, int]:
@@ -77,6 +91,43 @@ def fix_latin1_lookalikes(text: str) -> tuple[str, int]:
     return text.translate(LATIN1_LOOKALIKES), count
 
 
+def _is_cyrillic_or_greek(letter: str) -> bool:
+    return unicodedata.name(letter, "").startswith(("CYRILLIC", "GREEK"))
+
+
+def _is_latin(letter: str) -> bool:
+    return unicodedata.name(letter, "").startswith("LATIN")
+
+
+def fix_script_lookalikes(text: str) -> tuple[str, int]:
+    """Replace Cyrillic and Greek look-alike letters inside Latin words.
+
+    A word is changed only if it has a Latin letter and every letter of another script in
+    it has a Latin look-alike. "ЕU" (with a Cyrillic E) becomes "EU", but a Cyrillic word
+    such as "Адреса" or a Greek symbol such as "μg" stays.
+
+    Args:
+        text: The text to clean.
+
+    Returns:
+        The repaired text and the number of letters replaced.
+    """
+    replaced = 0
+
+    def repair(match: re.Match[str]) -> str:
+        nonlocal replaced
+        word = match.group(0)
+        foreign = [letter for letter in word if _is_cyrillic_or_greek(letter)]
+        if not foreign or not any(_is_latin(letter) for letter in word):
+            return word
+        if any(letter not in SCRIPT_LOOKALIKE_LETTERS for letter in foreign):
+            return word
+        replaced += len(foreign)
+        return word.translate(SCRIPT_LOOKALIKES)
+
+    return LETTER_SEQUENCE.sub(repair, text), replaced
+
+
 def clean_characters(text: str) -> tuple[str, dict[str, int]]:
     """Run all character-level steps: NUL and soft hyphens, NFC, then look-alike letters.
 
@@ -93,7 +144,9 @@ def clean_characters(text: str) -> tuple[str, dict[str, int]]:
     text, soft_hyphen_count = remove_soft_hyphens(text)
     text, marks_left = to_nfc(text)
     text, lookalike_count = fix_latin1_lookalikes(text)
+    text, script_count = fix_script_lookalikes(text)
     counts = {"nul_removed": nul_count, "soft_hyphens_removed": soft_hyphen_count}
     counts["lookalikes_fixed"] = lookalike_count
+    counts["script_lookalikes_fixed"] = script_count
     counts["combining_marks_left"] = marks_left
     return text, counts

@@ -1,6 +1,6 @@
 # ADR-2026-11-01-hunspell-command-line: Hunspell as a command-line program
 
-- **Status:** Proposed
+- **Status:** Accepted
 
 ## Context
 The word check and the line-break check need a Hungarian spell checker that knows

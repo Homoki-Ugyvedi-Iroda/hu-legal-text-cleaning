@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title><!--TITLE--></title>
+<style>
+body{font:15px/1.5 system-ui,sans-serif;margin:0;padding:16px;max-width:1200px}
+h1{font-size:18px}.meta{color:#555}.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.summary span{display:inline-block;margin:2px 10px 2px 0}
+table{border-collapse:collapse;width:100%}th,td{border-top:1px solid #ccc;padding:6px 8px;vertical-align:top;text-align:left}
+th{position:sticky;top:0;background:#fff}
+.glyph{font-size:30px;line-height:1.1;min-width:44px;text-align:center}
+.ctx{font:12px/1.4 ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#f6f6f6;padding:3px 6px;margin:2px 0}
+mark{background:#ffd43b;font-weight:bold}
+input,select,textarea{font:14px system-ui;box-sizing:border-box}textarea{width:100%;min-height:36px}
+.done{background:#eefaf0}
+</style></head><body>
+<h1><!--TITLE--></h1>
+<div class="bar"><label>Group <select id="kind"></select></label>
+<label>Search <input id="search" placeholder="character, code or name"></label>
+<label><input type="checkbox" id="onlyOpen"> only undecided</label>
+<span id="done" class="meta"></span><button id="export">Export CSV</button></div>
+<div id="summary" class="summary meta"></div>
+<table><thead><tr><th>Character</th><th>Code and name</th><th>Count</th><th>Examples</th><th>Decision</th></tr></thead>
+<tbody id="rows"></tbody></table>
+<p class="meta">Decisions: keep = the character is right; replace = write the right character
+in the box; remove = delete it; check = look at it again. Answers stay in this browser
+until you export them.</p>
+<script>
+const CHARACTERS = /*CHARACTERS*/[];
+const DECISIONS = ["keep", "replace", "remove", "check"];
+const STORE = "<!--STORAGE-KEY-->";
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(STORE) || "{}"); } catch (e) {}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function save() { try { localStorage.setItem(STORE, JSON.stringify(saved)); } catch (e) {} }
+function entry(c) { return saved[c.character] || (saved[c.character] = {decision: "", replacement: "", comment: ""}); }
+function visible(c) {
+  // Invisible and combining characters are shown with their code, or they would not show at all.
+  if (/^(combining mark|invisible format character|control character|space variant|private use)/.test(c.kind)) return "⟨" + c.code + "⟩";
+  return c.character;
+}
+function context(c, e) {
+  const ch = /^(combining mark)/.test(c.kind) ? c.character : visible(c);
+  const link = '<a href="' + esc(e.link) + '">' + esc(e.source.split("/").pop()) + "</a> line " + e.line_number;
+  return '<div class="ctx">' + esc(e.before) + "<mark>" + esc(ch) + "</mark>" + esc(e.after) + '</div><div class="meta">' + link + "</div>";
+}
+function render() {
+  const kind = document.getElementById("kind").value;
+  const query = document.getElementById("search").value.toLowerCase();
+  const onlyOpen = document.getElementById("onlyOpen").checked;
+  let html = "", shown = 0;
+  CHARACTERS.forEach((c, index) => {
+    const e = entry(c);
+    if (kind && c.kind !== kind) return;
+    if (onlyOpen && e.decision) return;
+    if (query && !(c.character + " " + c.code + " " + c.name).toLowerCase().includes(query)) return;
+    shown++;
+    html += '<tr class="' + (e.decision ? "done" : "") + '"><td class="glyph">' + esc(visible(c)) + "</td>";
+    html += "<td><b>" + esc(c.code) + "</b><br>" + esc(c.name || "(no name)") + '<br><span class="meta">' + esc(c.kind) + "</span></td>";
+    html += "<td>" + c.count + '<br><span class="meta">' + c.documents + " files</span></td>";
+    html += "<td>" + c.examples.map(x => context(c, x)).join("") + "</td>";
+    html += '<td><select data-i="' + index + '" data-f="decision"><option value="">-</option>';
+    for (const d of DECISIONS) html += '<option value="' + d + '"' + (e.decision === d ? " selected" : "") + ">" + d + "</option>";
+    html += '</select><br><input data-i="' + index + '" data-f="replacement" placeholder="replace with" value="' + esc(e.replacement) + '">';
+    html += '<textarea data-i="' + index + '" data-f="comment" placeholder="note">' + esc(e.comment) + "</textarea></td></tr>";
+  });
+  document.getElementById("rows").innerHTML = html;
+  document.querySelectorAll("[data-f]").forEach(el => el.onchange = el.oninput = () => {
+    entry(CHARACTERS[+el.dataset.i])[el.dataset.f] = el.value; save(); updateDone();
+    if (el.dataset.f === "decision") el.closest("tr").className = el.value ? "done" : "";
+  });
+  document.getElementById("summary").dataset.shown = shown;
+}
+function updateDone() {
+  const done = CHARACTERS.filter(c => entry(c).decision).length;
+  document.getElementById("done").textContent = done + " of " + CHARACTERS.length + " decided";
+}
+const kinds = [...new Set(CHARACTERS.map(c => c.kind))];
+document.getElementById("kind").innerHTML = '<option value="">all groups</option>' + kinds.map(k => '<option>' + esc(k) + "</option>").join("");
+document.getElementById("summary").innerHTML = kinds.map(k => {
+  const list = CHARACTERS.filter(c => c.kind === k);
+  return "<span><b>" + esc(k) + "</b>: " + list.length + " characters, " + list.reduce((n, c) => n + c.count, 0) + " occurrences</span>";
+}).join("");
+["kind", "search", "onlyOpen"].forEach(id => document.getElementById(id).oninput = render);
+document.getElementById("export").onclick = () => {
+  const q = s => '"' + String(s).replace(/"/g, '""') + '"';
+  const rows = [["character", "code", "name", "kind", "count", "documents", "decision", "replacement", "comment"].join(",")];
+  for (const c of CHARACTERS) {
+    const e = saved[c.character] || {decision: "", replacement: "", comment: ""};
+    rows.push([q(c.character), q(c.code), q(c.name), q(c.kind), c.count, c.documents, q(e.decision), q(e.replacement), q(e.comment)].join(","));
+  }
+  const blob = new Blob(["﻿" + rows.join("\n")], {type: "text/csv"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = STORE + "_answers.csv"; a.click();
+};
+updateDone(); render();
+</script></body></html>

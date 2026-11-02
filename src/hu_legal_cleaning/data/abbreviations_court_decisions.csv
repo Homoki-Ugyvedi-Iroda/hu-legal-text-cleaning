@@ -32,7 +32,7 @@ hpt,Hpt,6442,0.19,0.807,usually_before_number,yes,yes,legal,statute short name (
 pl,pl,6355,0.864,0.036,likely_abbreviation,no,yes,general,például,corpus
 hrsz,hrsz,6298,0.887,0.099,likely_abbreviation,no,yes,legal,helyrajzi szám (land registry number),corpus
 ún,ún,6248,0.895,0.011,likely_abbreviation,no,yes,general,úgynevezett,corpus
-nyom,nyom,5804,0.773,0.223,likely_abbreviation,no,yes,legal,nyomozati / nyomozás (to confirm),corpus
+nyom,nyom,5804,0.773,0.223,likely_abbreviation,no,yes,legal,nyomozati / nyomozás,corpus
 vi.r,VI.r,4972,0.982,0.001,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 rptk,rPtk,4797,0.089,0.909,usually_before_number,no,yes,legal,"former (régi) version of a statute, e.g. rPtk. = old Civil Code",corpus
 inytv,Inytv,4344,0.189,0.795,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
@@ -40,7 +40,7 @@ viii.r,VIII.r,3769,0.987,0.0,likely_abbreviation,no,yes,party_numbering,"numbere
 kjt,Kjt,3576,0.119,0.879,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 rt,Rt,3425,0.818,0.088,likely_abbreviation,no,yes,company_form,legal form of a company,corpus
 gt,Gt,3321,0.214,0.781,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-étv,Étv,3038,0.111,0.886,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+étv,Étv,3038,0.111,0.886,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 rpp,rPp,2929,0.043,0.954,usually_before_number,no,yes,legal,"former (régi) version of a statute, e.g. rPtk. = old Civil Code",corpus
 vii.r,VII.r,2914,0.965,0.001,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 mmtv,Mmtv,2912,0.045,0.955,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
@@ -51,28 +51,28 @@ ix.r,IX.r,2578,0.986,0.0,likely_abbreviation,no,yes,party_numbering,"numbered pa
 ve,Ve,2576,0.124,0.872,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 fétv,Fétv,2527,0.121,0.872,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 csjt,Csjt,2522,0.125,0.874,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-vhr,Vhr,2473,0.135,0.863,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+vhr,Vhr,2473,0.135,0.863,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 tpvt,Tpvt,2417,0.117,0.874,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 x.r,X.r,2210,0.99,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
-fftv,Fftv,2171,0.132,0.867,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+fftv,Fftv,2171,0.132,0.867,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 tny,Tny,2139,0.163,0.828,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 bv,bv,1851,0.85,0.002,likely_abbreviation,no,yes,legal,büntetés-végrehajtási,corpus
-ctv,Ctv,1810,0.106,0.883,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ctv,Ctv,1810,0.106,0.883,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 stb,stb,1766,0.751,0.005,likely_abbreviation,no,yes,general,és a többi,corpus
-kk,kk,1730,0.571,0.103,likely_abbreviation,no,yes,legal,kiskorú (to confirm),corpus
+kk,kk,1730,0.571,0.103,likely_abbreviation,no,yes,legal,kiskorú,corpus
 eütv,Eütv,1706,0.132,0.867,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 pk,PK,1685,0.289,0.688,usually_before_number,no,yes,legal,court decision series or case-number letters,corpus
 harmtv,Harmtv,1676,0.148,0.849,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-neve,neve,1612,0.676,0.024,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
-szt,Szt,1611,0.101,0.886,usually_before_number,no,yes,legal,to confirm,corpus
+neve,neve,1612,0.676,0.024,likely_abbreviation,no,no,placeholder,anonymisation artefact,corpus
+szt,Szt,1611,0.101,0.886,usually_before_number,no,yes,legal,,corpus
 szjt,Szjt,1599,0.133,0.856,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 met,Met,1549,0.043,0.956,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 smtv,Smtv,1496,0.116,0.884,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 bü,bü,1491,0.98,0.011,likely_abbreviation,no,yes,legal,bűnügyi,corpus
 jkv,jkv,1484,0.057,0.934,usually_before_number,no,yes,legal,jegyzőkönyv,corpus
-fgytv,Fgytv,1465,0.089,0.908,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+fgytv,Fgytv,1465,0.089,0.908,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 vt,Vt,1402,0.09,0.908,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-ör,Ör,1344,0.45,0.533,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ör,Ör,1344,0.45,0.533,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 air,Air,1341,0.083,0.912,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 sztv,Sztv,1294,0.233,0.766,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 vtv,Vtv,1274,0.211,0.783,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
@@ -82,20 +82,20 @@ xii.r,XII.r,1220,0.989,0.0,likely_abbreviation,no,yes,party_numbering,"numbered 
 ebtv,Ebtv,1201,0.17,0.823,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 xv.r,XV.r,1181,0.997,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 nyrt,Nyrt,1119,0.878,0.044,likely_abbreviation,no,yes,company_form,legal form of a company,corpus
-címe,címe,1102,0.946,0.005,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
-hb,hb,1084,0.998,0.001,likely_abbreviation,no,yes,legal,to confirm,corpus
+címe,címe,1102,0.946,0.005,likely_abbreviation,no,no,placeholder,anonymisation artefact,corpus
+hb,hb,1084,0.998,0.001,likely_abbreviation,no,yes,legal,,corpus
 kkt,Kkt,1083,0.28,0.714,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-nevei,neveI,1020,0.999,0.0,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
+nevei,neveI,1020,0.999,0.0,likely_abbreviation,no,no,placeholder,anonymisation artefact,corpus
 rtv,Rtv,1004,0.109,0.879,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 fot,Fot,997,0.113,0.836,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 mttv,Mttv,960,0.148,0.852,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 htv,Htv,953,0.191,0.807,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 ktv,Ktv,911,0.169,0.829,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 bh,BH,908,0.014,0.985,usually_before_number,no,yes,legal,court decision series or case-number letters,corpus
-rttv,Rttv,907,0.18,0.818,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+rttv,Rttv,907,0.18,0.818,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 xiii.r,XIII.r,876,0.981,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 ltv,Ltv,875,0.177,0.814,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-pevtv,Pevtv,874,0.168,0.831,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+pevtv,Pevtv,874,0.168,0.831,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 kttv,Kttv,865,0.131,0.867,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 pf,Pf,845,0.028,0.806,usually_before_number,no,yes,legal,court decision series or case-number letters,corpus
 gyer,Gyer,841,0.075,0.924,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
@@ -105,39 +105,39 @@ xiv.r,XIV.r,799,0.982,0.0,likely_abbreviation,no,yes,party_numbering,"numbered p
 vet,Vet,798,0.201,0.764,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 jöt,Jöt,793,0.222,0.777,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 mvt,Mvt,786,0.087,0.911,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-kr,Kr,783,0.223,0.769,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-gyk,gyk,714,0.546,0.045,likely_abbreviation,no,yes,legal,to confirm,corpus
-iü,iü,709,0.999,0.0,likely_abbreviation,no,yes,legal,to confirm,corpus
+kr,Kr,783,0.223,0.769,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+gyk,gyk,714,0.546,0.045,likely_abbreviation,no,yes,legal,,corpus
+iü,iü,709,0.999,0.0,likely_abbreviation,no,yes,legal,,corpus
 evt,Evt,692,0.127,0.87,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 rhpt,rHpt,675,0.159,0.837,usually_before_number,no,yes,legal,"former (régi) version of a statute, e.g. rPtk. = old Civil Code",corpus
 bszi,Bszi,674,0.104,0.895,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 un,un,673,0.889,0.01,likely_abbreviation,no,yes,general,úgynevezett (without accent),corpus
 mötv,Mötv,672,0.177,0.817,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 ptké,Ptké,654,0.058,0.898,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-ht,Ht,646,0.115,0.885,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ht,Ht,646,0.115,0.885,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 gyvt,Gyvt,638,0.113,0.881,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 szám,szám,627,0.86,0.006,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
-csődtv,Csődtv,620,0.1,0.9,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-neveii,neveII,616,1.0,0.0,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
+csődtv,Csődtv,620,0.1,0.9,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+neveii,neveII,616,1.0,0.0,likely_abbreviation,no,no,placeholder,anonymisation artefact,corpus
 szmtv,Szmtv,611,0.209,0.791,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 tbj,Tbj,610,0.133,0.866,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 grtv,Grtv,595,0.195,0.805,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-nyá,nyá,587,1.0,0.0,likely_abbreviation,no,yes,legal,to confirm,corpus
-fogykölcstv,FogykölcsTv,584,0.36,0.639,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-tht,Tht,583,0.185,0.815,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+nyá,nyá,587,1.0,0.0,likely_abbreviation,no,yes,legal,,corpus
+fogykölcstv,FogykölcsTv,584,0.36,0.639,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+tht,Tht,583,0.185,0.815,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 áht,Áht,572,0.213,0.773,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 szjtv,Szjtv,555,0.182,0.8,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 xxvii.r,XXVII.r,552,0.993,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 tvr,tvr,547,0.324,0.662,usually_before_number,no,yes,legal,törvényerejű rendelet,corpus
-korm.r,Korm.r,541,0.244,0.752,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+korm.r,Korm.r,541,0.244,0.752,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 sorsz,sorsz,525,0.968,0.008,likely_abbreviation,no,yes,general,sorszám,corpus
 hjt,Hjt,515,0.157,0.833,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 ssz,ssz,514,0.986,0.014,likely_abbreviation,no,yes,general,sorszám,corpus
 xxii.r,XXII.r,495,0.968,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 jat,Jat,492,0.209,0.787,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-kvtv,Kvtv,478,0.224,0.762,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+kvtv,Kvtv,478,0.224,0.762,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 száma,száma,477,0.688,0.004,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
-áe,Áe,472,0.222,0.775,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+áe,Áe,472,0.222,0.775,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 tjkv,tjkv,467,0.002,0.991,usually_before_number,no,yes,legal,tárgyalási jegyzőkönyv,corpus
 tpt,Tpt,463,0.194,0.797,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 xvii.r,XVII.r,460,0.976,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
@@ -145,7 +145,7 @@ xix.r,XIX.r,459,0.976,0.0,likely_abbreviation,no,yes,party_numbering,"numbered p
 cst,Cst,455,0.136,0.862,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 k.j,K.J,448,0.924,0.018,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 avtv,Avtv,447,0.253,0.738,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-btátv,Btátv,447,0.141,0.857,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+btátv,Btátv,447,0.141,0.857,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 nevei.r,neveI.r,438,1.0,0.0,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
 old,old,432,0.391,0.586,usually_before_number,no,yes,general,oldal,corpus
 r.ptk,r.Ptk,431,0.06,0.94,usually_before_number,no,yes,legal,"former (régi) version of a statute, e.g. rPtk. = old Civil Code",corpus
@@ -156,34 +156,34 @@ tvt,Tvt,411,0.19,0.808,usually_before_number,yes,yes,legal,statute short name (N
 bf,Bf,399,0.143,0.694,usually_before_number,no,yes,legal,court decision series or case-number letters,corpus
 ötv,Ötv,398,0.286,0.711,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 eht,Eht,391,0.21,0.788,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-ükr,Ükr,388,0.108,0.892,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ükr,Ükr,388,0.108,0.892,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 ltd,Ltd,382,0.927,0.047,likely_abbreviation,no,yes,company_form,legal form of a company,corpus
 xxiv.r,XXIV.r,382,0.99,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 xx.r,XX.r,374,0.997,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
-pe,pe,370,0.854,0.008,likely_abbreviation,no,yes,legal,to confirm,corpus
+pe,pe,370,0.854,0.008,likely_abbreviation,no,yes,legal,,corpus
 xvi.r,XVI.r,370,0.962,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 bszt,Bszt,369,0.26,0.734,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 ütv,Ütv,350,0.149,0.849,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 fszt,fszt,344,0.006,0.988,usually_before_number,no,yes,general,földszint,corpus
 xxi.r,XXI.r,341,0.994,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
-szja,Szja,336,0.976,0.018,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+szja,Szja,336,0.976,0.018,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 get,Get,336,0.205,0.702,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 kt,Kt,333,0.763,0.231,likely_abbreviation,yes,yes,legal,statute short name (NJT list),corpus
 nytv,Nytv,332,0.211,0.768,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 méptv,Méptv,330,0.221,0.767,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-szaktv,Szaktv,322,0.177,0.82,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-hiv,hiv,320,0.975,0.0,likely_abbreviation,no,yes,general,hivatkozott / hivatal (to confirm),corpus
+szaktv,Szaktv,322,0.177,0.82,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+hiv,hiv,320,0.975,0.0,likely_abbreviation,no,yes,general,hivatkozott / hivatal,corpus
 b.i,B.I,314,0.946,0.006,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-neveiii,neveIII,313,1.0,0.0,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
+neveiii,neveIII,313,1.0,0.0,likely_abbreviation,no,no,placeholder,anonymisation artefact,corpus
 kjtv,Kjtv,309,0.107,0.887,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 kvt,Kvt,309,0.152,0.848,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-számv,Számv,307,0.993,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-tfvt,Tfvt,307,0.078,0.919,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+számv,Számv,307,0.993,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+tfvt,Tfvt,307,0.078,0.919,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 gyftv,Gyftv,304,0.115,0.882,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 kpt,Kpt,304,0.178,0.789,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 pft,Pft,302,0.202,0.781,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-lsztv,Lsztv,297,0.185,0.811,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-tft,Tft,291,0.241,0.759,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+lsztv,Lsztv,297,0.185,0.811,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+tft,Tft,291,0.241,0.759,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 xviii.r,XVIII.r,290,0.959,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 mell,Mell,290,0.014,0.938,usually_before_number,no,yes,legal,melléklet,corpus
 éltv,Éltv,289,0.083,0.913,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
@@ -193,83 +193,83 @@ krt,krt,286,0.112,0.888,usually_before_number,no,yes,general,körút,corpus
 bit,Bit,284,0.285,0.715,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 avt,Avt,282,0.124,0.872,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 nsztv,Nsztv,279,0.057,0.925,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-neveii.r,neveII.r,276,1.0,0.0,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
+neveii.r,neveII.r,276,1.0,0.0,likely_abbreviation,no,no,placeholder,anonymisation artefact,corpus
 etv,Etv,272,0.199,0.79,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 hgt,Hgt,269,0.16,0.84,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 mavtv,Mavtv,268,0.291,0.709,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-bmr,BMr,264,0.246,0.754,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+bmr,BMr,264,0.246,0.754,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 b.j,B.J,261,0.931,0.034,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 xxvi.r,XXVI.r,260,0.985,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 tao,Tao,260,0.946,0.05,likely_abbreviation,yes,yes,legal,statute short name (NJT list),corpus
 bkv,Bkv,256,0.07,0.555,usually_before_number,no,yes,legal,court decision series or case-number letters,corpus
-ir,Ir,256,0.652,0.328,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ir,Ir,256,0.652,0.328,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 k.i,K.I,254,0.646,0.051,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 bdt,BDT,252,0.012,0.984,usually_before_number,no,yes,legal,court decision series or case-number letters,corpus
-bm,BM,252,0.933,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-szabs,Szabs,252,0.996,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-ek,EK,250,0.764,0.004,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-eszjtv,Eszjtv,250,0.296,0.684,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+bm,BM,252,0.933,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+szabs,Szabs,252,0.996,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+ek,EK,250,0.764,0.004,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+eszjtv,Eszjtv,250,0.296,0.684,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 szig,szig,248,0.992,0.0,likely_abbreviation,no,yes,general,személyi igazolvány,corpus
 k.l,K.L,247,0.887,0.028,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 cg,Cg,246,0.415,0.545,usually_before_number,no,yes,legal,court decision series or case-number letters,corpus
 b.l,B.L,245,0.853,0.053,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 kmr,Kmr,244,0.041,0.959,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 ftv,Ftv,242,0.19,0.81,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-fkr,Fkr,241,0.166,0.834,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+fkr,Fkr,241,0.166,0.834,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 i.sz,I.sz,238,0.979,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 tip,tip,237,0.789,0.207,likely_abbreviation,no,yes,general,típusú,corpus
 ab,AB,235,0.919,0.009,likely_abbreviation,no,yes,legal,court decision series or case-number letters,corpus
 psztv,Psztv,233,0.09,0.906,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-módtv,Módtv,229,0.572,0.428,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+módtv,Módtv,229,0.572,0.428,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 kit,Kit,229,0.21,0.782,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-ktvr,Ktvr,226,0.177,0.819,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ktvr,Ktvr,226,0.177,0.819,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 tjk,tjk,222,0.018,0.982,usually_before_number,no,yes,legal,tárgyalási jegyzőkönyv,corpus
 s.r.o,s.r.o,219,0.973,0.009,likely_abbreviation,no,yes,company_form,legal form of a company,corpus
-bv.tv,Bv.tv,215,0.312,0.679,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+bv.tv,Bv.tv,215,0.312,0.679,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 xxv.r,XXV.r,213,1.0,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
-cím,cím,212,0.877,0.005,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
+cím,cím,212,0.877,0.005,likely_abbreviation,no,no,placeholder,anonymisation artefact,corpus
 il.r,Il.r,210,0.962,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 r.pp,r.Pp,209,0.029,0.962,usually_before_number,no,yes,legal,"former (régi) version of a statute, e.g. rPtk. = old Civil Code",corpus
-fdvtv,Fdvtv,208,0.221,0.779,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-szankciótv,Szankciótv,208,0.067,0.933,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+fdvtv,Fdvtv,208,0.221,0.779,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+szankciótv,Szankciótv,208,0.067,0.933,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 ttv,Ttv,207,0.275,0.725,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 ált,ált,206,0.976,0.0,likely_abbreviation,no,yes,general,általános,corpus
-bj,Bj,202,0.262,0.663,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+bj,Bj,202,0.262,0.663,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 i.kft,I.Kft,201,0.92,0.07,likely_abbreviation,no,yes,company_form,legal form of a company; anonymised company name,corpus
-ntt,Ntt,201,0.313,0.687,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ntt,Ntt,201,0.313,0.687,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 kertv,Kertv,200,0.225,0.775,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 abtv,Abtv,200,0.135,0.865,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-eü,Eü,199,0.94,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+eü,Eü,199,0.94,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 min,min,198,0.333,0.662,usually_before_number,no,yes,general,minimum / perc,corpus
 b.s,B.S,197,0.863,0.01,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-vbt,Vbt,197,0.091,0.909,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-ászf,ÁSZF,196,0.24,0.52,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-harm.tv,Harm.tv,196,0.097,0.898,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+vbt,Vbt,197,0.091,0.909,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+ászf,ÁSZF,196,0.24,0.52,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+harm.tv,Harm.tv,196,0.097,0.898,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 k.t,K.T,196,0.806,0.026,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-mkk,Mkk,195,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+mkk,Mkk,195,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 m.l,M.L,195,0.938,0.026,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 m.i,M.I,193,0.606,0.021,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-szoctv,Szoctv,193,0.114,0.881,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+szoctv,Szoctv,193,0.114,0.881,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 rend,rend,190,0.153,0.695,usually_before_number,no,yes,legal,rendelet,corpus
 stv,Stv,189,0.254,0.73,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 pld,pld,186,0.855,0.054,likely_abbreviation,no,yes,general,például,corpus
 ebh,EBH,185,0.016,0.984,usually_before_number,no,yes,legal,court decision series or case-number letters,corpus
 n.i,N.I,185,0.8,0.054,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 ti,ti,184,0.967,0.011,likely_abbreviation,no,yes,general,tudniillik,corpus
-áfatv,Áfatv,182,0.104,0.896,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+áfatv,Áfatv,182,0.104,0.896,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 pftv,Pftv,182,0.121,0.874,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-kgy,Kgy,181,0.917,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+kgy,Kgy,181,0.917,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 a.a,A.A,181,0.917,0.022,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 at,At,181,0.122,0.58,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 mk,MK,180,0.028,0.972,usually_before_number,no,yes,legal,court decision series or case-number letters,corpus
-vár,Vár,179,0.128,0.682,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+vár,Vár,179,0.128,0.682,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 ámt,Ámt,177,0.102,0.881,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-tvtv,Tvtv,176,0.131,0.864,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+tvtv,Tvtv,176,0.131,0.864,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 ktjv,Ktjv,174,0.132,0.856,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 k.g,K.G,174,0.845,0.069,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 k.k,K.K,174,0.92,0.011,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 t.i,T.I,173,0.942,0.029,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-im.r,IM.r,172,0.076,0.924,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+im.r,IM.r,172,0.076,0.924,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 neveiv,neveIV,172,1.0,0.0,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
 b.p,B.P,172,0.733,0.006,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 gytv,Gytv,170,0.294,0.706,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
@@ -283,7 +283,7 @@ t.l,T.L,165,0.927,0.061,likely_abbreviation,no,yes,initials,initials of an anony
 m.k,M.K,164,0.823,0.03,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 képv,képv,163,0.969,0.0,likely_abbreviation,no,yes,legal,képviselő / képviseli,corpus
 fktv,Fktv,163,0.503,0.497,likely_abbreviation,yes,yes,legal,statute short name (NJT list),corpus
-mb,mb,162,0.994,0.0,likely_abbreviation,no,yes,legal,to confirm,corpus
+mb,mb,162,0.994,0.0,likely_abbreviation,no,yes,legal,,corpus
 szül,szül,162,0.79,0.0,likely_abbreviation,no,yes,general,született / születési,corpus
 ehtv,Ehtv,160,0.281,0.719,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 xxxii.r,XXXII.r,159,0.994,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
@@ -298,16 +298,16 @@ idtv,Idtv,153,0.059,0.941,usually_before_number,yes,yes,legal,statute short name
 flt,Flt,152,0.296,0.704,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 b.t,B.T,151,0.702,0.007,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 vgtv,Vgtv,151,0.199,0.788,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-nyi,Nyi,151,0.0,0.934,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-tnyvhr,Tnyvhr,151,0.086,0.907,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+nyi,Nyi,151,0.0,0.934,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+tnyvhr,Tnyvhr,151,0.086,0.907,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 p.l,P.L,150,0.867,0.067,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-hdt,Hdt,150,0.187,0.813,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-bvtv,Bvtv,148,0.189,0.811,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-info,Info,146,0.952,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+hdt,Hdt,150,0.187,0.813,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+bvtv,Bvtv,148,0.189,0.811,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+info,Info,146,0.952,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 s.z,S.Z,146,0.993,0.007,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 b.a,B.A,145,0.8,0.014,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 frsz,frsz,143,0.58,0.119,likely_abbreviation,no,yes,general,forgalmi rendszám,corpus
-fh,Fh,142,0.965,0.028,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+fh,Fh,142,0.965,0.028,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 öpt,Öpt,140,0.079,0.921,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 m.j,M.J,137,0.92,0.044,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 nftv,Nftv,137,0.212,0.788,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
@@ -316,47 +316,47 @@ fsz,fsz,136,0.059,0.941,usually_before_number,no,yes,general,földszint,corpus
 s.a,S.A,135,0.933,0.037,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 vksztv,Vksztv,134,0.239,0.746,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 sz.j,Sz.J,132,0.932,0.038,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-hhvtv,Hhvtv,132,0.045,0.955,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+hhvtv,Hhvtv,132,0.045,0.955,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 pmt,Pmt,131,0.412,0.588,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 h.l,H.L,130,0.869,0.015,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 p.i,P.I,130,0.908,0.015,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 dátum,dátum,130,0.792,0.008,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
 ker,ker,130,0.854,0.008,likely_abbreviation,no,yes,general,kerület,corpus
-ök,Ök,130,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-tfmtv,Tfmtv,130,0.377,0.623,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-szak,szak,129,0.628,0.0,likely_abbreviation,no,yes,general,to confirm,corpus
-fokttv,Fokttv,127,0.063,0.929,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-inytv.vhr,Inytv.vhr,126,0.063,0.937,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-mnbtv,Mnbtv,126,0.063,0.937,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-kütv,Kütv,126,0.198,0.802,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ök,Ök,130,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+tfmtv,Tfmtv,130,0.377,0.623,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+szak,szak,129,0.628,0.0,likely_abbreviation,no,yes,general,,corpus
+fokttv,Fokttv,127,0.063,0.929,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+inytv.vhr,Inytv.vhr,126,0.063,0.937,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+mnbtv,Mnbtv,126,0.063,0.937,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+kütv,Kütv,126,0.198,0.802,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 pje,PJE,124,0.75,0.21,likely_abbreviation,no,yes,legal,court decision series or case-number letters,corpus
 k.m,K.M,123,0.959,0.016,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-tnyr,TnyR,123,0.13,0.87,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-harm,Harm,122,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+tnyr,TnyR,123,0.13,0.87,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+harm,Harm,122,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 h.s,H.S,122,0.836,0.008,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-khvr,Khvr,122,0.066,0.918,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+khvr,Khvr,122,0.066,0.918,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 n.j,N.J,121,0.694,0.008,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 gk,GK,120,0.242,0.717,usually_before_number,no,yes,legal,court decision series or case-number letters,corpus
 inc,Inc,120,0.883,0.042,likely_abbreviation,no,yes,company_form,legal form of a company,corpus
 sz.l,Sz.L,120,0.967,0.008,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-bir,bir,119,0.975,0.025,likely_abbreviation,no,yes,legal,to confirm,corpus
+bir,bir,119,0.975,0.025,likely_abbreviation,no,yes,legal,,corpus
 számú,számú,117,0.889,0.017,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
-tsz,tsz,117,0.897,0.085,likely_abbreviation,no,yes,general,termelőszövetkezet / tanszék (to confirm),corpus
+tsz,tsz,117,0.897,0.085,likely_abbreviation,no,yes,general,termelőszövetkezet / tanszék,corpus
 x.y,X.Y,116,0.931,0.017,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 k.gy,K.Gy,116,0.931,0.034,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-foktftv,Foktftv,116,0.112,0.879,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-neveiii.r,neveIII.r,115,1.0,0.0,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
+foktftv,Foktftv,116,0.112,0.879,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+neveiii.r,neveIII.r,115,1.0,0.0,likely_abbreviation,no,no,placeholder,anonymisation artefact,corpus
 b.zs,B.Zs,115,0.748,0.026,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-mf,Mf,114,0.088,0.807,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+mf,Mf,114,0.088,0.807,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 g.z,G.Z,114,0.895,0.026,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 bjt,Bjt,113,0.177,0.823,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 i.k,I.K,113,1.0,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-fvm,FVM,110,0.973,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-korm.rend,Korm.rend,110,0.245,0.755,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-jst,Jst,110,0.182,0.818,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+fvm,FVM,110,0.973,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+korm.rend,Korm.rend,110,0.245,0.755,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+jst,Jst,110,0.182,0.818,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 m.m,M.M,109,0.917,0.046,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 p.j,P.J,108,1.0,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-eva,Eva,108,0.991,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+eva,Eva,108,0.991,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 ui,ui,108,0.954,0.028,likely_abbreviation,no,yes,general,ugyanis,corpus
 jtcsr,Jtcsr,108,0.176,0.815,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 m.t,M.T,107,0.776,0.009,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
@@ -368,12 +368,12 @@ nyom.ir,nyom.ir,105,0.0,0.971,usually_before_number,no,yes,legal,nyomozati irat,
 kftv,Kftv,105,0.486,0.514,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 h.b,H.B,105,0.943,0.038,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 mth,Mth,104,0.25,0.75,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-szhitv,Szhitv,104,0.615,0.365,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-épelj,Épelj,104,0.135,0.846,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-tao.tv,Tao.tv,103,0.165,0.835,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-szem,szem,102,0.971,0.0,likely_abbreviation,no,yes,general,személy / személyi (to confirm),corpus
+szhitv,Szhitv,104,0.615,0.365,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+épelj,Épelj,104,0.135,0.846,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+tao.tv,Tao.tv,103,0.165,0.835,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+szem,szem,102,0.971,0.0,likely_abbreviation,no,yes,general,személy / személyi,corpus
 t.j,T.J,101,0.901,0.059,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-vp,vp,101,0.782,0.0,likely_abbreviation,no,yes,legal,to confirm,corpus
+vp,vp,101,0.782,0.0,likely_abbreviation,no,yes,legal,,corpus
 xxxix.r,XXXIX.r,100,0.99,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 f.i,F.I,100,0.85,0.04,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 m.s,M.S,100,0.78,0.02,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
@@ -383,25 +383,25 @@ t.a,T.A,97,0.928,0.052,likely_abbreviation,no,yes,initials,initials of an anonym
 k.b,K.B,97,0.67,0.01,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 k.s,K.S,97,0.897,0.021,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 f.j,F.J,97,0.979,0.01,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-áfa.tv,Áfa.tv,96,0.208,0.792,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+áfa.tv,Áfa.tv,96,0.208,0.792,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 v.l,V.L,96,0.958,0.031,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-pm,PM,95,0.958,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+pm,PM,95,0.958,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 xxxi.r,XXXI.r,95,0.979,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 v.i,V.I,95,0.937,0.042,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-nvtv,Nvtv,95,0.295,0.695,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+nvtv,Nvtv,95,0.295,0.695,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 cnytv,Cnytv,94,0.096,0.904,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-szoc.tv,Szoc.tv,93,0.065,0.925,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+szoc.tv,Szoc.tv,93,0.065,0.925,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 ii.kft,II.Kft,93,0.935,0.065,likely_abbreviation,no,yes,company_form,legal form of a company; anonymised company name,corpus
 o.m,O.M,92,0.946,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 s.r.l,s.r.l,92,0.967,0.022,likely_abbreviation,no,yes,company_form,legal form of a company,corpus
 fkbt,Fkbt,92,0.217,0.783,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 k.z,K.Z,92,0.902,0.022,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-eüsztv,Eüsztv,91,0.143,0.857,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+eüsztv,Eüsztv,91,0.143,0.857,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 p.t,P.T,91,0.516,0.011,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 l.j,L.J,91,0.89,0.022,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 t.m,T.M,91,0.967,0.022,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 kg,kg,91,0.516,0.022,likely_abbreviation,no,yes,general,kilogramm,corpus
-újcsokr,Újcsokr,91,0.154,0.846,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+újcsokr,Újcsokr,91,0.154,0.846,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 k.e,K.E,90,0.844,0.044,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 alp,alp,90,1.0,0.0,likely_abbreviation,no,yes,legal,alperes,corpus
 v.z,V.Z,90,0.622,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
@@ -409,12 +409,12 @@ sz.sz,Sz.Sz,89,0.966,0.0,likely_abbreviation,no,yes,initials,initials of an anon
 kgfb,Kgfb,89,0.966,0.034,likely_abbreviation,no,yes,legal,kötelező gépjármű-felelősségbiztosítás,corpus
 m.a,M.A,89,0.899,0.022,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 kmb,kmb,88,0.625,0.0,likely_abbreviation,no,yes,legal,körzeti megbízott (police),corpus
-mmr,Mmr,88,0.034,0.966,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+mmr,Mmr,88,0.034,0.966,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 ápt,Ápt,88,0.125,0.875,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 f.a,F.A,87,0.862,0.011,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 eur,Eur,87,0.586,0.046,likely_abbreviation,no,yes,general,euro,corpus
 xxxiii.r,XXXIII.r,87,0.977,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
-pr,Pr,87,0.046,0.77,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+pr,Pr,87,0.046,0.77,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 jstv,Jstv,87,0.184,0.816,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 p.k,P.K,87,0.885,0.034,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 b.k,B.K,87,0.885,0.023,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
@@ -423,46 +423,46 @@ p.g,P.G,86,0.907,0.081,likely_abbreviation,no,yes,initials,initials of an anonym
 v.zs,V.Zs,86,0.988,0.012,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 e.m,E.M,86,0.837,0.047,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 j.t,J.T,86,0.57,0.035,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-kjkt,Kjkt,85,0.071,0.918,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-hl,HL,85,0.847,0.106,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+kjkt,Kjkt,85,0.071,0.918,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+hl,HL,85,0.847,0.106,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 b.g,B.G,84,0.833,0.024,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 xxx.r,XXX.r,84,1.0,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
-nbtv,Nbtv,84,0.155,0.845,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+nbtv,Nbtv,84,0.155,0.845,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 l.e,L.E,84,0.952,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 sz.a,Sz.A,83,0.88,0.084,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 s.j,S.J,83,0.964,0.024,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 nmjtv,Nmjtv,83,0.217,0.783,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-eumsz,EUMSz,82,0.024,0.976,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-inytvr,Inytvr,82,0.28,0.72,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+eumsz,EUMSz,82,0.024,0.976,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+inytvr,Inytvr,82,0.28,0.72,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 r.a,R.A,82,0.915,0.085,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 i.zrt,I.Zrt,82,0.854,0.146,likely_abbreviation,no,yes,company_form,legal form of a company; anonymised company name,corpus
-épkiv,Épkiv,81,0.247,0.728,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+épkiv,Épkiv,81,0.247,0.728,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 dáptv,Dáptv,81,0.235,0.765,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 g.i,G.I,81,0.519,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 t.p,T.P,81,0.642,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 v.a,V.A,80,0.925,0.05,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 sz.e,Sz.E,80,0.975,0.025,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 házszám,házszám,80,0.975,0.0,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
-vh,Vh,79,0.177,0.823,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+vh,Vh,79,0.177,0.823,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 xxix.r,XXIX.r,79,0.899,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 k.r,K.R,79,0.646,0.089,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 sz.f,Sz.F,79,0.848,0.013,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 sz.i,Sz.I,79,0.861,0.013,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 srsz,srsz,79,1.0,0.0,likely_abbreviation,no,yes,general,sorszám,corpus
-mvtv,Mvtv,79,0.203,0.797,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+mvtv,Mvtv,79,0.203,0.797,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 d.i,D.I,78,0.654,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 lakcíme,lakcíme,78,0.628,0.026,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
 k.f,K.F,78,0.795,0.026,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-szn,szn,78,1.0,0.0,likely_abbreviation,no,yes,general,to confirm,corpus
-szoc,Szoc,77,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-eatv,Eatv,77,0.0,1.0,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-egk,EGK,77,0.818,0.026,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-info.tv,Info.tv,77,0.195,0.805,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-hatv,Hatv,77,0.234,0.766,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+szn,szn,78,1.0,0.0,likely_abbreviation,no,yes,general,,corpus
+szoc,Szoc,77,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+eatv,Eatv,77,0.0,1.0,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+egk,EGK,77,0.818,0.026,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+info.tv,Info.tv,77,0.195,0.805,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+hatv,Hatv,77,0.234,0.766,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 nfatv,Nfatv,77,0.169,0.831,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 f.k,F.K,76,0.908,0.013,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 c.c,C.C,76,0.934,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-szja.tv,Szja.tv,76,0.132,0.868,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+szja.tv,Szja.tv,76,0.132,0.868,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 j.a,J.A,76,0.961,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 sz.t,Sz.T,76,0.934,0.026,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 k.cs,K.Cs,76,0.961,0.026,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
@@ -474,32 +474,32 @@ tb,tb,74,0.851,0.014,likely_abbreviation,no,yes,legal,társadalombiztosítás,co
 f.b,F.B,74,0.878,0.081,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 fmtv,Fmtv,74,0.027,0.973,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 s.m,S.M,74,0.784,0.041,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-vb,VB,73,0.507,0.041,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+vb,VB,73,0.507,0.041,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 ill.r,Ill.r,73,1.0,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 r.hpt,r.Hpt,73,0.055,0.945,usually_before_number,no,yes,legal,"former (régi) version of a statute, e.g. rPtk. = old Civil Code",corpus
 ford,ford,73,1.0,0.0,likely_abbreviation,no,yes,general,fordítás / fordította,corpus
-favir,Favir,73,0.192,0.808,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-ksz,KSZ,73,0.205,0.671,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+favir,Favir,73,0.192,0.808,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+ksz,KSZ,73,0.205,0.671,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 kötv,Kötv,73,0.164,0.822,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-ügkr,Ügkr,72,0.986,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ügkr,Ügkr,72,0.986,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 bje,BJE,72,0.778,0.083,likely_abbreviation,no,yes,legal,court decision series or case-number letters,corpus
-ectv,Ectv,72,0.194,0.806,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ectv,Ectv,72,0.194,0.806,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 m.e,M.E,72,0.903,0.014,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-púétv,Púétv,72,0.056,0.944,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-nyt,Nyt,71,0.507,0.127,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+púétv,Púétv,72,0.056,0.944,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+nyt,Nyt,71,0.507,0.127,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 m.z,M.Z,71,1.0,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 s.t,S.T,71,0.901,0.028,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-btávhr,Btávhr,71,0.085,0.915,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-matrt,MaTrt,71,0.211,0.789,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+btávhr,Btávhr,71,0.085,0.915,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+matrt,MaTrt,71,0.211,0.789,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 t.t,T.T,71,0.69,0.014,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 h.i,H.I,71,0.958,0.042,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 ikt,ikt,71,0.986,0.0,likely_abbreviation,no,yes,legal,iktatószám,corpus
 g.l,G.L,71,0.901,0.07,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-eufetv,Eufetv,71,0.239,0.761,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+eufetv,Eufetv,71,0.239,0.761,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 s.l,S.L,70,0.971,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 f.f,F.F,70,0.957,0.014,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-fkbtv,Fkbtv,70,0.1,0.9,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-tük,Tük,69,0.971,0.029,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+fkbtv,Fkbtv,70,0.1,0.9,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+tük,Tük,69,0.971,0.029,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 tftv,Tftv,69,0.174,0.826,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 xxxviii.r,XXXVIII.r,69,0.928,0.014,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 kat,Kat,69,0.783,0.087,likely_abbreviation,yes,yes,legal,statute short name (NJT list),corpus
@@ -509,124 +509,124 @@ btké,Btké,68,0.015,0.985,usually_before_number,yes,yes,legal,statute short nam
 n.l,N.L,68,0.868,0.044,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 xxxvii.r,XXXVII.r,68,0.985,0.015,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 g.t,G.T,68,0.632,0.324,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-ávtv,Ávtv,68,0.103,0.897,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ávtv,Ávtv,68,0.103,0.897,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 iii.kft,III.Kft,68,0.985,0.015,likely_abbreviation,no,yes,company_form,legal form of a company; anonymised company name,corpus
 k.o,K.O,68,0.956,0.015,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 vádlottvi.r,vádlottVI.r,68,1.0,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant; glued to the preceding word (artefact)",corpus
-bny,Bny,67,0.119,0.851,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-nktv,Nktv,67,0.119,0.851,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+bny,Bny,67,0.119,0.851,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+nktv,Nktv,67,0.119,0.851,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 v.m,V.M,67,0.925,0.015,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 t.z,T.Z,67,0.97,0.03,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-ta,ta,67,0.537,0.403,likely_abbreviation,no,yes,general,to confirm,corpus
+ta,ta,67,0.537,0.403,likely_abbreviation,no,yes,general,,corpus
 v.k,V.K,66,0.773,0.03,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 l.m,L.M,66,0.924,0.03,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 no,no,66,0.0,1.0,usually_before_number,no,yes,general,number (English),corpus
-szgr,Szgr,66,0.167,0.833,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+szgr,Szgr,66,0.167,0.833,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 g.j,G.J,65,0.923,0.062,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 kknyt,Kknyt,65,0.108,0.892,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 m.zs,M.Zs,65,0.708,0.015,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 hvt,Hvt,65,0.077,0.892,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 v.t,V.T,65,0.585,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-jszbt,Jszbt,65,0.262,0.738,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-támtv,Támtv,64,0.266,0.734,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+jszbt,Jszbt,65,0.262,0.738,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+támtv,Támtv,64,0.266,0.734,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 l.l,L.L,64,0.797,0.047,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-szjatv,Szjatv,64,0.484,0.516,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+szjatv,Szjatv,64,0.484,0.516,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 átv,Átv,64,0.578,0.422,likely_abbreviation,yes,yes,legal,statute short name (NJT list),corpus
-mavétv,Mavétv,64,0.031,0.969,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+mavétv,Mavétv,64,0.031,0.969,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 nvt,Nvt,63,0.19,0.81,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 azi.r,azI.r,63,1.0,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant; glued to the preceding word (artefact)",corpus
-akr,Akr,62,0.0,1.0,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+akr,Akr,62,0.0,1.0,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 s.e,S.E,62,0.855,0.048,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-ké,Ké,62,0.968,0.032,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ké,Ké,62,0.968,0.032,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 v.v,V.V,62,0.903,0.032,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-imr,IMr,62,0.113,0.887,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-harmvhr,Harmvhr,62,0.081,0.919,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-vr,Vr,62,0.21,0.79,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+imr,IMr,62,0.113,0.887,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+harmvhr,Harmvhr,62,0.081,0.919,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+vr,Vr,62,0.21,0.79,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 vtsz,vtsz,62,0.968,0.016,likely_abbreviation,no,yes,legal,vámtarifaszám,corpus
 ftőrm,ftőrm,62,0.903,0.048,likely_abbreviation,no,yes,general,főtörzsőrmester (rank),corpus
 ávr,Ávr,62,0.258,0.742,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 sz.gy,Sz.Gy,62,0.903,0.032,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 szla,Szla,62,0.984,0.0,likely_abbreviation,no,yes,general,számla,corpus
 f.m,F.M,62,0.613,0.016,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-nf,NF,61,0.18,0.82,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+nf,NF,61,0.18,0.82,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 h.gy,H.Gy,61,0.918,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 gfbt,Gfbt,61,0.197,0.803,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 d.k,D.K,61,0.984,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-bv.tvr,Bv.tvr,60,0.267,0.733,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+bv.tvr,Bv.tvr,60,0.267,0.733,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 p.m,P.M,60,0.7,0.017,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 n.a,N.A,60,0.85,0.05,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 l.k,L.K,60,0.7,0.033,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 épt,Épt,60,0.117,0.85,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 j.i,J.I,60,0.9,0.05,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 k.b.z,K.B.Z,60,1.0,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-szü,Szü,59,0.966,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+szü,Szü,59,0.966,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 sz.m,Sz.M,59,0.932,0.017,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-szj,Szj,59,0.949,0.051,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-eüm,EüM,59,0.983,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-elj,Elj,59,0.814,0.051,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+szj,Szj,59,0.949,0.051,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+eüm,EüM,59,0.983,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+elj,Elj,59,0.814,0.051,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 cs.g,Cs.G,59,0.898,0.068,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-ehi,Ehi,58,0.328,0.672,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ehi,Ehi,58,0.328,0.672,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 l.a,L.A,58,0.948,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-nevev,neveV,58,1.0,0.0,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
-tny.vhr,Tny.vhr,58,0.086,0.914,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-ökt,Ökt,58,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+nevev,neveV,58,1.0,0.0,likely_abbreviation,no,no,placeholder,anonymisation artefact,corpus
+tny.vhr,Tny.vhr,58,0.086,0.914,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+ökt,Ökt,58,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 gmbh,GmbH,58,0.914,0.052,likely_abbreviation,no,yes,company_form,legal form of a company,corpus
 d.l,D.L,58,0.966,0.034,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-tpr,Tpr,58,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+tpr,Tpr,58,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 j.f,J.F,57,1.0,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 xxxv.r,XXXV.r,57,1.0,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 d.d,D.D,57,0.842,0.035,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 thtv,Thtv,57,0.14,0.86,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 kktv,Kktv,57,0.123,0.877,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 b.e,B.E,57,0.842,0.07,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-eljr,Eljr,57,0.088,0.912,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+eljr,Eljr,57,0.088,0.912,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 ét,Ét,56,0.107,0.536,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-nav,NAV,56,0.661,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+nav,NAV,56,0.661,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 o.j,O.J,56,1.0,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 iasz,Iasz,56,0.089,0.893,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 l.cs,L.Cs,56,0.964,0.018,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-im.sz,IM.sz,55,0.964,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-kfv.i,Kfv.I,55,0.0,0.982,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-njtv,Njtv,55,0.164,0.836,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+im.sz,IM.sz,55,0.964,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+kfv.i,Kfv.I,55,0.0,0.982,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+njtv,Njtv,55,0.164,0.836,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 g.a,G.A,55,0.909,0.018,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-vgt,Vgt,55,0.382,0.564,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+vgt,Vgt,55,0.382,0.564,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 fbtv,Fbtv,55,0.2,0.8,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-mmt,Mmt,55,0.327,0.655,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+mmt,Mmt,55,0.327,0.655,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 lszt,Lszt,54,0.241,0.759,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 g.p,G.P,54,0.796,0.019,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-psz,psz,54,0.5,0.019,likely_abbreviation,no,yes,general,to confirm,corpus
+psz,psz,54,0.5,0.019,likely_abbreviation,no,yes,general,,corpus
 nr,Nr,54,0.241,0.741,usually_before_number,no,yes,general,number (German),corpus
-ktm,KTM,54,0.981,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ktm,KTM,54,0.981,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 n.g,N.G,54,0.944,0.037,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-fémtv,Fémtv,54,0.648,0.352,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+fémtv,Fémtv,54,0.648,0.352,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 s.g,S.G,53,0.868,0.075,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-kkv,Kkv,53,0.642,0.34,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+kkv,Kkv,53,0.642,0.34,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 m.b,M.B,53,0.717,0.019,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-ia,Ia,53,0.642,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-khtv,Khtv,53,0.113,0.887,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-hketv,Hketv,53,0.245,0.755,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-nfa,Nfa,52,0.942,0.038,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ia,Ia,53,0.642,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+khtv,Khtv,53,0.113,0.887,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+hketv,Hketv,53,0.245,0.755,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+nfa,Nfa,52,0.942,0.038,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 xxxiv.r,XXXIV.r,52,1.0,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 srl,SRL,52,0.885,0.058,likely_abbreviation,no,yes,company_form,legal form of a company,corpus
 e.e,E.E,52,0.846,0.019,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-fhtv,Fhtv,52,0.192,0.788,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+fhtv,Fhtv,52,0.192,0.788,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 m.á,M.Á,52,0.923,0.058,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-tkr,Tkr,52,0.288,0.712,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+tkr,Tkr,52,0.288,0.712,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 m.h,M.H,52,0.865,0.019,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 n.d.o.o,N.d.o.o,52,0.942,0.019,likely_abbreviation,no,yes,company_form,legal form of a company,corpus
 k.zs,K.Zs,51,0.941,0.02,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-számv.tv,Számv.tv,51,0.235,0.765,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+számv.tv,Számv.tv,51,0.235,0.765,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 h.p,H.P,51,0.686,0.039,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 lásd,lásd,51,0.51,0.235,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
 fpk,Fpk,51,0.137,0.765,usually_before_number,no,yes,legal,court decision series or case-number letters,corpus
 r.f,R.F,51,0.745,0.02,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-tá,tá,51,0.588,0.412,likely_abbreviation,no,yes,general,to confirm,corpus
+tá,tá,51,0.588,0.412,likely_abbreviation,no,yes,general,,corpus
 n.ú,N.Ú,51,1.0,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-önk,Önk,50,0.94,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+önk,Önk,50,0.94,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 szgk,szgk,50,0.88,0.08,likely_abbreviation,no,yes,general,személygépkocsi,corpus
 budapest,Budapest,50,0.06,0.78,usually_before_number,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
-er,Er,50,0.2,0.8,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-panasztv,Panasztv,50,0.78,0.22,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+er,Er,50,0.2,0.8,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+panasztv,Panasztv,50,0.78,0.22,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 sz.z,Sz.Z,49,0.959,0.02,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 évszám,évszám,49,0.959,0.0,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
 a.s,A.S,49,0.633,0.02,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
@@ -634,115 +634,115 @@ br,br,49,0.163,0.837,usually_before_number,no,yes,general,bruttó,corpus
 a.i,A.I,49,0.776,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 d.a,D.A,48,0.896,0.021,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 f.p,F.P,48,0.771,0.062,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-vszt,Vszt,48,0.625,0.375,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-ebt,Ebt,48,0.875,0.125,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+vszt,Vszt,48,0.625,0.375,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+ebt,Ebt,48,0.875,0.125,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 b.r,B.R,48,0.812,0.062,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-adóig,Adóig,48,0.542,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+adóig,Adóig,48,0.542,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 t.b,T.B,48,0.979,0.021,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 m.l.s,M.L.S,48,1.0,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 s.p,S.P,47,0.532,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 sz.s,Sz.S,47,0.894,0.106,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-nm,NM,47,0.723,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+nm,NM,47,0.723,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 kgd,KGD,47,0.064,0.936,usually_before_number,no,yes,legal,court decision series or case-number letters,corpus
-mtr,MTr,47,0.213,0.787,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+mtr,MTr,47,0.213,0.787,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 t.g,T.G,47,0.894,0.043,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 n.v,N.V,47,0.596,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-árt,Árt,47,0.362,0.638,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+árt,Árt,47,0.362,0.638,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 i.f,I.f,47,0.915,0.085,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
-gyptv,Gyptv,47,0.34,0.66,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+gyptv,Gyptv,47,0.34,0.66,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 w.rt,W.Rt,47,0.979,0.021,likely_abbreviation,no,yes,company_form,legal form of a company; anonymised company name,corpus
-szj.tv,Szj.tv,47,0.362,0.638,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-ámtv,Ámtv,46,0.152,0.848,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-fot.vhr,Fot.vhr,46,0.0,1.0,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-nsz,nsz,46,0.913,0.087,likely_abbreviation,no,yes,general,nyilvántartási szám (to confirm),corpus
+szj.tv,Szj.tv,47,0.362,0.638,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+ámtv,Ámtv,46,0.152,0.848,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+fot.vhr,Fot.vhr,46,0.0,1.0,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+nsz,nsz,46,0.913,0.087,likely_abbreviation,no,yes,general,nyilvántartási szám,corpus
 j.l,J.L,46,0.978,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 ávt,Ávt,46,0.261,0.739,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 n.n,N.N,46,0.935,0.043,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 v.s,V.S,46,0.978,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-ea,Ea,46,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ea,Ea,46,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 b.n,B.N,45,0.889,0.067,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-lakástv,Lakástv,45,0.222,0.778,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+lakástv,Lakástv,45,0.222,0.778,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 fmhtv,Fmhtv,45,0.133,0.867,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 t.cs,T.Cs,45,0.911,0.089,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 v.gy,V.Gy,45,0.978,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 mgtsz,Mgtsz,45,0.933,0.067,likely_abbreviation,no,yes,general,mezőgazdasági termelőszövetkezet,corpus
 r.e,R.E,45,0.889,0.022,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 ügysz,ügysz,45,0.844,0.022,likely_abbreviation,no,yes,legal,ügyszám,corpus
-khetv,Khetv,45,0.067,0.933,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+khetv,Khetv,45,0.067,0.933,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 r.k,R.K,44,0.932,0.023,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 eftv,Eftv,44,0.227,0.659,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-övt,Övt,44,0.318,0.682,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-cmr,CMR,44,0.182,0.705,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+övt,Övt,44,0.318,0.682,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+cmr,CMR,44,0.182,0.705,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 he,He,44,0.068,0.932,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 cs.j,Cs.J,44,0.977,0.023,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-szf.tv,Szf.tv,44,0.182,0.818,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+szf.tv,Szf.tv,44,0.182,0.818,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 eüak,Eüak,44,0.364,0.636,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 p.e,P.E,44,0.955,0.023,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 o.o,O.O,44,0.977,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 h.j,H.J,43,0.837,0.047,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 z.kft,Z.Kft,43,0.953,0.023,likely_abbreviation,no,yes,company_form,legal form of a company; anonymised company name,corpus
 ii.sz,II.sz,43,0.884,0.023,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
-jgyk,jgyk,43,0.023,0.907,usually_before_number,no,yes,legal,to confirm,corpus
+jgyk,jgyk,43,0.023,0.907,usually_before_number,no,yes,legal,,corpus
 s.f,S.F,43,0.814,0.023,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-fe,Fe,43,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+fe,Fe,43,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 b.o,B.O,43,1.0,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-hetv,Hetv,43,0.07,0.93,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+hetv,Hetv,43,0.07,0.93,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 s.n,S.N,43,0.977,0.023,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 sértett.ii,SÉRTETT.II,43,0.953,0.023,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 k.e.zrt,K.E.Zrt,43,0.93,0.023,likely_abbreviation,no,yes,company_form,legal form of a company; anonymised company name,corpus
-vk,VK,42,0.667,0.333,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+vk,VK,42,0.667,0.333,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 a.j,A.J,42,0.952,0.048,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-sznyr,Sznyr,42,0.571,0.429,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+sznyr,Sznyr,42,0.571,0.429,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 sz.p,Sz.P,42,0.952,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 p.zs,P.Zs,42,0.976,0.024,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-hész,Hész,42,0.595,0.381,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-tfv,Tfv,42,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+hész,Hész,42,0.595,0.381,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+tfv,Tfv,42,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 abh,Abh,41,0.61,0.171,likely_abbreviation,no,yes,legal,court decision series or case-number letters,corpus
-iv.tv,IV.tv,41,0.146,0.854,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-tptv,Tptv,41,0.073,0.927,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-köf,Köf,41,0.293,0.707,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+iv.tv,IV.tv,41,0.146,0.854,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+tptv,Tptv,41,0.073,0.927,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+köf,Köf,41,0.293,0.707,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 f.s,F.S,41,0.805,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 t.r,T.R,41,0.951,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-knymt,Knymt,41,0.195,0.78,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-nmj,Nmj,41,0.927,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+knymt,Knymt,41,0.195,0.78,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+nmj,Nmj,41,0.927,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 l.z,L.Z,41,0.951,0.024,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-tgyj,tgyj,41,0.0,1.0,usually_before_number,no,yes,legal,to confirm,corpus
+tgyj,tgyj,41,0.0,1.0,usually_before_number,no,yes,legal,,corpus
 b.gy,B.Gy,41,0.829,0.024,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 a.l,A.L,40,0.925,0.025,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 cca,cca,40,0.1,0.875,usually_before_number,no,yes,general,circa,corpus
-sgt,sgt,40,0.25,0.75,usually_before_number,no,yes,legal,to confirm,corpus
+sgt,sgt,40,0.25,0.75,usually_before_number,no,yes,legal,,corpus
 m.f,M.F,40,0.775,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 üjt,Üjt,40,0.05,0.95,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 oték,OTÉK,40,0.2,0.8,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-eng,Eng,40,0.975,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+eng,Eng,40,0.975,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 d.kft,D.Kft,40,0.925,0.075,likely_abbreviation,no,yes,company_form,legal form of a company; anonymised company name,corpus
-scar,SCAr,40,0.1,0.9,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-kbftv,Kbftv,40,0.275,0.725,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+scar,SCAr,40,0.1,0.9,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+kbftv,Kbftv,40,0.275,0.725,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 n.s,N.S,40,0.5,0.025,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-sporttv,Sporttv,40,0.15,0.825,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+sporttv,Sporttv,40,0.15,0.825,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 xli.r,XLI.r,39,0.897,0.026,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
-fm,FM,39,0.769,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-fa,fa,39,0.795,0.0,likely_abbreviation,no,yes,general,to confirm,corpus
+fm,FM,39,0.769,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+fa,fa,39,0.795,0.0,likely_abbreviation,no,yes,general,,corpus
 f.g,F.G,39,0.846,0.026,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-it,It,39,0.077,0.667,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+it,It,39,0.077,0.667,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 f.l,F.L,39,0.821,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 k.á,K.Á,39,0.897,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 eütev,Eütev,39,0.487,0.513,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-szht,Szht,39,0.179,0.821,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-gyátv,Gyátv,39,0.282,0.718,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+szht,Szht,39,0.179,0.821,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+gyátv,Gyátv,39,0.282,0.718,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 r.r,R.R,38,0.947,0.026,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 p.kft,P.Kft,38,0.974,0.0,likely_abbreviation,no,yes,company_form,legal form of a company; anonymised company name,corpus
-inyvhr,Inyvhr,38,0.026,0.974,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+inyvhr,Inyvhr,38,0.026,0.974,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 r.z,R.Z,38,1.0,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-eü.tv,Eü.tv,38,0.079,0.921,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+eü.tv,Eü.tv,38,0.079,0.921,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 h.m,H.M,37,0.892,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 xlv.r,XLV.r,37,0.946,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 s.b,S.B,37,0.784,0.054,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-áhtv,Áhtv,37,0.216,0.784,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+áhtv,Áhtv,37,0.216,0.784,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 i.i,I.I,37,0.865,0.027,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 h.z,H.Z,37,0.892,0.081,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 cs.t,Cs.T,37,0.946,0.054,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-gtv,Gtv,37,0.73,0.27,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+gtv,Gtv,37,0.73,0.27,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 w.w,W.W,37,1.0,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 dec,dec,36,0.056,0.944,usually_before_number,no,yes,general,december,corpus
 prof,prof,36,0.75,0.083,likely_abbreviation,no,yes,general,professzor,corpus
@@ -750,30 +750,30 @@ t.k,T.K,36,0.889,0.0,likely_abbreviation,no,yes,initials,initials of an anonymis
 szvmt,Szvmt,36,0.833,0.167,likely_abbreviation,yes,yes,legal,statute short name (NJT list),corpus
 o.z,O.Z,36,0.944,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 l.f,L.F,36,0.889,0.056,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
-gsz,Gsz,36,0.972,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-mtsz,Mtsz,36,0.111,0.889,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-ehat.tv,Ehat.tv,36,0.5,0.5,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+gsz,Gsz,36,0.972,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+mtsz,Mtsz,36,0.111,0.889,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+ehat.tv,Ehat.tv,36,0.5,0.5,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 t.kft,T.Kft,35,1.0,0.0,likely_abbreviation,no,yes,company_form,legal form of a company; anonymised company name,corpus
 n.f,N.F,35,0.914,0.057,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 cs.l,Cs.L,35,1.0,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 l.s,L.S,35,0.657,0.029,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 b.á,B.Á,35,0.914,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-khrtv,Khrtv,35,0.257,0.714,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+khrtv,Khrtv,35,0.257,0.714,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 a.ltd,A.Ltd,35,0.943,0.029,likely_abbreviation,no,yes,company_form,legal form of a company; anonymised company name,corpus
 r.t,R.T,34,0.765,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 lix.r,LIX.r,34,1.0,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 h.f,H.F,34,0.912,0.088,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 o.t,O.T,34,0.941,0.029,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-szabs.tv,Szabs.tv,34,0.118,0.882,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-rk,Rk,34,0.294,0.588,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+szabs.tv,Szabs.tv,34,0.118,0.882,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+rk,Rk,34,0.294,0.588,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 s.r,S.R,34,0.824,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-priv,Priv,34,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-vtv.vhr,Vtv.vhr,34,0.382,0.618,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-gyr,GyR,34,0.088,0.912,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+priv,Priv,34,1.0,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
+vtv.vhr,Vtv.vhr,34,0.382,0.618,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+gyr,GyR,34,0.088,0.912,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 m.j.z,M.J.Z,34,1.0,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-pa,pa,34,0.912,0.059,likely_abbreviation,no,yes,general,to confirm,corpus
-szsztv,Szsztv,34,0.294,0.706,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-egtv,Egtv,34,0.088,0.882,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+pa,pa,34,0.912,0.059,likely_abbreviation,no,yes,general,,corpus
+szsztv,Szsztv,34,0.294,0.706,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+egtv,Egtv,34,0.088,0.882,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 xlix.r,XLIX.r,33,1.0,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 lxv.r,LXV.r,33,0.939,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 büsz,Büsz,33,0.212,0.758,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
@@ -781,63 +781,63 @@ sz.zs,Sz.Zs,33,0.97,0.0,likely_abbreviation,no,yes,initials,initials of an anony
 aptv,Aptv,33,0.212,0.788,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 cs.p,Cs.P,33,0.939,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 d.j,D.J,33,0.939,0.061,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-hgtv,Hgtv,33,0.182,0.818,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-szmr,Szmr,33,0.182,0.818,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-nmjtvr,Nmjtvr,33,0.091,0.909,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+hgtv,Hgtv,33,0.182,0.818,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+szmr,Szmr,33,0.182,0.818,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+nmjtvr,Nmjtvr,33,0.091,0.909,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 j.m,J.M,33,0.879,0.061,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-bef,Bef,32,0.656,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+bef,Bef,32,0.656,0.0,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 uo,uo,32,0.656,0.344,likely_abbreviation,no,yes,general,ugyanott,corpus
-tsztv,Tsztv,32,0.25,0.75,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-bvtvr,Bvtvr,32,0.031,0.969,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+tsztv,Tsztv,32,0.25,0.75,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+bvtvr,Bvtvr,32,0.031,0.969,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 v.p,V.P,32,0.938,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 z.m,Z.M,32,0.781,0.031,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 r.l,R.L,32,0.688,0.094,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 f.sz,F.Sz,32,0.875,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-szütv,Szütv,32,0.0,1.0,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+szütv,Szütv,32,0.0,1.0,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 ii.bt,II.Bt,32,0.875,0.125,likely_abbreviation,no,yes,company_form,legal form of a company; anonymised company name,corpus
-díjr,Díjr,32,0.0,1.0,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+díjr,Díjr,32,0.0,1.0,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 kbtv,Kbtv,32,0.312,0.688,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 ll.r,ll.r,32,1.0,0.0,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
 szept,szept,31,0.032,0.968,usually_before_number,no,yes,general,szeptember,corpus
 mtv,Mtv,31,0.161,0.839,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
-gt.ii,Gt.II,31,0.355,0.613,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+gt.ii,Gt.II,31,0.355,0.613,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 p.s,P.S,31,0.871,0.032,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 ag,AG,31,0.806,0.032,likely_abbreviation,no,yes,company_form,legal form of a company,corpus
 jpe,Jpe,31,0.774,0.097,likely_abbreviation,no,yes,legal,court decision series or case-number letters,corpus
-bnyt,Bnyt,31,0.194,0.806,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+bnyt,Bnyt,31,0.194,0.806,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 lakcím,lakcím,31,0.871,0.0,likely_abbreviation,no,no,placeholder,placeholder or ordinary word: the dot may end a sentence,corpus
 v.f,V.F,31,0.806,0.032,likely_abbreviation,no,yes,party_numbering,"numbered party, e.g. I.r. = I. rendű (first) defendant",corpus
-objf,objf,31,1.0,0.0,likely_abbreviation,no,yes,general,to confirm,corpus
+objf,objf,31,1.0,0.0,likely_abbreviation,no,yes,general,,corpus
 g.bt,G.Bt,31,0.903,0.097,likely_abbreviation,no,yes,company_form,legal form of a company; anonymised company name,corpus
 j.j,J.J,31,0.968,0.032,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-ügkr.vhr,Ügkr.vhr,31,0.032,0.968,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-ibtv,Ibtv,31,0.355,0.645,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-kgyr,Kgyr,31,0.452,0.548,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+ügkr.vhr,Ügkr.vhr,31,0.032,0.968,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+ibtv,Ibtv,31,0.355,0.645,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+kgyr,Kgyr,31,0.452,0.548,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 sz.k,Sz.K,30,0.833,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 kresz,Kresz,30,0.067,0.9,usually_before_number,yes,yes,legal,statute short name (NJT list),corpus
 m.d,M.D,30,0.867,0.067,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-sztrájktv,Sztrájktv,30,0.1,0.9,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+sztrájktv,Sztrájktv,30,0.1,0.9,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 usd,USD,30,0.7,0.0,likely_abbreviation,no,yes,general,US dollar,corpus
 g.m,G.M,30,0.967,0.033,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
 l.é,L.É,30,0.933,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-hbr,Hbr,30,0.233,0.733,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+hbr,Hbr,30,0.233,0.733,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 h.cs,H.Cs,30,0.9,0.0,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-kormr,Kormr,30,0.133,0.867,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+kormr,Kormr,30,0.133,0.867,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 sz.g,Sz.G,30,0.933,0.067,likely_abbreviation,no,yes,initials,initials of an anonymised person,corpus
-kvr,Kvr,30,0.067,0.933,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
-szolg.tv,Szolg.tv,30,0.2,0.8,usually_before_number,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+kvr,Kvr,30,0.067,0.933,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
+szolg.tv,Szolg.tv,30,0.2,0.8,usually_before_number,no,yes,legal,"statute, authority or legal series",corpus
 rhszt,rHszt,30,0.067,0.933,usually_before_number,no,yes,legal,"former (régi) version of a statute, e.g. rPtk. = old Civil Code",corpus
-eln,ELN,30,0.8,0.067,likely_abbreviation,no,yes,legal,"statute, authority or legal series (to confirm)",corpus
+eln,ELN,30,0.8,0.067,likely_abbreviation,no,yes,legal,"statute, authority or legal series",corpus
 dr,dr,,,,,no,yes,general,doktor,hand list
 eh,eh,,,,,no,yes,legal,hand list,hand list
 em,em,,,,,no,yes,general,emelet,hand list
 gf,gf,,,,,no,yes,legal,hand list,hand list
-hr,hr,,,,,no,yes,general,to confirm,hand list
+hr,hr,,,,,no,yes,general,,hand list
 id,id,,,,,no,yes,general,idősebb,hand list
 ifj,ifj,,,,,no,yes,general,ifjabb,hand list
 ill,ill,,,,,no,yes,general,illetve,hand list
 kfv,kfv,,,,,no,yes,legal,hand list,hand list
-ny,ny,,,,,no,yes,general,to confirm,hand list
+ny,ny,,,,,no,yes,general,,hand list
 pfv,pfv,,,,,no,yes,legal,hand list,hand list
 u,u,,,,,no,yes,general,utca,hand list
 utca,utca,,,,,no,yes,general,utca,hand list

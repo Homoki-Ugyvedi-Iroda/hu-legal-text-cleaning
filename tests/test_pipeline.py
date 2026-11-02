@@ -103,3 +103,22 @@ def test_review_items_from_csv(tmp_path):
 def test_cli_evaluate_splitter(capsys):
     main(["evaluate-splitter"])
     assert "F1" in capsys.readouterr().out
+
+
+def test_find_false_space_candidates(tmp_path):
+    root = tmp_path / "in"
+    write_text(
+        root / "2015" / "a.txt",
+        "Az els ő fokú bíróság döntött.\nA k e r ü l e t és az a bíróság.\nels ő itt is.\n",
+    )
+
+    class SplitWordHunspell:
+        known = {"az", "a", "és", "bíróság", "döntött", "első", "fokú", "itt", "is"}
+
+        def unknown_words(self, words):
+            return {word for word in words if word.lower() not in self.known}
+
+    out = tmp_path / "pairs.csv"
+    assert pipeline.find_false_space_candidates(root, SplitWordHunspell(), out) == 1
+    [row] = read_rows(out)
+    assert (row["wrong"], row["proposed"], row["occurrences"]) == ("els ő", "első", "2")

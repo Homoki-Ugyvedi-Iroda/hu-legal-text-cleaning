@@ -109,7 +109,11 @@ def _year_of(relative: str) -> str:
 
 
 def find_occurrences(
-    root: Path, rows: dict[str, CheckRow], examples: int, context_lines: int
+    root: Path,
+    rows: dict[str, CheckRow],
+    examples: int,
+    context_lines: int,
+    line_start_only: bool = False,
 ) -> None:
     """Count the wrong words in a corpus and choose examples spread over the years.
 
@@ -120,6 +124,8 @@ def find_occurrences(
         rows: The "check" rows from `load_check_rows`.
         examples: How many occurrences to keep per word.
         context_lines: How many lines to keep above and below each occurrence.
+        line_start_only: If True, count only words that start a line, e.g. for the
+            damaged line starts of `line_starts`.
     """
     pattern = _word_pattern(list(rows))
     kept: dict[str, dict[str, list[Occurrence]]] = defaultdict(lambda: defaultdict(list))
@@ -130,6 +136,8 @@ def find_occurrences(
         found_here: set[str] = set()
         for index, line in enumerate(lines):
             for match in pattern.finditer(line):
+                if line_start_only and line[: match.start()].strip():
+                    continue
                 word = match.group(1).lower()
                 rows[word].count += 1
                 found_here.add(word)
@@ -166,11 +174,12 @@ def _spread(by_year: dict[str, list[Occurrence]], examples: int) -> list[Occurre
     return sorted(chosen, key=lambda occurrence: occurrence.source)
 
 
-def build_check_page(rows: dict[str, CheckRow], storage_key: str) -> str:
+def build_check_page(rows: dict[str, CheckRow], storage_key: str, title: str = PAGE_TITLE) -> str:
     """Build the HTML review page.
 
     Args:
         rows: The "check" rows with their occurrences.
+        title: The page title.
         storage_key: Name under which the browser keeps the answers; use a different one
             for each corpus or table.
 
@@ -183,7 +192,7 @@ def build_check_page(rows: dict[str, CheckRow], storage_key: str) -> str:
     words = words.replace("</", "<\\/")
     return (
         template.read_text(encoding="utf-8")
-        .replace("<!--TITLE-->", PAGE_TITLE)
+        .replace("<!--TITLE-->", title)
         .replace("<!--STORAGE-KEY-->", storage_key)
         .replace("/*WORDS*/[]", words)
     )

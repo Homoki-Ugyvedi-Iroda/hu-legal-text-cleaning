@@ -67,8 +67,8 @@ szonyból,manual linebreak (jogviszonyból),no,6
 rnapi,Úrnapi,no,6
 sének,Asének,,6
 galmi,Ágalmi,,6
-ákozdiné,Pákozdiné,,6
-ésszerűen,Résszerűen,,6
+ákozdiné,Pákozdiné,yes,6
+ésszerűen,Résszerűen,no,6
 zösség,Őzösség,,5
 gezte,Egezte,,5
 badság,Szabadság,,5

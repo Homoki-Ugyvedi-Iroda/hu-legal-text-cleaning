@@ -9,7 +9,7 @@ import argparse
 import logging
 from pathlib import Path
 
-from hu_legal_cleaning import check_rows, pipeline, sentences
+from hu_legal_cleaning import characters, check_rows, pipeline, sentences
 from hu_legal_cleaning.corrections import bundled_table_path, load_corrections
 from hu_legal_cleaning.evaluation import evaluate_splitter
 from hu_legal_cleaning.hunspell import Hunspell
@@ -42,6 +42,11 @@ def _find_linebreaks(args: argparse.Namespace) -> None:
     print(f"{count} split-word pairs written to {args.out}")
 
 
+def _find_false_spaces(args: argparse.Namespace) -> None:
+    count = pipeline.find_false_space_candidates(args.source, Hunspell(), args.out, args.sample)
+    print(f"{count} false-space pairs written to {args.out}")
+
+
 def _find_line_starts(args: argparse.Namespace) -> None:
     count = pipeline.find_line_start_candidates(args.source, args.out)
     print(f"{count} candidates written to {args.out}")
@@ -68,10 +73,18 @@ def _review_page(args: argparse.Namespace) -> None:
 
 def _review_check_rows(args: argparse.Namespace) -> None:
     rows = check_rows.load_check_rows(args.table)
-    check_rows.find_occurrences(args.source, rows, args.examples, args.context_lines)
-    page = check_rows.build_check_page(rows, args.out.stem)
+    check_rows.find_occurrences(
+        args.source, rows, args.examples, args.context_lines, args.line_start_only
+    )
+    page = check_rows.build_check_page(rows, args.out.stem, args.title)
     args.out.write_text(page, encoding="utf-8")
     print(f"Review page with {len(rows)} words: {args.out}")
+
+
+def _review_characters(args: argparse.Namespace) -> None:
+    stats = characters.scan_characters(args.source, args.examples)
+    args.out.write_text(characters.build_character_page(stats, args.out.stem), encoding="utf-8")
+    print(f"Overview of {len(stats)} unusual characters: {args.out}")
 
 
 def _apply(args: argparse.Namespace) -> None:
@@ -126,6 +139,10 @@ def build_parser() -> argparse.ArgumentParser:
     _add_source_target(step)
     step.set_defaults(run=_clean_characters)
 
+    step = steps.add_parser("find-false-spaces", help="words split by a false space")
+    _add_source_out(step, with_sample=True)
+    step.set_defaults(run=_find_false_spaces)
+
     step = steps.add_parser("find-linebreaks", help="words split by a hyphen at a line end")
     _add_source_out(step)
     step.set_defaults(run=_find_linebreaks)
@@ -161,7 +178,15 @@ def build_parser() -> argparse.ArgumentParser:
     step.add_argument("--table", type=Path, default=bundled_table_path(), help="correction table")
     step.add_argument("--examples", type=int, default=check_rows.DEFAULT_EXAMPLES)
     step.add_argument("--context-lines", type=int, default=check_rows.DEFAULT_CONTEXT_LINES)
+    step.add_argument("--line-start-only", action="store_true", help="count only line starts")
+    step.add_argument("--title", default=check_rows.PAGE_TITLE, help="page title")
     step.set_defaults(run=_review_check_rows)
+
+    step = steps.add_parser("review-characters", help="page with the unusual characters")
+    step.add_argument("source", type=Path, help="folder of text files")
+    step.add_argument("out", type=Path, help="HTML file to write")
+    step.add_argument("--examples", type=int, default=characters.DEFAULT_EXAMPLES)
+    step.set_defaults(run=_review_characters)
 
     step = steps.add_parser("apply", help="apply approved fixes to a copy")
     _add_source_target(step)

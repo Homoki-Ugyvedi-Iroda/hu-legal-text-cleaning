@@ -1,6 +1,6 @@
 # ADR-2026-11-02-text-level-encoding-repair: Repair wrong code pages on the text, not only in the RTF reader
 
-- **Status:** Proposed
+- **Status:** Accepted
 
 ## Context
 Some BHGY decisions were full of words such as "hatلrozat" and "bيrَsلg". The RTF files

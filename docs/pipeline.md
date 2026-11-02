@@ -24,9 +24,10 @@ and the commands that carry it out.
 | 1 | Download and record source, date, file hash, format and the website's metadata | (your downloader) | originals + manifest |
 | 2 | Convert by format | `convert` | text tree + log |
 | 3 | Wrong code page ("hatلrozat") | `find-encoding-damage` → `repair-encoding` | file list, repaired tree + log |
-| 4 | Characters: NUL, soft hyphens, NFC, õ/û | `clean-characters` | text tree + log |
+| 4 | Characters: NUL, soft hyphens, NFC, õ/û, look-alike letters | `clean-characters`, then `review-characters` | text tree + log, overview page |
 | 5 | Words split at line ends | `find-linebreaks` → `review-page` → `apply --joins` | candidates, answers, copy |
 | 6 | Lines that lost their first letter | `find-line-starts` → `review-page` → `apply --line-starts` | candidates, answers, copy |
+| 6b | Words split by a false space | `find-false-spaces` → `review-check-rows` → `apply --corrections` | candidate pairs, answers, copy |
 | 7 | Word-level OCR errors | `check-words` → review → `apply --corrections` | word list, correction table, copy |
 | 8 | Abbreviations for sentence splitting | `audit-abbreviations` → review | abbreviation list |
 | 9 | Sentences | `split`, `evaluate-splitter` | segments with flags |
@@ -91,6 +92,13 @@ See [ADR-2026-11-02-text-level-encoding-repair](decisions/ADR-2026-11-02-text-le
   Marks without a composed form (strike-through, a doubled acute on a letter that has no
   such form) remain and are counted in the log.
 - õ and û, which do not exist in Hungarian, are replaced with ő and ű.
+- Cyrillic and Greek letters that look like a Latin letter and stand inside a Latin word
+  ("ЕU" with a Cyrillic Е, "Citroёn") are replaced by the Latin letter. Cyrillic words,
+  Greek symbols ("μg", "Δ9-THC") and the ambiguous Cyrillic "Н" are left alone.
+- `review-characters` builds a page with every character that is neither ASCII nor a
+  Hungarian letter: its count, a few examples in context and a decision (keep, replace,
+  remove, check) with a note. It is the check that no damage was left in the character
+  clean-up.
 - Not repaired automatically: ő and ű stored as a dotless ı (seen in PDF text layers of a
   competition authority), because ı may stand for either letter; this needs a dictionary
   decision per word.
@@ -117,6 +125,18 @@ follow a finished sentence (the line above ends in `. ! ? : ;` or is blank) are 
 a line that continues the sentence above ("…, amely" / "mellett az …") is a normal wrap.
 The remaining false candidates usually follow a page or paragraph break and are removed
 in the review.
+
+### Stage 6b: false spaces
+
+A false space splits one word into two pieces ("els ő" for "első", "k ésedelmi"). The finder
+reads the neighbouring words of every line: a pair is a candidate if Hunspell does not
+know one of the pieces but knows the pieces joined. Pairs of two real words are never
+listed, letter-spaced lines ("k e r ü l e t") are skipped, and a first piece that follows a
+digit, hyphen or slash is ignored, because it is usually a suffix ("2010-ig a"). The pairs
+are counted, so a person decides once per pair; approved pairs are added to the correction
+table, which `apply --corrections` already applies. On a sample of 300 files the finder
+takes about 20 seconds and lists about 33 pairs; roughly two thirds are real splits, the rest
+are foreign words ("euro alapú") and need a "keep" decision.
 
 ### Stage 7: word-level errors
 

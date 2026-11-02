@@ -1,6 +1,6 @@
 # ADR-2026-11-01-own-rtf-docx-reader: Own RTF and DOCX reader instead of pandoc
 
-- **Status:** Proposed
+- **Status:** Accepted
 
 ## Context
 The BHGY decisions are published as RTF (older years) and DOCX files. A test on 101 files

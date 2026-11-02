@@ -18,6 +18,7 @@ from hu_legal_cleaning import (
     abbreviations,
     convert,
     encoding_repair,
+    false_spaces,
     line_starts,
     linebreaks,
     normalise,
@@ -127,7 +128,7 @@ def clean_characters_folder(source_root: Path, target_root: Path, log_path: Path
         if cleaned != text or counts["combining_marks_left"]:
             log_rows.append([path.relative_to(source_root), *counts.values()])
     header = ["file", "nul_removed", "soft_hyphens_removed", "lookalikes_fixed"]
-    header.append("combining_marks_left")
+    header += ["script_lookalikes_fixed", "combining_marks_left"]
     _write_csv(log_path, header, log_rows)
     return len(log_rows)
 
@@ -183,6 +184,45 @@ def repair_encoding_folder(
             write_text(output_path(path, source_root, target_root), repaired)
     _write_csv(log_path, ["file", "wrong_codec", "words_changed", "utf8_misread"], log_rows)
     return len(log_rows)
+
+
+def find_false_space_candidates(
+    root: Path, hunspell: Hunspell, out_csv: Path, sample_size: int = 0
+) -> int:
+    """List neighbouring words that probably are one word split by a false space.
+
+    The list has the layout of the correction table, so the approved rows can be added to
+    the table and applied with `apply`, and `review-check-rows` can show them in context.
+
+    Args:
+        root: Folder of text files.
+        hunspell: The spell checker.
+        out_csv: The candidate pairs, the most frequent first.
+        sample_size: Number of files to read; 0 reads all.
+
+    Returns:
+        The number of candidate pairs.
+    """
+    paths = sample_text_files(root, sample_size)
+    words: Counter[str] = Counter()
+    for path in paths:
+        words.update(false_spaces.vocabulary(iter_lines(path)))
+    unknown = hunspell.unknown_words(sorted(words))
+    texts = ((path.relative_to(root).as_posix(), list(iter_lines(path))) for path in paths)
+    pairs = false_spaces.collect_pairs(
+        texts, lambda first, second: first in unknown or second in unknown
+    )
+    joined_unknown = hunspell.unknown_words(sorted(false_spaces.joined_forms(pairs)))
+    candidates = false_spaces.false_space_pairs(pairs, unknown, joined_unknown)
+    rows = [
+        [f"{first} {second}".lower(), joined.lower(), "false space", "check", stats.count]
+        + [stats.documents, "", "", f"example {stats.example}", ""]
+        for first, second, joined, stats in candidates
+    ]
+    header = ["wrong", "proposed", "type", "safe_to_apply", "occurrences", "decisions"]
+    header += ["first_year", "last_year", "hunspell_suggestions", "occurrences_if_not_NFC"]
+    _write_csv(out_csv, header, rows)
+    return len(rows)
 
 
 def find_linebreak_candidates(root: Path, hunspell: Hunspell, out_csv: Path) -> int:

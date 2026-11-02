@@ -1,6 +1,7 @@
 from hu_legal_cleaning.normalise import (
     clean_characters,
     fix_latin1_lookalikes,
+    fix_script_lookalikes,
     remove_nul,
     remove_soft_hyphens,
     to_nfc,
@@ -31,8 +32,20 @@ def test_clean_characters_runs_nfc_before_lookalike_repair():
         "nul_removed": 1,
         "soft_hyphens_removed": 0,
         "lookalikes_fixed": 1,
+        "script_lookalikes_fixed": 0,
         "combining_marks_left": 0,
     }
+
+
+def test_fix_script_lookalikes_repairs_latin_words_only():
+    assert fix_script_lookalikes("2014/17/ЕU Citroёn Grüβen") == (
+        "2014/17/EU Citroën Grüßen",
+        3,
+    )
+    assert fix_script_lookalikes("Адрес μg Δ9-THC") == (
+        "Адрес μg Δ9-THC",
+        0,
+    )
 
 
 def test_clean_characters_removes_soft_hyphens():
