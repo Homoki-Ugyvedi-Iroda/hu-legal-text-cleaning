@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title><!--TITLE--></title>
+<style>
+body{font:15px/1.5 system-ui,sans-serif;margin:0;padding:16px;max-width:1100px}
+h1{font-size:18px}h2{font-size:20px;margin:12px 0 4px}.meta{color:#555}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.occ{border:1px solid #ccc;border-radius:6px;margin:12px 0;padding:8px}
+.ctx{background:#f6f6f6;padding:8px;font:13px/1.45 ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.ctx .dim{color:#777}.ctx .line{background:#fff3bf}mark{background:#ffd43b;font-weight:bold}
+button,select{padding:6px 10px;margin:4px 6px 4px 0}
+.chosen{outline:3px solid #2b6cb0}
+textarea{width:100%;box-sizing:border-box;min-height:44px;font:14px system-ui}
+.word-box{background:#eef4fb;padding:8px 12px;border-radius:6px;margin:8px 0}
+</style></head><body>
+<h1><!--TITLE--></h1>
+<div class="bar"><button id="prev">&larr; Previous word</button><span id="pos"></span>
+<button id="next">Next word &rarr;</button><span id="done" class="meta"></span>
+<button id="export">Export CSV</button></div>
+<div id="word"></div>
+<p class="meta">Answers and comments stay in this browser until you export them. The export
+has one row per word and one per occurrence.</p>
+<script>
+const WORDS = /*WORDS*/[];
+const OCCURRENCE_OPTIONS = ["fix", "keep", "unsure"];
+const WORD_OPTIONS = [
+  ["apply_everywhere", "Apply everywhere"],
+  ["apply_in_context", "Only where the context shows it (not automatic)"],
+  ["do_not_apply", "Do not apply"],
+  ["other_correction", "Apply a different correction (write it in the comment)"],
+  ["unsure", "Unsure"]
+];
+const STORE = "<!--STORAGE-KEY-->";
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(STORE) || "{}"); } catch (e) {}
+let index = 0;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function save() { try { localStorage.setItem(STORE, JSON.stringify(saved)); } catch (e) {} }
+function entry(key) { return saved[key] || (saved[key] = {decision: "", comment: ""}); }
+function occKey(w, n) { return w.wrong + "|" + w.occurrences[n].source + ":" + w.occurrences[n].line_number; }
+function show() {
+  const w = WORDS[index];
+  const wordEntry = entry(w.wrong);
+  document.getElementById("pos").textContent = (index + 1) + " / " + WORDS.length;
+  document.getElementById("done").textContent = Object.values(saved).filter(e => e.decision).length + " decisions made";
+  let h = "<h2>" + esc(w.wrong) + " &rarr; " + esc(w.proposed) + "</h2>";
+  h += '<p class="meta">' + esc(w.error_type) + " &middot; " + w.count + " occurrences in " + w.documents + " files &middot; Hunspell: " + esc(w.suggestions) + " &middot; showing " + w.occurrences.length + " examples spread over the years</p>";
+  h += '<div class="word-box"><b>Decision for the whole word</b><br><select id="wordDecision"><option value="">-</option>';
+  for (const [value, label] of WORD_OPTIONS) h += '<option value="' + value + '"' + (wordEntry.decision === value ? " selected" : "") + ">" + esc(label) + "</option>";
+  h += '</select><textarea id="wordComment" placeholder="Comment on the word">' + esc(wordEntry.comment) + "</textarea></div>";
+  w.occurrences.forEach((o, n) => {
+    const e = entry(occKey(w, n));
+    h += '<div class="occ"><div class="meta"><a href="' + esc(o.link) + '">' + esc(o.source) + "</a> line " + o.line_number + "</div>";
+    h += '<div class="ctx"><span class="dim">' + o.above.map(esc).join("\n") + '</span>\n<span class="line">' + esc(o.before) + "<mark>" + esc(o.hit) + "</mark>" + esc(o.after) + '</span>\n<span class="dim">' + o.below.map(esc).join("\n") + "</span></div>";
+    h += "<div>";
+    for (const option of OCCURRENCE_OPTIONS) h += '<button data-n="' + n + '" data-option="' + option + '" class="' + (e.decision === option ? "chosen" : "") + '">' + option + "</button>";
+    h += '</div><textarea data-comment="' + n + '" placeholder="Comment on this occurrence">' + esc(e.comment) + "</textarea></div>";
+  });
+  document.getElementById("word").innerHTML = h;
+  document.getElementById("wordDecision").onchange = ev => { wordEntry.decision = ev.target.value; save(); updateDone(); };
+  document.getElementById("wordComment").oninput = ev => { wordEntry.comment = ev.target.value; save(); };
+  document.querySelectorAll("button[data-option]").forEach(b => b.onclick = () => {
+    const e = entry(occKey(w, +b.dataset.n));
+    e.decision = e.decision === b.dataset.option ? "" : b.dataset.option;
+    save(); show();
+  });
+  document.querySelectorAll("textarea[data-comment]").forEach(t => t.oninput = () => { entry(occKey(w, +t.dataset.comment)).comment = t.value; save(); });
+  window.scrollTo(0, 0);
+}
+function updateDone() { document.getElementById("done").textContent = Object.values(saved).filter(e => e.decision).length + " decisions made"; }
+function go(step) { index = Math.min(Math.max(index + step, 0), WORDS.length - 1); show(); }
+document.getElementById("prev").onclick = () => go(-1);
+document.getElementById("next").onclick = () => go(1);
+document.getElementById("export").onclick = () => {
+  const q = s => '"' + String(s).replace(/"/g, '""') + '"';
+  const rows = [["kind", "wrong", "proposed", "decision", "source", "line", "comment"].join(",")];
+  for (const w of WORDS) {
+    const we = saved[w.wrong] || {decision: "", comment: ""};
+    rows.push([q("word"), q(w.wrong), q(w.proposed), q(we.decision), q(""), q(""), q(we.comment)].join(","));
+    w.occurrences.forEach((o, n) => {
+      const e = saved[occKey(w, n)] || {decision: "", comment: ""};
+      rows.push([q("occurrence"), q(w.wrong), q(w.proposed), q(e.decision), q(o.source), o.line_number, q(e.comment)].join(","));
+    });
+  }
+  const blob = new Blob(["﻿" + rows.join("\n")], {type: "text/csv"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = STORE + "_answers.csv"; a.click();
+};
+show();
+</script></body></html>

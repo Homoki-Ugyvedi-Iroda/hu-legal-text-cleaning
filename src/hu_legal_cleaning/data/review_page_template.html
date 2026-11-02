@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title><!--TITLE--></title>
+<style>
+body{font:15px/1.5 system-ui,sans-serif;margin:0;padding:16px;max-width:980px}
+h1{font-size:18px}.meta{color:#555}.ctx{background:#f6f6f6;padding:8px;margin:8px 0}
+mark{background:#ffe066}.opts button{margin:4px 6px 4px 0;padding:6px 10px}
+.chosen{outline:3px solid #2b6cb0}.bar{display:flex;gap:8px;align-items:center}
+</style></head><body>
+<h1><!--TITLE--></h1>
+<div class="bar"><span id="pos"></span><span id="done" class="meta"></span>
+<button id="export">Export CSV</button></div>
+<div id="item"></div>
+<p class="meta">Keys: 1-9 answer and go on, arrow keys or j / k move, answers stay in
+this browser until you export them.</p>
+<script>
+const ITEMS = /*ITEMS*/[];
+const OPTIONS = /*OPTIONS*/[];
+const STORE = "<!--STORAGE-KEY-->";
+let answers = {};
+try { answers = JSON.parse(localStorage.getItem(STORE) || "{}"); } catch (e) {}
+let index = 0;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function save() { try { localStorage.setItem(STORE, JSON.stringify(answers)); } catch (e) {} }
+function show() {
+  const it = ITEMS[index];
+  document.getElementById("pos").textContent = (index + 1) + " / " + ITEMS.length;
+  document.getElementById("done").textContent = Object.keys(answers).length + " answered";
+  let h = "<h2>" + esc(it.title) + "</h2><p>" + esc(it.proposal) + " &middot; " + it.count + " occurrences</p>";
+  for (const c of it.contexts) {
+    const src = c.link ? '<a href="' + esc(c.link) + '">' + esc(c.source) + "</a>" : esc(c.source);
+    h += '<div class="ctx">' + esc(c.before) + "<mark>" + esc(c.hit) + "</mark>" + esc(c.after) + '<div class="meta">' + src + "</div></div>";
+  }
+  h += '<div class="opts">';
+  OPTIONS.forEach((o, n) => { h += '<button data-n="' + n + '" class="' + (answers[it.key] === o ? "chosen" : "") + '">' + (n + 1) + ". " + esc(o) + "</button>"; });
+  document.getElementById("item").innerHTML = h + "</div>";
+  document.querySelectorAll(".opts button").forEach(b => b.onclick = () => choose(+b.dataset.n));
+}
+function choose(n) { answers[ITEMS[index].key] = OPTIONS[n]; save(); if (index < ITEMS.length - 1) index++; show(); }
+document.addEventListener("keydown", e => {
+  const n = parseInt(e.key, 10);
+  if (n >= 1 && n <= OPTIONS.length) choose(n - 1);
+  else if (e.key === "ArrowRight" || e.key === "j") { index = Math.min(index + 1, ITEMS.length - 1); show(); }
+  else if (e.key === "ArrowLeft" || e.key === "k") { index = Math.max(index - 1, 0); show(); }
+});
+document.getElementById("export").onclick = () => {
+  const q = s => '"' + String(s).replace(/"/g, '""') + '"';
+  const rows = [["key", "proposal", "answer", "count"].join(",")];
+  for (const it of ITEMS) rows.push([q(it.key), q(it.proposal), q(answers[it.key] || ""), it.count].join(","));
+  const blob = new Blob(["\ufeff" + rows.join("\n")], {type: "text/csv"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = STORE + "_answers.csv"; a.click();
+};
+show();
+</script></body></html>

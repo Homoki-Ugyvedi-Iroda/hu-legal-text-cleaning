@@ -1,0 +1,57 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hu-legal-text-cleaning"
+version = "0.1.0"
+description = "Cleaning tools and word lists for Hungarian court decision texts."
+readme = "README.md"
+license = "CC0-1.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.12"
+# Runtime dependencies. Adding one needs a decision record (AGENTS.md, section 6).
+dependencies = []
+
+[project.scripts]
+hu-legal-clean = "hu_legal_cleaning.cli:main"
+
+[project.optional-dependencies]
+# Development-only tools, installed with: pip install -e ".[dev]"
+dev = [
+    "ruff",
+    "pytest",
+    "mkdocs",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors (PEP 8)
+    "W",    # pycodestyle warnings (PEP 8)
+    "F",    # pyflakes: unused imports, undefined names, `import *`
+    "I",    # import sorting
+    "N",    # PEP 8 naming
+    "B",    # likely bugs
+    "UP",   # outdated syntax for the Python version
+    "D",    # docstrings
+    "ANN",  # type hints
+]
+ignore = [
+    "ANN401",  # allow `Any` where it is genuinely needed
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+# Test names describe the case, so tests need neither docstrings nor return type hints.
+"tests/**" = ["D", "ANN"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hu_legal_cleaning"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
