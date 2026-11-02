@@ -18,7 +18,7 @@ into a cleaned copy, with a log of every change.
 | 7 | Unicode NFC | composed separately stored accents | 170 files changed; 76 files keep marks without a composed form |
 | 8 | Unaccented typing | decisions typed mostly without accents | very rare: 2 in a sample of about 5,900 |
 | 9 | Wrong code page | Hungarian text in a font declared as Arabic, Shift-JIS, Greek or Hebrew ("hatلrozat", "bekezd駸"); re-converted from the source | 617 decisions, about 89,000 damaged words |
-| 10 | Soft hyphens | invisible hyphens inside words ("in" + soft hyphen + "gatlan") | 1,618 decisions; not yet removed from the cleaned copy |
+| 10 | Soft hyphens | invisible hyphens inside words ("in" + soft hyphen + "gatlan") removed; 54 at line ends kept, as they mark split words | 9,630 removed in 1,618 decisions |
 
 Steps 4 and 5 together changed 2,649 files. The correction table of step 3 has not yet
 been applied to the cleaned copy.
@@ -110,7 +110,8 @@ the first kind and keeps the others apart.
   occurrence.
 - Words split by a false space ("els ő", "elk övetési") are a separate error type, found
   during the review; no step looks for them yet.
-- Remove the soft hyphens from the cleaned copy (1,618 decisions).
+- 54 soft hyphens at line ends (50 decisions) mark split words that the line-break step
+  does not yet recognise.
 - 25 hyphen pairs are on hold (number words, role labels) and 134 joins across blank
   lines were not applied.
 - 50 line-start candidates are still unanswered in `line_start_fixes.csv`.

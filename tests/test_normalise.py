@@ -2,6 +2,7 @@ from hu_legal_cleaning.normalise import (
     clean_characters,
     fix_latin1_lookalikes,
     remove_nul,
+    remove_soft_hyphens,
     to_nfc,
 )
 
@@ -37,3 +38,10 @@ def test_clean_characters_runs_nfc_before_lookalike_repair():
 def test_clean_characters_removes_soft_hyphens():
     text, counts = clean_characters("in\u00adgatlan")
     assert (text, counts["soft_hyphens_removed"]) == ("ingatlan", 1)
+
+
+def test_remove_soft_hyphens_keeps_the_one_at_a_line_end():
+    assert remove_soft_hyphens("in\u00adgatlan\nalkal\u00ad\nmazott") == (
+        "ingatlan\nalkal\u00ad\nmazott",
+        1,
+    )

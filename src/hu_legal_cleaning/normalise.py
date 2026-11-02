@@ -10,6 +10,8 @@ NUL = "\x00"
 # An invisible "hyphenate here if needed" mark. Inside a word ("in\u00adgatlan") it splits
 # the word for any tool that looks for whole words.
 SOFT_HYPHEN = "\u00ad"
+# A soft hyphen not followed by a line end (more soft hyphens may stand in between).
+SOFT_HYPHEN_INSIDE_LINE = re.compile(SOFT_HYPHEN + "(?!" + SOFT_HYPHEN + "*\\r?\\n)")
 # Combining accent marks (U+0300 to U+036F) that are stored apart from their letter.
 COMBINING_MARK = re.compile("[̀-ͯ]")
 # õ and û never occur in Hungarian. They appear when a text typed with ő and ű is
@@ -33,13 +35,16 @@ def remove_nul(text: str) -> tuple[str, int]:
 def remove_soft_hyphens(text: str) -> tuple[str, int]:
     """Remove soft hyphens, which are invisible when the text is printed.
 
+    A soft hyphen at the end of a line is kept: it marks a word split across two lines,
+    which the line-break step joins.
+
     Args:
         text: The text to clean.
 
     Returns:
         The cleaned text and the number of soft hyphens removed.
     """
-    return text.replace(SOFT_HYPHEN, ""), text.count(SOFT_HYPHEN)
+    return SOFT_HYPHEN_INSIDE_LINE.subn("", text)
 
 
 def to_nfc(text: str) -> tuple[str, int]:

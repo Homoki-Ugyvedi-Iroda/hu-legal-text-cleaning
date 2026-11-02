@@ -85,7 +85,8 @@ See [ADR-2026-11-02-text-level-encoding-repair](decisions/ADR-2026-11-02-text-le
 
 - NUL characters (padding at the end of many converted files) are removed.
 - Soft hyphens (U+00AD, invisible "hyphenate here" marks) are removed: inside a word
-  ("in" + soft hyphen + "gatlan") they make whole-word searches and the spell checker see two words.
+  ("in" + soft hyphen + "gatlan") they make whole-word searches and the spell checker see
+  two words. A soft hyphen at a line end is kept: it marks a split word for stage 5.
 - Unicode NFC joins a letter and a separately stored accent into one character.
   Marks without a composed form (strike-through, a doubled acute on a letter that has no
   such form) remain and are counted in the log.
