@@ -31,6 +31,7 @@ into a cleaned copy, with a log of every change.
 | 20 | Damaged spaced headings | what step 19 left: "I N D OKOL Á S" → "INDOKOLÁS", "I n d o k o 1 á s" → "Indokolás", "n d o k o l á s" → "Indokolás", "b ü n ö s" → "bűnös" | 2,096 headings in 1,918 decisions |
 | 21 | Letterhead residue | runs of accented letters left over from anonymised letterhead words, glued to the court name on the first line ("őáÍéőá... Ítélőtábla" → "... Ítélőtábla", "íööáóVAS MEGYEI BÍRÓSÁG"); found by the character language model pilot, as every character is a valid Hungarian letter | 3,020 decisions (2,091 runs of four or more letters) |
 | 22 | Page numbers and running headers | page numbers ("- 2 -", "3 / 6 oldal", bare numbers) and repeated case-number lines ("Pf.III.20.106/2013/8. szám") removed; sentences split by a page break rejoined | 22,285 page numbers and 11,650 case numbers in 4,448 decisions; 9,730 sentences rejoined |
+| 23 | Hard-wrapped decisions | sentences wrapped at a fixed width of about 90-115 characters joined back into one line each; headings, verdict words, list items, signatures and table rows kept on their own lines | 39,393 joins in 201 decisions |
 | 24 | Text lost in conversion | the converter's two bugs (see "Text lost in conversion" below) fixed and the recovered text carried into the cleaned copy: "Dr" before judges' names, "Budapest" in date lines, first words of numbered paragraphs ("[44]ár" → "[44] Bár"), digits and cells of table rows, and tabs between paragraph numbers and text ("[5]Terhelt1" → "[5] Terhelt1") | 312,438 insertions and 272 table rows in 65,311 decisions; 15,545 already put back by earlier steps; 783 left (see open points) |
 
 Steps 4 and 5 together changed 2,649 files. The correction table of step 3 (step 11) was
@@ -158,6 +159,14 @@ Step 22 removed the page numbers and the repeated case numbers. The dashed page 
 come mostly from the Szeged Court of Appeal (Szegedi Ítélőtábla). In review, the rule
 was wrong once in 39 doubtful cases: "1/9." was a defendant's reference in a list
 ("1/12. L.A."), which the rule now recognises.
+
+Step 23 found far fewer hard-wrapped decisions than first estimated: 201, not a fifth of
+the corpus. The first estimate counted mid-sentence breaks over adjacent line pairs, and
+in files with blank lines between paragraphs those pairs are mostly signature blocks.
+Elsewhere, mid-sentence breaks are deliberate layout (headings, the operative part, party
+blocks) and stay. Samples of every doubtful kind of join were checked by hand before
+applying; the rules were tightened where placeholders, point references ("b) pontja") and
+"bírósági" at a line start had been taken for layout.
 
 ## Sentence splitting: why lines start in lowercase
 

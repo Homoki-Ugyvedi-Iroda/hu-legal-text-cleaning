@@ -30,6 +30,7 @@ and the commands that carry it out.
 | 6b | Words split by a false space | `find-false-spaces` → `review-check-rows` → `apply --corrections` | candidate pairs, answers, copy |
 | 6c | Letter-spaced words, then whitespace | library only: `spacing.join_letter_spaced`, then `spacing.normalise_whitespace` | copy + log |
 | 6e | Page numbers and running case-number headers | library only: `page_furniture.remove_page_furniture`; inventory and review pages first | patterns, answers, copy + log |
+| 6f | Hard-wrapped decisions | library only: `unwrap.unwrap_lines` | copy + log |
 | 7 | Word-level OCR errors | `check-words` → review → `apply --corrections` | word list, correction table, copy |
 | 8 | Abbreviations for sentence splitting | `audit-abbreviations` → review | abbreviation list |
 | 9 | Sentences | `split`, `evaluate-splitter` | segments with flags |
@@ -259,6 +260,36 @@ the first two dozen patterns; the rule they showed (remove case numbers and page
 numbers, keep everything else) settled the rest, and only removals that nothing in the
 file confirmed (a bare number outside the file's page numbering, a rejoin after a short
 line) went to a second review.
+
+### Stage 6f: hard-wrapped decisions
+
+A few decisions were wrapped at a fixed width of about 90-115 characters, so that their
+sentences run over several lines. `unwrap_lines` first decides whether a file is wrapped
+throughout: at least ten lines (and a tenth of all lines) end mid-sentence and continue in
+lowercase, and at most a tenth of the lines are more than 1.3 times the wrap width (in a
+file with one paragraph per line, many lines are much longer). The wrap width is the
+median length of the lines that continue in lowercase.
+
+In such a file a line is joined to the next when it does not end a sentence and the next
+line follows directly, and either the next line starts in lowercase and the line is at
+least half the wrap width, or the next line starts with a capital (a name carried over)
+and the line is at least 0.8 of the width. A line that ends a sentence is never joined,
+because the next line may start a new paragraph. Headings ("ítéletet:"), verdict words
+("bűnös"), list items, signature lines, lines in capitals and table rows stay on their
+own. Placeholders ("tanú16"), point references ("b) pontja", "h) pont]") and units
+("km/h") are words of the sentence, not layout, inside running text.
+
+Mid-sentence line breaks also occur in ordinary files, about 2% of line pairs, but there
+they are nearly always deliberate layout: headings ("meghozta a következő" / "ítéletet:"),
+the operative part ("vádlott" / "bűnös"), party blocks and signatures. These are kept;
+the sentence splitter joins the few real wraps among them when it builds sentences.
+
+How it was measured: a first count of files with more than 20% mid-sentence breaks
+suggested that a fifth of the corpus was hard-wrapped, but the share was taken over
+adjacent line pairs only, and in files with blank lines between paragraphs the few
+adjacent pairs are mostly signature blocks. Counting only breaks the sentence splitter
+would join, over all text lines, and adding the long-line test, left 201 decisions
+(about 0.1%).
 
 ### Stage 7: word-level errors
 
