@@ -31,6 +31,7 @@ into a cleaned copy, with a log of every change.
 | 20 | Damaged spaced headings | what step 19 left: "I N D OKOL Á S" → "INDOKOLÁS", "I n d o k o 1 á s" → "Indokolás", "n d o k o l á s" → "Indokolás", "b ü n ö s" → "bűnös" | 2,096 headings in 1,918 decisions |
 | 21 | Letterhead residue | runs of accented letters left over from anonymised letterhead words, glued to the court name on the first line ("őáÍéőá... Ítélőtábla" → "... Ítélőtábla", "íööáóVAS MEGYEI BÍRÓSÁG"); found by the character language model pilot, as every character is a valid Hungarian letter | 3,020 decisions (2,091 runs of four or more letters) |
 | 22 | Page numbers and running headers | page numbers ("- 2 -", "3 / 6 oldal", bare numbers) and repeated case-number lines ("Pf.III.20.106/2013/8. szám") removed; sentences split by a page break rejoined | 22,285 page numbers and 11,650 case numbers in 4,448 decisions; 9,730 sentences rejoined |
+| 24 | Text lost in conversion | the converter's two bugs (see "Text lost in conversion" below) fixed and the recovered text carried into the cleaned copy: "Dr" before judges' names, "Budapest" in date lines, first words of numbered paragraphs ("[44]ár" → "[44] Bár"), digits and cells of table rows, and tabs between paragraph numbers and text ("[5]Terhelt1" → "[5] Terhelt1") | 312,438 insertions and 272 table rows in 65,311 decisions; 15,545 already put back by earlier steps; 783 left (see open points) |
 
 Steps 4 and 5 together changed 2,649 files. The correction table of step 3 (step 11) was
 applied afterwards.
@@ -182,20 +183,38 @@ ordinal or date was a wrongly split wrapped line in 80 of 80 cases; the other ca
 correct splits of layout or anonymisation artefacts. The splitter in this package joins
 the first kind and keeps the others apart.
 
+## Text lost in conversion
+
+Found with the character language model on a random sample of 10,023 decisions, where
+lines such as "[44]ár az egyedi szerződés" scored badly. Both causes were in the converter:
+
+- RTF: some writers leave out the space that ends a control word (`\tabDr.`,
+  `\qjBudapest`, `\tab981 092 Ft`). The reader took the letters or digits as part of the
+  control word and lost them together with the tab or cell separator: ". Kiss Anna s.k."
+  for "Dr. Kiss Anna s.k.", ", 2010." for "Budapest, 2010.", "[44]ár" for "[44] Bár".
+  48,398 of 154,003 RTF files (2006–2021) were affected.
+- DOCX: tabs written as `<w:tab />` were dropped, gluing paragraph numbers to the text
+  ("[5]Terhelt1"): 3,259 of 71,398 DOCX files (2020–2026).
+
+The cleaned copy was not rebuilt from scratch. The fixed reader only adds text compared with
+the old one, so each addition was placed into the cleaned text by the text around it, and
+all other cleaning stayed as it was. Where an earlier step had already put the lost letters
+back (the first-letter steps 4 and 16 had repaired some of these, e.g. "ővárosi" →
+"Fővárosi"), nothing was added. Table rows whose digits were lost were replaced as a whole
+line when exactly one cleaned line matched. The raw copy (`hatarozatok_txt`) was converted
+again with the fixed reader.
+
+Most of what came back: tabs between words or after paragraph numbers (155,950), "Dr" or
+"dr" before names (about 84,500), "Budapest" (7,200) and other place names in date lines,
+first letters and words of paragraphs, and table cells.
+
 ## Open points
 
-- **Conversion lost text in about a third of the decisions; fixed in the reader, not yet
-  re-run.** Found with the character language model on a random sample of 10,023
-  decisions:
-    - RTF: control words glued to text (`\tabDr.`, `\qjBudapest`, `\pardDr`) were read as
-      one unknown control word, so the text letters and the tab or cell separator were lost:
-      ". Kiss Anna s.k." for "Dr. Kiss Anna s.k.", ", 2010." for "Budapest, 2010.",
-      "[44]ár" for "[44] Bár". 48,398 of 154,003 RTF files, about 151,000 places, 272,000
-      letters (2006–2021). Digits glued the same way (`\tab981 092 Ft`, `\cell1998.02.02.`)
-      were read as a number argument: about 3,700 places in a 10% sample.
-    - DOCX: tabs written as `<w:tab />` were dropped, gluing paragraph numbers to the text
-      ("[5]Terhelt1"): 3,259 of 71,398 DOCX files (2020–2026), 166,663 tabs.
-  The affected decisions need to be converted again and all later steps re-applied.
+- Text lost in conversion (step 24): 783 places in the cleaned copy could not be placed
+  exactly, mostly where an earlier step had already changed the spot ("óhelye" already
+  repaired to "lakóhelye", spaced headings joined, running headers removed) or where a
+  table repeats the same cells ("000 | 373.§(3)b"). They are listed as "unresolved" in the
+  step's log; the raw copy has the full text.
 - Found in the same sample, not yet handled: anonymisation labels written into words at
   the source ("büIII.rsi" for "büntetési"; 886 places in 323 decisions), legal-database
   link code (`LinkUgrik('…')>`, `<cdp://…TV/>`; 245 in 29 decisions), filler placeholders
