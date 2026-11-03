@@ -184,6 +184,23 @@ the first kind and keeps the others apart.
 
 ## Open points
 
+- **Conversion lost text in about a third of the decisions; fixed in the reader, not yet
+  re-run.** Found with the character language model on a random sample of 10,023
+  decisions:
+    - RTF: control words glued to text (`\tabDr.`, `\qjBudapest`, `\pardDr`) were read as
+      one unknown control word, so the text letters and the tab or cell separator were lost:
+      ". Kiss Anna s.k." for "Dr. Kiss Anna s.k.", ", 2010." for "Budapest, 2010.",
+      "[44]ár" for "[44] Bár". 48,398 of 154,003 RTF files, about 151,000 places, 272,000
+      letters (2006–2021). Digits glued the same way (`\tab981 092 Ft`, `\cell1998.02.02.`)
+      were read as a number argument: about 3,700 places in a 10% sample.
+    - DOCX: tabs written as `<w:tab />` were dropped, gluing paragraph numbers to the text
+      ("[5]Terhelt1"): 3,259 of 71,398 DOCX files (2020–2026), 166,663 tabs.
+  The affected decisions need to be converted again and all later steps re-applied.
+- Found in the same sample, not yet handled: anonymisation labels written into words at
+  the source ("büIII.rsi" for "büntetési"; 886 places in 323 decisions), legal-database
+  link code (`LinkUgrik('…')>`, `<cdp://…TV/>`; 245 in 29 decisions), filler placeholders
+  ("yyyy", "zzzz", "oooo", ",,,,,"; 408 in 138 decisions) and U+FFFD characters (191 in
+  42 decisions).
 - About ten decisions keep a letterhead residue run, because the heading after it lost a
   letter too ("...áővárosi Közigazgatási") or the run is not on the first line; these need
   a person. Runs of one repeated letter ("ÉÉÉÉ tanú", "öööö") are placeholders and stay.

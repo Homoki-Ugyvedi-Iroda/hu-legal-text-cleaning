@@ -122,3 +122,36 @@ def test_rtf_to_text_reads_bytes_stored_as_unicode(tmp_path):
         rb"\f0 Ptk. 61. \u129?\u732?-a, payment\u129?h, vezet\u337?i \u150? munka}"
     )
     assert _convert(tmp_path, rtf) == "Ptk. 61. §-a, payment”, vezetői – munka"
+
+
+def test_rtf_to_text_keeps_text_glued_to_a_control_word(tmp_path):
+    rtf = (
+        rb"{\rtf1\ansi\ansicpg1250\deff0{\fonttbl{\f0\fcharset238 Times New Roman CE;}}\f0 "
+        rb"[44]\tabB\'e1r igen.\par\pard\qjBudapest, 2010.\par\qcDr. Kiss Anna\par "
+        rb"\tabdr. Nagy\par\pardDr. Kov\'e1cs\par\cell1998.02.02.\cell\tab981 092 Ft}"
+    )
+    assert _convert(tmp_path, rtf) == (
+        "[44]\tBár igen.\nBudapest, 2010.\nDr. Kiss Anna\n\tdr. Nagy\nDr. Kovács\n"
+        " | 1998.02.02. | \t981 092 Ft"
+    )
+
+
+def test_rtf_to_text_still_reads_whole_control_words(tmp_path):
+    rtf = (
+        rb"{\rtf1\ansi\ansicpg1250\deff0{\fonttbl{\f0\fcharset238 Times New Roman CE;}}"
+        rb"\pard\pararsid123\plain\f0 Egy\tab kett\'f5\par}"
+    )
+    assert _convert(tmp_path, rtf) == "Egy\tkettő\n"
+
+
+def test_docx_to_text_reads_tabs_written_with_a_space(tmp_path):
+    body = (
+        '<?xml version="1.0"?><w:document xmlns:w="w"><w:body>'
+        '<w:p><w:pPr><w:tabs><w:tab w:val="left" w:pos="850"/></w:tabs></w:pPr>'
+        "<w:r><w:t>[5]</w:t></w:r><w:r><w:tab /></w:r><w:r><w:t>Terhelt1</w:t></w:r></w:p>"
+        "</w:body></w:document>"
+    )
+    path = tmp_path / "t.docx"
+    with zipfile.ZipFile(path, "w") as archive:
+        archive.writestr("word/document.xml", body)
+    assert docx_to_text(path) == "[5]\tTerhelt1\n"

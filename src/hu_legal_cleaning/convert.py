@@ -24,11 +24,15 @@ from hu_legal_cleaning.encoding_repair import (
 # --- DOCX ---------------------------------------------------------------------
 
 DOCX_BODY = "word/document.xml"
+# A tab character in the text: "<w:tab/>" or "<w:tab />". Tab stop definitions such as
+# <w:tab w:val="left" w:pos="850"/> have attributes and are not text.
+DOCX_TAB = re.compile(r"<w:tab\s*/>")
 
 
 def _docx_cell(match: re.Match[str]) -> str:
     cell = match.group(1).replace("</w:p>", " ")
-    cell = re.sub(r"<w:tab/>|<w:br\b[^>]*/>", " ", cell)
+    cell = DOCX_TAB.sub(" ", cell)
+    cell = re.sub(r"<w:br\b[^>]*/>", " ", cell)
     cell = re.sub(r"<[^>]+>", "", cell)
     return re.sub(r"\s+", " ", cell).strip() + " | "
 
@@ -51,7 +55,7 @@ def docx_to_text(path: Path) -> str:
     xml = re.sub(r"<w:del\b.*?</w:del>", "", xml, flags=re.S)
     xml = re.sub(r"<w:tc\b[^>]*>(.*?)</w:tc>", _docx_cell, xml, flags=re.S)
     xml = re.sub(r"<w:tr\b[^>]*>", "| ", xml).replace("</w:tr>", "\n")
-    xml = xml.replace("</w:p>", "\n").replace("<w:tab/>", "\t")
+    xml = DOCX_TAB.sub("\t", xml.replace("</w:p>", "\n"))
     xml = re.sub(r"<w:br\b[^>]*/>", "\n", xml)
     xml = re.sub(r"<[^>]+>", "", xml)
     return html.unescape(xml)
@@ -118,6 +122,21 @@ CONVERTED_MIN_DAMAGED_WORDS = 1
 CONVERTED_MIN_SHARE = 0.0
 FALLBACK_ERROR_HANDLER = "cp1252fallback"
 CONTROL_WORD = re.compile(rb"([a-zA-Z]+)(-?\d+)? ?")
+# Some writers leave out the space that ends a control word before text, as in "\tabDr.",
+# "\qjbudapest" or "\tab981 092 Ft". Control words that are followed by text, and never
+# take a number, are split off such a run;
+# longest first, so that "\pardDr" becomes \pard + "Dr", not \par + "dDr".
+TEXT_PRECEDING_WORDS = sorted(
+    ("tab", "par", "pard", "cell", "row", "line", "qc", "qj", "ql", "qr", "intbl",
+     "nowidctlpar", "ltrpar", "rtlpar", "plain", "sectd"),
+    key=len, reverse=True,
+)  # fmt: skip
+# Real control words that begin with one of the above; those marked True take a number.
+LONGER_CONTROL_WORDS = {
+    "pararsid": True, "cellx": True, "linex": True, "linemod": True, "linestarts": True,
+    "linebetcol": False, "linecont": False, "lineppage": False, "linerestart": False,
+    "sectdefaultcl": False, "tabsnoovrlp": False,
+}  # fmt: skip
 HEX_PAIR = re.compile(rb"[0-9a-fA-F]{2}")
 UNICODE_LIMIT = 65536
 # Control characters U+0080 to U+009F in a \uN are bytes the writer failed to decode.
@@ -133,6 +152,24 @@ def _cp1252_fallback(error: UnicodeDecodeError) -> tuple[str, int]:
 
 # Registers the handler under a name, so that bytes.decode(codec, name) can use it.
 codecs.register_error(FALLBACK_ERROR_HANDLER, _cp1252_fallback)
+
+
+def _glued_control_word(word: str, argument: bytes | None) -> str | None:
+    r"""Return the control word at the start of a run glued to text, or None.
+
+    "tabDr" returns "tab" (the text is "Dr"), and so does "tab" with the number 981,
+    because \tab never takes a number ("\tab981 092 Ft"). "pararsid" with a number and
+    "tab" alone return None: they are whole control words.
+    """
+    if word in TEXT_PRECEDING_WORDS:
+        return word if argument is not None else None
+    takes_number = LONGER_CONTROL_WORDS.get(word)
+    if takes_number is not None and (argument is not None or not takes_number):
+        return None
+    for known_word in TEXT_PRECEDING_WORDS:
+        if word.startswith(known_word):
+            return known_word
+    return None
 
 
 def _default_codec(data: bytes) -> str:
@@ -388,7 +425,12 @@ class _RtfReader:
         match = CONTROL_WORD.match(self.data, index + 1)
         if not match:
             return index + 2
-        return self.control_word(match.group(1).decode(), match.group(2), match.end())
+        word, argument = match.group(1).decode(), match.group(2)
+        glued_word = _glued_control_word(word, argument)
+        if glued_word:
+            # The rest of the run (and any number after it) is text, read from here on.
+            return self.control_word(glued_word, None, index + 1 + len(glued_word))
+        return self.control_word(word, argument, match.end())
 
     def read(self) -> str:
         """Return the running text of the whole file."""

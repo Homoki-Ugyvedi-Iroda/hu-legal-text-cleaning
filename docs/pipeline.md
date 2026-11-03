@@ -54,8 +54,15 @@ and the commands that carry it out.
   Cyrillic, ...) produces words that mix that script with Latin letters, the font was
   declared by mistake, and that stretch of text is decoded with the document's own code
   page instead. Real Greek or Japanese text keeps its font's code page.
+- **Control words glued to text:** some RTF writers leave out the space that ends a
+  control word, as in `\tabDr.`, `\qjBudapest` or `\tab981 092 Ft`. Read by the rules,
+  `\tabDr` is one unknown control word, and "Dr" (or "981") would be lost with the tab.
+  Control words that precede text and never take a number (`\tab`, `\par`, `\pard`,
+  `\cell`, `\qj`, ...) are split off such a run; real longer words such as `\pararsid` and
+  `\cellx` with their number are kept.
 - **DOCX:** only the body (`word/document.xml`) is read; headers, footers, footnotes and
-  text boxes are left out, because in decisions they hold case and page numbers.
+  text boxes are left out, because in decisions they hold case and page numbers. Tabs are
+  written both as `<w:tab/>` and as `<w:tab />`; both become a tab.
 - **Tables** become lines of cells separated by " | ".
 - **PDF** is not handled here: first check whether the text layer is usable, and only
   run OCR where it is not.
