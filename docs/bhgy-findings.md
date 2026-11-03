@@ -30,6 +30,7 @@ into a cleaned copy, with a log of every change.
 | 19 | Letter-spaced words and whitespace | spaced-out headings joined when Hunspell knows the word ("I n d o k o l á s" → "Indokolás", "A  M A G Y A R   K Ö Z T Á R S A S Á G" → "A MAGYAR KÖZTÁRSASÁG"); spaces at line ends and runs of spaces and tabs collapsed | 425,992 words joined in 174,755 decisions; 15.3 million lines tidied in 224,968 decisions |
 | 20 | Damaged spaced headings | what step 19 left: "I N D OKOL Á S" → "INDOKOLÁS", "I n d o k o 1 á s" → "Indokolás", "n d o k o l á s" → "Indokolás", "b ü n ö s" → "bűnös" | 2,096 headings in 1,918 decisions |
 | 21 | Letterhead residue | runs of accented letters left over from anonymised letterhead words, glued to the court name on the first line ("őáÍéőá... Ítélőtábla" → "... Ítélőtábla", "íööáóVAS MEGYEI BÍRÓSÁG"); found by the character language model pilot, as every character is a valid Hungarian letter | 3,020 decisions (2,091 runs of four or more letters) |
+| 22 | Page numbers and running headers | page numbers ("- 2 -", "3 / 6 oldal", bare numbers) and repeated case-number lines ("Pf.III.20.106/2013/8. szám") removed; sentences split by a page break rejoined | 22,285 page numbers and 11,650 case numbers in 4,448 decisions; 9,730 sentences rejoined |
 
 Steps 4 and 5 together changed 2,649 files. The correction table of step 3 (step 11) was
 applied afterwards.
@@ -151,6 +152,11 @@ not from OCR.
 
 Page markers almost disappear from 2015, but header and footer lines inside the text
 remain at a few per cent until 2020.
+
+Step 22 removed the page numbers and the repeated case numbers. The dashed page numbers
+come mostly from the Szeged Court of Appeal (Szegedi Ítélőtábla). In review, the rule
+was wrong once in 39 doubtful cases: "1/9." was a defendant's reference in a list
+("1/12. L.A."), which the rule now recognises.
 
 ## Sentence splitting: why lines start in lowercase
 

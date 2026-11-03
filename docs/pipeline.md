@@ -29,6 +29,7 @@ and the commands that carry it out.
 | 6 | Lines that lost their first letter | `find-line-starts` → `review-page` → `apply --line-starts` | candidates, answers, copy |
 | 6b | Words split by a false space | `find-false-spaces` → `review-check-rows` → `apply --corrections` | candidate pairs, answers, copy |
 | 6c | Letter-spaced words, then whitespace | library only: `spacing.join_letter_spaced`, then `spacing.normalise_whitespace` | copy + log |
+| 6e | Page numbers and running case-number headers | library only: `page_furniture.remove_page_furniture`; inventory and review pages first | patterns, answers, copy + log |
 | 7 | Word-level OCR errors | `check-words` → review → `apply --corrections` | word list, correction table, copy |
 | 8 | Abbreviations for sentence splitting | `audit-abbreviations` → review | abbreviation list |
 | 9 | Sentences | `split`, `evaluate-splitter` | segments with flags |
@@ -227,6 +228,30 @@ converter is not at fault; the tool that removed the words kept their accented c
 letter repeated four or more times ("ÉÉÉÉ tanú", an anonymisation placeholder), a run
 followed by a small letter (the heading itself is damaged: "...áővárosi") and up to three
 capitals before a capital ("ÍTÉLET").
+
+### Stage 6e: page numbers and running headers
+
+Converted decisions keep page numbers between paragraphs ("- 2 -", "3 / 6 oldal", a bare
+"4") and the case number repeated at the top of every page. `remove_page_furniture`
+removes page numbers in those forms, and a case-number line when it repeats an earlier
+line of the file, as the first occurrence is the decision's own heading. Everything else
+stays even if it repeats: court names, headings, role words, statute lines and separator
+lines of several dashes ("--- 0 ---"). "x/y" counts as a page only when x is not larger
+than y ("023/6" is a parcel number), and an "x/y." line next to lines that start with the
+same kind of reference ("1/12. L.A.") is a list item.
+
+Where the removed line stood inside a sentence (the kept line before has no sentence end
+and the kept line after starts in lowercase, but not with a list marker such as "b)"), the
+two halves are joined. This test turned out to be reliable in review.
+
+How the rules were found: an inventory grouped every page-marker line and every line
+repeated within a file into patterns (digits shown as #), with the share of files where
+the numbers rise, the median gap between markers, the share of lines that interrupt a
+sentence and whether the first occurrence is at the top of the file. A person decided
+the first two dozen patterns; the rule they showed (remove case numbers and page
+numbers, keep everything else) settled the rest, and only removals that nothing in the
+file confirmed (a bare number outside the file's page numbering, a rejoin after a short
+line) went to a second review.
 
 ### Stage 7: word-level errors
 
