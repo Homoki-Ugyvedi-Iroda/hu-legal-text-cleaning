@@ -92,7 +92,9 @@ def _review_characters(args: argparse.Namespace) -> None:
 def _apply(args: argparse.Namespace) -> None:
     corrections = load_corrections(args.corrections) if args.corrections else {}
     fixes = pipeline.load_approved_fixes(args.line_starts, args.joins, corrections)
-    totals = pipeline.apply_approved_fixes(args.source, args.target, fixes, args.log)
+    totals = pipeline.apply_approved_fixes(
+        args.source, args.target, fixes, args.log, not args.correct_quotes
+    )
     print(f"Applied: {dict(totals)}; log: {args.log}")
 
 
@@ -204,6 +206,11 @@ def build_parser() -> argparse.ArgumentParser:
         nargs="?",
         const=bundled_table_path(),
         help="correction table; without a path the bundled table is used",
+    )
+    step.add_argument(
+        "--correct-quotes",
+        action="store_true",
+        help="also correct words inside quotations that look like verbatim lay writing",
     )
     step.set_defaults(run=_apply)
 

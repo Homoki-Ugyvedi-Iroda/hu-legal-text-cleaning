@@ -75,10 +75,45 @@ def test_apply_approved_fixes(tmp_path):
     joins.write_text("first_part,second_part,decision\nsze,rint,join\n", encoding="utf-8")
     fixes = pipeline.load_approved_fixes(starts, joins, {"igy": "így"})
     totals = pipeline.apply_approved_fixes(source, tmp_path / "out", fixes, tmp_path / "log.csv")
-    assert dict(totals) == {"line_starts": 1, "joins": 1, "corrections": 1}
+    assert dict(totals) == {
+        "line_starts": 1,
+        "joins": 1,
+        "corrections": 1,
+        "corrections_left_in_quotes": 0,
+    }
     assert read_text(tmp_path / "out" / "2015" / "a.txt").startswith(
         "A törvény szerint\nSértett elmondta, így"
     )
+
+
+def test_apply_approved_fixes_leaves_lay_quotes_as_written(tmp_path):
+    source = tmp_path / "in"
+    court_prose = "a bíróság szerint igy döntött a tanács elnöke "
+    write_text(source / "court.txt", court_prose * 20)
+    write_text(
+        source / "case.txt",
+        "A bíróság „a bíróság szerint igy döntött a tanács elnöke” mondatot idézte. "
+        "Az sms szövege: „igy irtad nekem tegnap hogy nemjossz haza”",
+    )
+    fixes = pipeline.load_approved_fixes(None, None, {"igy": "így"})
+    totals = pipeline.apply_approved_fixes(source, tmp_path / "out", fixes, tmp_path / "log.csv")
+    corrected = read_text(tmp_path / "out" / "case.txt")
+    assert "„a bíróság szerint így döntött" in corrected
+    assert "„igy irtad nekem" in corrected
+    assert totals["corrections_left_in_quotes"] == 1
+    [row] = read_rows(tmp_path / "log_protected_quotes.csv")
+    assert (row["word"], row["lead_in"]) == ("igy", "sms")
+
+
+def test_apply_approved_fixes_can_correct_quotes_too(tmp_path):
+    source = tmp_path / "in"
+    write_text(source / "case.txt", "Az sms szövege: „igy irtad nekem tegnap hogy nemjossz haza”")
+    fixes = pipeline.load_approved_fixes(None, None, {"igy": "így"})
+    pipeline.apply_approved_fixes(
+        source, tmp_path / "out", fixes, tmp_path / "log.csv", is_protecting_quotes=False
+    )
+    assert "„így irtad" in read_text(tmp_path / "out" / "case.txt")
+    assert not (tmp_path / "log_protected_quotes.csv").exists()
 
 
 def test_load_approved_fixes_ignores_notes_in_the_correction_column(tmp_path):

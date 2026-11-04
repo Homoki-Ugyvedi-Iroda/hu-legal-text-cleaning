@@ -31,7 +31,7 @@ and the commands that carry it out.
 | 6c | Letter-spaced words, then whitespace | library only: `spacing.join_letter_spaced`, then `spacing.normalise_whitespace` | copy + log |
 | 6e | Page numbers and running case-number headers | library only: `page_furniture.remove_page_furniture`; inventory and review pages first | patterns, answers, copy + log |
 | 6f | Hard-wrapped decisions | library only: `unwrap.unwrap_lines` | copy + log |
-| 7 | Word-level OCR errors | `check-words` → review → `apply --corrections` | word list, correction table, copy |
+| 7 | Word-level OCR errors | `check-words` → review → `apply --corrections`; corrections inside quoted lay writing are left out and listed (see [Protected text](protected-text.md)) | word list, correction table, copy, list of corrections left out |
 | 8 | Abbreviations for sentence splitting | `audit-abbreviations` → review | abbreviation list |
 | 9 | Sentences | `split`, `evaluate-splitter` | segments with flags |
 | 10 | Quality report and versioning | (your own) | error rates by period, version number |

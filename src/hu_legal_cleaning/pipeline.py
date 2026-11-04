@@ -22,8 +22,9 @@ from hu_legal_cleaning import (
     line_starts,
     linebreaks,
     normalise,
+    protected_text,
 )
-from hu_legal_cleaning.corrections import apply_corrections
+from hu_legal_cleaning.corrections import apply_corrections, correction_pattern
 from hu_legal_cleaning.dictionary import (
     WordStats,
     collect_word_stats,
@@ -406,37 +407,96 @@ def load_approved_fixes(
     return ApprovedFixes(starts, joins, corrections)
 
 
+def _fix_lines(text: str, fixes: ApprovedFixes) -> tuple[str, int, int]:
+    """Apply the line-start fixes and joins; return the text and both counts."""
+    line_ending = "\r\n" if "\r\n" in text else "\n"
+    lines = text.replace("\r\n", "\n").split("\n")
+    lines, started = line_starts.fix_line_starts(lines, fixes.line_starts)
+    joined_lines = linebreaks.join_hyphenated_lines(lines, fixes.joins)
+    return line_ending.join(joined_lines), started, len(lines) - len(joined_lines)
+
+
+def _quote_word_counts(paths: list[Path], fixes: ApprovedFixes) -> Counter[str]:
+    """Count, over the whole corpus, the words that occur inside quotations."""
+    wanted: set[str] = set()
+    for path in paths:
+        wanted |= protected_text.quote_words(_fix_lines(read_text(path), fixes)[0])
+    return protected_text.count_words((_fix_lines(read_text(p), fixes)[0] for p in paths), wanted)
+
+
+def _protected_rows(
+    relative: Path, text: str, corrections: dict[str, str], quotes: list[protected_text.Quote]
+) -> list[list[object]]:
+    """One log row per correction left out because it falls in a protected quote."""
+    rows: list[list[object]] = []
+    for match in correction_pattern(corrections).finditer(text):
+        quote = next((q for q in quotes if q.start <= match.start() < q.end), None)
+        if quote is None:
+            continue
+        context = text[
+            max(0, match.start() - CONTEXT_WIDTH // 2) : match.end() + CONTEXT_WIDTH // 2
+        ]
+        word = match.group()
+        rows.append(
+            [
+                relative,
+                word,
+                corrections[word.lower()],
+                round(quote.rare_share, 3),
+                quote.lead_in,
+                context.replace("\n", " / "),
+            ]
+        )
+    return rows
+
+
 def apply_approved_fixes(
-    source_root: Path, target_root: Path, fixes: ApprovedFixes, log_path: Path
+    source_root: Path,
+    target_root: Path,
+    fixes: ApprovedFixes,
+    log_path: Path,
+    is_protecting_quotes: bool = True,
 ) -> Counter[str]:
     """Copy a text tree, applying the approved line-start fixes, joins and corrections.
+
+    Word corrections are left out inside quotations that look like verbatim lay writing
+    (see `protected_text`); each one left out is listed in a second log next to
+    `log_path`, named `<log name>_protected_quotes.csv`, for a person to check. Finding
+    those quotations reads the corpus twice more before the copy is written.
 
     Args:
         source_root: Folder of text files (never changed).
         target_root: Folder for the corrected copy.
         fixes: The approved fixes.
         log_path: CSV log with the number of changes per file and step.
+        is_protecting_quotes: False applies the corrections inside quotations too.
 
     Returns:
-        The total number of changes per step.
+        The total number of changes per step, and of corrections left out.
     """
+    paths = list_text_files(source_root)
+    is_protecting = is_protecting_quotes and bool(fixes.corrections)
+    word_counts = _quote_word_counts(paths, fixes) if is_protecting else Counter()
     totals: Counter[str] = Counter()
     log_rows: list[list[object]] = []
-    for path in list_text_files(source_root):
-        text = read_text(path)
-        line_ending = "\r\n" if "\r\n" in text else "\n"
-        lines = text.replace("\r\n", "\n").split("\n")
-        lines, started = line_starts.fix_line_starts(lines, fixes.line_starts)
-        joined_lines = linebreaks.join_hyphenated_lines(lines, fixes.joins)
-        joined = len(lines) - len(joined_lines)
-        corrected_text, corrected = apply_corrections(
-            line_ending.join(joined_lines), fixes.corrections
-        )
+    protected_log_rows: list[list[object]] = []
+    for path in paths:
+        relative = path.relative_to(source_root)
+        text, started, joined = _fix_lines(read_text(path), fixes)
+        quotes = protected_text.protected_quotes(text, word_counts) if is_protecting else []
+        protected_log_rows += _protected_rows(relative, text, fixes.corrections, quotes)
+        spans = [(quote.start, quote.end) for quote in quotes]
+        corrected_text, corrected = apply_corrections(text, fixes.corrections, spans)
         write_text(output_path(path, source_root, target_root), corrected_text)
         if started or joined or corrected:
-            log_rows.append([path.relative_to(source_root), started, joined, corrected])
+            log_rows.append([relative, started, joined, corrected])
         totals.update({"line_starts": started, "joins": joined, "corrections": corrected})
+    totals["corrections_left_in_quotes"] = len(protected_log_rows)
     _write_csv(log_path, ["file", "line_starts", "joins", "corrections"], log_rows)
+    if is_protecting:
+        protected_log = log_path.with_name(log_path.stem + "_protected_quotes.csv")
+        header = ["file", "word", "correction_left_out", "quote_rare_share", "lead_in", "context"]
+        _write_csv(protected_log, header, protected_log_rows)
     return totals
 
 
