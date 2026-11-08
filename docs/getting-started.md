@@ -63,13 +63,6 @@ hu-legal-clean review-page line_start_candidates.csv text_clean/ line_starts.htm
 Open `line_starts.html` in a browser, answer with the number keys, export the answers,
 and pass the approved list to `apply`. The full order is in [the pipeline](pipeline.md).
 
-To try the sentence splitter:
-
-```bash
-hu-legal-clean split text_clean/2015/some_decision.txt
-hu-legal-clean evaluate-splitter
-```
-
 ## Check your work
 
 ```bash

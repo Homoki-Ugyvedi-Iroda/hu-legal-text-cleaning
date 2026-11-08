@@ -1,49 +1,45 @@
-# The cleaning pipeline
+# The pipeline: conversion, cleaning and normalisation
 
-This page describes a repeatable cleaning process for Hungarian legal text collections
-and the commands that carry it out.
+This page describes a repeatable process for Hungarian legal text collections and the
+commands that carry it out.
 
-## Principles
+## Terms
 
-1. **Never change the originals.** Every stage reads one folder and writes a new one.
-2. **Dry run, review, then apply.** Rules produce candidate lists; a person checks them
-   on a review page (with the context and a link to the original document); only the
-   approved decisions are applied.
-3. **Log every change.** Each stage writes a CSV log, so a change can be traced back and
-   the whole run repeated.
-4. **Measure by year, court and format.** Errors cluster by period and by the tool a
-   court used. In BHGY, OCR damage and line-start losses are concentrated in particular
-   years (see [BHGY findings](bhgy-findings.md)).
-5. **Flag rather than delete.** A document with damage stays in the corpus with a flag;
-   whether to leave it out is the decision of each analysis.
-6. **Keep cleaning apart from preprocessing.** Cleaning corrects errors, so that the text
-   says what the source document says; its result is the published cleaned copy and does
-   not depend on any task. Preprocessing shapes the text for one use (sentence splitting,
-   placeholder tokens for NER, lowercasing or deduplication for training) and goes into
-   derived copies built by code from the cleaned copy, never edited by hand. A few
-   normalisations sit in between: they correct nothing but help every use (composed
-   accents, one set of quotation marks, tidy whitespace). They may stay in the cleaned
-   copy, but are marked as normalisation and logged so they can be undone.
+- **Preprocessing** is the broader term: it brings a collection, such as the texts of
+  decisions, into a form that suits one particular use (everyday legal search, language
+  modelling, an analysis of damages awarded). Conversion between formats, cleaning and
+  normalisation are parts of it.
+- **Cleaning** removes data errors, unjustified differences and missing data that would
+  spoil the result: a wrong code page, symbol-font characters, damaged letters, OCR
+  errors, typos already in the source. Even cleaning depends on the use: correcting the
+  spelling of a quoted defendant's words is a mistake if those words must be reproduced
+  exactly (see [Protected text](protected-text.md)).
+- **Normalisation** goes beyond cleaning: it brings layout and writing variants into one
+  canonical form. Examples are letter-spaced words ("Í T É L E T"), extra spaces, line
+  breaks and tabs, NUL characters, soft hyphens, page numbers and running headers, hard
+  line breaks at every line end, one set of quotation marks and Unicode NFC. Whether a
+  normalisation is wanted depends on the use: a decision cited by page needs its page
+  breaks and page numbers.
+
+The *Kind* column says which of these each stage is.
 
 ## Stages
 
-| # | Stage | Command | Output |
-|---|---|---|---|
-| 1 | Download and record source, date, file hash, format and the website's metadata | (your downloader) | originals + manifest |
-| 2 | Convert by format | `convert` | text tree + log |
-| 3 | Wrong code page ("hatلrozat") | `find-encoding-damage` → `repair-encoding` | file list, repaired tree + log |
-| 4 | Characters: NUL, soft hyphens, NFC, õ/û, look-alike letters | `clean-characters`, then `review-characters` | text tree + log, overview page |
-| 5 | Words split at line ends | `find-linebreaks` → `review-page` → `apply --joins` | candidates, answers, copy |
-| 6 | Lines that lost their first letter | `find-line-starts` → `review-page` → `apply --line-starts` | candidates, answers, copy |
-| 6b | Words split by a false space | `find-false-spaces` → `review-check-rows` → `apply --corrections` | candidate pairs, answers, copy |
-| 6c | Letter-spaced words, then whitespace | library only: `spacing.join_letter_spaced`, then `spacing.normalise_whitespace` | copy + log |
-| 6e | Page numbers and running case-number headers | library only: `page_furniture.remove_page_furniture`; inventory and review pages first | patterns, answers, copy + log |
-| 6f | Hard-wrapped decisions | library only: `unwrap.unwrap_lines` | copy + log |
-| 6g | Fixed-pattern leftovers: glued labels, joined compounds, link code, empty table rows | library only: `leftovers.fix_leftovers` | copy + log |
-| 7 | Word-level OCR errors | `check-words` → review → `apply --corrections`; corrections inside quoted lay writing are left out and listed (see [Protected text](protected-text.md)) | word list, correction table, copy, list of corrections left out |
-| 8 | Abbreviations for sentence splitting | `audit-abbreviations` → review | abbreviation list |
-| 9 | Sentences | `split`, `evaluate-splitter` | segments with flags |
-| 10 | Quality report and versioning | (your own) | error rates by period, version number |
+| # | Stage | Kind | Command | Output |
+|---|---|---|---|---|
+| 1 | Download and record source, date, file hash, format and the website's metadata | collection | (your downloader) | originals + manifest |
+| 2 | Convert by format | conversion | `convert` | text tree + log |
+| 3 | Wrong code page ("hatلrozat") | cleaning | `find-encoding-damage` → `repair-encoding` | file list, repaired tree + log |
+| 4 | Characters: õ/û and look-alike letters; NUL, soft hyphens and NFC | cleaning; normalisation | `clean-characters`, then `review-characters` | text tree + log, overview page |
+| 5 | Words split at line ends | normalisation | `find-linebreaks` → `review-page` → `apply --joins` | candidates, answers, copy |
+| 6 | Lines that lost their first letter | cleaning | `find-line-starts` → `review-page` → `apply --line-starts` | candidates, answers, copy |
+| 6b | Words split by a false space | cleaning | `find-false-spaces` → `review-check-rows` → `apply --corrections` | candidate pairs, answers, copy |
+| 6c | Letter-spaced words, then whitespace | normalisation | library only: `spacing.join_letter_spaced`, then `spacing.normalise_whitespace` | copy + log |
+| 6e | Page numbers and running case-number headers | normalisation | library only: `page_furniture.remove_page_furniture`; inventory and review pages first | patterns, answers, copy + log |
+| 6f | Hard-wrapped decisions | normalisation | library only: `unwrap.unwrap_lines` | copy + log |
+| 6g | Fixed-pattern leftovers: glued labels, joined compounds, link code, empty table rows | cleaning | library only: `leftovers.fix_leftovers` | copy + log |
+| 7 | Word-level OCR errors and typos | cleaning | `check-words` → review → `apply --corrections`; corrections inside quoted lay writing are left out and listed (see [Protected text](protected-text.md)) | word list, correction table, copy, list of corrections left out |
+| 8 | Abbreviations, so that a dot after them is not taken for a sentence end | preprocessing for sentence splitting | `audit-abbreviations` → review | abbreviation list |
 
 ### Stage 2: conversion
 
@@ -51,7 +47,8 @@ and the commands that carry it out.
   (charset 238) is decoded as cp1250 even when the document declares cp1252. A Western
   font (charset 0, e.g. "Times New Roman" without "CE") is cp1252 even in a Hungarian
   document: read as cp1250, its "¼", "³" and "º" became "Ľ", "ł" and "ş". Fonts with
-  charset 128 are Shift-JIS: some anonymisation tools wrote "…" and "§" in such a font.
+  charset 128 are Shift-JIS: in more than 600 BHGY decisions "§" and the one-character
+  "…" used for anonymisation are stored in such a font.
 - **Symbol fonts** draw their own picture for each byte, so the font name decides:
   "Symbol" is mapped to Unicode (Greek letters, "®", "°", "•"); Wingdings, Webdings
   and similar picture fonts get the private-use code U+F0hh, as Word itself does, so a
@@ -64,8 +61,10 @@ and the commands that carry it out.
   Cyrillic, ...) produces words that mix that script with Latin letters, the font was
   declared by mistake, and that stretch of text is decoded with the document's own code
   page instead. Real Greek or Japanese text keeps its font's code page.
-- **Control words glued to text:** some RTF writers leave out the space that ends a
-  control word, as in `\tabDr.`, `\qjBudapest` or `\tab981 092 Ft`. Read by the rules,
+- **Control words glued to text:** the publisher's original conversion program sometimes
+  left out the space that ends a control word, as in `\tabDr.`, `\qjBudapest` or
+  `\tab981 092 Ft` (`\qj` sets justified alignment). This affects 28% of BHGY decisions,
+  though Word and other programs do not show it. Read by the rules,
   `\tabDr` is one unknown control word, and "Dr" (or "981") would be lost with the tab.
   Control words that precede text and never take a number (`\tab`, `\par`, `\pard`,
   `\cell`, `\qj`, ...) are split off such a run; real longer words such as `\pararsid` and
@@ -113,7 +112,8 @@ See [ADR-2026-11-02-text-level-encoding-repair](decisions/ADR-2026-11-02-text-le
 
 ### Stage 4: characters
 
-- NUL characters (padding at the end of many converted files) are removed.
+- NUL characters (padding at the end of the source files, in nearly 5% of BHGY
+  decisions) are removed.
 - Soft hyphens (U+00AD, invisible "hyphenate here" marks) are removed: inside a word
   ("in" + soft hyphen + "gatlan") they make whole-word searches and the spell checker see
   two words. A soft hyphen at a line end is kept: it marks a split word for stage 5.
@@ -304,14 +304,14 @@ own. Placeholders ("tanú16"), point references ("b) pontja", "h) pont]") and un
 Mid-sentence line breaks also occur in ordinary files, about 2% of line pairs, but there
 they are nearly always deliberate layout: headings ("meghozta a következő" / "ítéletet:"),
 the operative part ("vádlott" / "bűnös"), party blocks and signatures. These are kept;
-the sentence splitter joins the few real wraps among them when it builds sentences.
+a sentence splitter, as a later preprocessing step, can join the few real wraps among them.
 
 How it was measured: a first count of files with more than 20% mid-sentence breaks
 suggested that a fifth of the corpus was hard-wrapped, but the share was taken over
 adjacent line pairs only, and in files with blank lines between paragraphs the few
-adjacent pairs are mostly signature blocks. Counting only breaks the sentence splitter
-would join, over all text lines, and adding the long-line test, left 201 decisions
-(about 0.1%).
+adjacent pairs are mostly signature blocks. Counting only breaks that the line-kind rules
+(`line_kinds`) would join, over all text lines, and adding the long-line test, left 201
+decisions (0.09%).
 
 ### Stage 6g: fixed-pattern leftovers
 

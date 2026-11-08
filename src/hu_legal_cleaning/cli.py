@@ -9,12 +9,10 @@ import argparse
 import logging
 from pathlib import Path
 
-from hu_legal_cleaning import characters, check_rows, pipeline, sentences
+from hu_legal_cleaning import characters, check_rows, pipeline
 from hu_legal_cleaning.corrections import bundled_table_path, load_corrections
-from hu_legal_cleaning.evaluation import evaluate_splitter
 from hu_legal_cleaning.hunspell import Hunspell
 from hu_legal_cleaning.review_page import build_review_page
-from hu_legal_cleaning.text_files import read_text
 
 
 def _convert(args: argparse.Namespace) -> None:
@@ -96,16 +94,6 @@ def _apply(args: argparse.Namespace) -> None:
         args.source, args.target, fixes, args.log, not args.correct_quotes
     )
     print(f"Applied: {dict(totals)}; log: {args.log}")
-
-
-def _split(args: argparse.Namespace) -> None:
-    for segment, cause in sentences.split_with_causes(read_text(args.file)):
-        print(f"[{cause}] {segment}" if cause else segment)
-
-
-def _evaluate(_: argparse.Namespace) -> None:
-    score = evaluate_splitter(sentences.split_sentences)
-    print(f"Boundary precision {score.precision}, recall {score.recall}, F1 {score.f1}")
 
 
 def _add_source_target(parser: argparse.ArgumentParser) -> None:
@@ -213,13 +201,6 @@ def build_parser() -> argparse.ArgumentParser:
         help="also correct words inside quotations that look like verbatim lay writing",
     )
     step.set_defaults(run=_apply)
-
-    step = steps.add_parser("split", help="split one text file into sentences")
-    step.add_argument("file", type=Path)
-    step.set_defaults(run=_split)
-
-    step = steps.add_parser("evaluate-splitter", help="score the splitter on the gold set")
-    step.set_defaults(run=_evaluate)
     return parser
 
 

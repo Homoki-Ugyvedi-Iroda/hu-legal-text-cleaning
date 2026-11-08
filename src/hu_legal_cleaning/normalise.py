@@ -1,6 +1,8 @@
-"""Character-level clean-up: NUL padding, soft hyphens, Unicode NFC and look-alike letters.
+"""Character-level steps: NUL padding, soft hyphens, Unicode NFC and look-alike letters.
 
-These steps change characters only, never words, so they are safe to run first.
+Removing NUL padding and soft hyphens and applying NFC are normalisation; replacing õ/û
+and look-alike letters is cleaning (see docs/pipeline.md for the terms). These steps
+change characters only, never words, so they are safe to run first.
 """
 
 import re
@@ -49,7 +51,7 @@ DOTLESS_I_WITH_MARK = re.compile("ı(?=[̀-ͯ])")
 
 
 def remove_nul(text: str) -> tuple[str, int]:
-    """Remove NUL characters, such as the padding at the end of converted files.
+    """Remove NUL characters, such as the padding at the end of some source files.
 
     Args:
         text: The text to clean.

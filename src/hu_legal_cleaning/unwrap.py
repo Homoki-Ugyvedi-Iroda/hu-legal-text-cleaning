@@ -27,7 +27,7 @@ import statistics
 from collections import Counter
 from dataclasses import dataclass
 
-from hu_legal_cleaning.sentences import (
+from hu_legal_cleaning.line_kinds import (
     STANDALONE_CAUSES,
     TERMINAL_END,
     ends_in_abbreviation,

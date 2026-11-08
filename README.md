@@ -4,8 +4,8 @@ Tools and reviewed word lists for cleaning Hungarian court decisions and other l
 texts: RTF/DOCX conversion that keeps Hungarian accents and table cells, character
 clean-up (NUL padding, Unicode NFC), detection of OCR and layout damage (words split at
 line ends, lines that lost their first letter, typos found with Hunspell), keyboard-driven
-review pages for a person to approve each fix, and a rule-based sentence splitter. Built on
-the about 225,000 decisions of the Hungarian Collection of Court Decisions (BHGY).
+review pages for a person to approve each fix. Built on the about 225,000 decisions of the
+Hungarian Collection of Court Decisions (BHGY).
 
 ## Install and run
 

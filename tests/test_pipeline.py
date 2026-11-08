@@ -135,11 +135,6 @@ def test_review_items_from_csv(tmp_path):
     assert item.contexts[0].before == "A törvény sze-"
 
 
-def test_cli_evaluate_splitter(capsys):
-    main(["evaluate-splitter"])
-    assert "F1" in capsys.readouterr().out
-
-
 def test_find_false_space_candidates(tmp_path):
     root = tmp_path / "in"
     write_text(
@@ -157,3 +152,12 @@ def test_find_false_space_candidates(tmp_path):
     assert pipeline.find_false_space_candidates(root, SplitWordHunspell(), out) == 1
     [row] = read_rows(out)
     assert (row["wrong"], row["proposed"], row["occurrences"]) == ("els ő", "első", "2")
+
+
+def test_cli_clean_characters(tmp_path):
+    source = tmp_path / "in"
+    write_text(source / "2015" / "a.txt", "A bűnös\x00\n")
+    main(
+        ["clean-characters", str(source), str(tmp_path / "out"), "--log", str(tmp_path / "log.csv")]
+    )
+    assert read_text(tmp_path / "out" / "2015" / "a.txt") == "A bűnös\n"

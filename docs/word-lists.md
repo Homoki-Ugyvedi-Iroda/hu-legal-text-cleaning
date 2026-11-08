@@ -8,12 +8,11 @@ a person's check.
 | File | Content | Rows | Status |
 |---|---|---:|---|
 | `correction_table.csv` | OCR errors, typos and false spaces with the correction, the error type and whether it is safe to apply | 127 | reviewed |
-| `words_unknown_to_hunspell.csv` | words Hunspell does not know but that a reviewer accepted, with a category | 372 | reviewed |
+| `words_unknown_to_hunspell.csv` | words Hunspell does not know but that a reviewer accepted as valid, with a category | 359 | reviewed |
 | `abbreviations_court_decisions.csv` | dotted words measured in 30,000 decisions, with category and meaning | 846 | reviewed |
 | `abbreviations_statutes_njt.txt` | statute short names of the National Legislation Database (NJT) | 375 | as published |
 | `line_start_fixes.csv` | damaged line-start words with their correction, the reviewer's decision (apply, join, no) and a note | 118 | reviewed |
 | `hyphen_join_decisions.csv` | split words the spell checker could not decide, with the reviewer's decision | 140 | reviewed |
-| `sentence_gold.jsonl` | 40 passages with their correct sentence split | 40 | reviewed |
 | `review_page_template.html` | template of the review page (not a list) | | |
 | `check_rows_template.html` | template of the page for the "check" rows (not a list) | | |
 
@@ -31,7 +30,13 @@ Columns: `wrong`, `proposed`, `type`, `safe_to_apply`, `occurrences`, `decisions
   occurrences need different corrections ("elk").
 
 Current counts: 117 `yes`, 9 `no`, 1 `check`. "pont ba" and "fordulat ba" were approved on the sample but set to `no`: in the full corpus "ba)" is almost always a sub-point label ("b) pont ba) alpontja"). The 104 `yes` rows were applied to the BHGY
-cleaned copy on 2 November 2026: 46,173 replacements in 18,216 files. The 35 former `check` rows were reviewed
+cleaned copy on 2 November 2026: 46,173 replacements in 18,216 files. The table replaces
+whole words only, so on 8 November 2026 the inflected forms of "extasy" ("extasyt",
+"extasyval", ...) were replaced too: 958 replacements in 273 files. Left as written:
+"extasystole" (a misspelt medical term), a CD title and a quoted substance name.
+
+`occurrences` and `decisions` count the part of the corpus the word check ran on, not
+the whole corpus, so they are much smaller than whole-corpus counts. The 35 former `check` rows were reviewed
 with `hu-legal-clean review-check-rows` (six examples per word with ten lines of context):
 32 became `yes`, 1 became `no`, 2 stayed `check`. Of those two, "els" was closed when the
 review of the false spaces showed that the fix is to delete the space ("els ő" → "első").
@@ -56,7 +61,6 @@ to a custom spell-checker dictionary:
 | `foreign_latin_or_technical` | 76 | res iudicata, sui generis, pendrive, eIDAS | yes, as needed |
 | `number_word` | 10 | kettőszázezer, egyszázötvenezer | yes |
 | `name_or_place` | 14 | Székesfehérvár, Mosonmagyaróvár | in a name list instead |
-| `lost_letter_fragment` | 13 | érelmezte, ásodfokú | no: fixed by the line-start step |
 | `anonymisation_leftover` | 11 | településra, nevevádlott | no: placeholders |
 | `abbreviation_without_dot` | 2 | frsz, össz | in the abbreviation list |
 | `word_part` | 2 | pót, utó | no |

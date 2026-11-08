@@ -6,6 +6,10 @@ Collection of Court Decisions (Bírósági Határozatok Gyűjteménye, BHGY), bu
 word lists work for any Hungarian legal corpus: decisions of courts and authorities,
 published contracts, statutes.
 
+Besides cleaning in the strict sense, which corrects errors, some steps normalise layout
+and writing variants (letter-spaced words, page numbers, hard line breaks). Whether a
+normalisation is wanted depends on the use; see the terms in [the pipeline](pipeline.md).
+
 ## What it does
 
 | Step | What it fixes | Module |
@@ -16,7 +20,6 @@ published contracts, statutes.
 | Line starts | lines that lost their first letter ("értett" for "Sértett") | `line_starts` |
 | Word check | OCR damage and typos, after filtering names, abbreviations and anonymisation leftovers | `dictionary`, `hunspell`, `corrections` |
 | Abbreviations | measures which dotted words are abbreviations in your corpus | `abbreviations` |
-| Sentences | rule-based sentence splitter for court decisions | `sentences`, `evaluation` |
 | Review | keyboard-driven review pages for every list of candidates | `review_page` |
 
 Every step that changes text writes a copy and a log; the original files are never
@@ -31,8 +34,4 @@ Word lists built from the BHGY decisions and reviewed by a person, see
 - a correction table of OCR errors and typos, rated safe / check / no;
 - the words Hunspell does not know but that are correct in legal texts, by category;
 - abbreviations found in court decisions, legal and general, with their meaning;
-- the reviewed fixes for damaged line starts and for words split across lines;
-- a gold set of 40 passages for testing sentence splitters.
-
-What the cleaning found in BHGY, year by year, is in [BHGY findings](bhgy-findings.md).
-Where the cleaning leads next is in [further analysis](further-analysis.md).
+- the reviewed fixes for damaged line starts and for words split across lines.
