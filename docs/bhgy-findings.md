@@ -15,7 +15,7 @@ into a cleaned copy, with a log of every change.
 | 4 | Lost first letters | "értett" → "Sértett", "ővárosi" → "Fővárosi" | 2,801 lines fixed |
 | 5 | Words split at line ends | "alkalma-" / "zottai" → "alkalmazottai" | 1,914 joins |
 | 6 | NUL padding | removed | 10,875 files |
-| 7 | Unicode NFC | composed separately stored accents | 170 files changed; 76 files keep marks without a composed form |
+| 7 | Unicode NFC (normalisation) | composed separately stored accents | 170 files changed; 76 files keep marks without a composed form |
 | 8 | Unaccented typing | decisions typed mostly without accents | very rare: 2 in a sample of about 5,900 |
 | 9 | Wrong code page | Hungarian text in a font declared as Arabic, Shift-JIS, Greek or Hebrew ("hatلrozat", "bekezd駸"); re-converted from the source | 617 decisions, about 89,000 damaged words |
 | 10 | Soft hyphens | invisible hyphens inside words ("in" + soft hyphen + "gatlan") removed; 54 at line ends kept, as they mark split words | 9,630 removed in 1,618 decisions |
@@ -26,14 +26,25 @@ into a cleaned copy, with a log of every change.
 | 15 | False spaces | 13 of the 15 approved pairs ("n em", "k ésedelmi", "els őfokú") and three reviewed "gatlan" places; "pont ba" and "fordulat ba" were undone, as "ba)" is a sub-point label | 112 replacements and 3 fixes in 66 decisions |
 | 16 | Line starts, second round | the reviewed answers: lost first letters ("érleti" → "Bérleti"), whole words given by the reviewer ("ánya, 2006. május 25." → "Tatabánya, …" in the Tatabánya courts, "óvár" → "Mosonmagyaróvár"), split words joined to the line above ("kap" / "csolatos"), "e" / "körben" | 229 changes in 216 decisions |
 | 17 | Characters, second review | the reviewer's 578 character decisions with context rules, stored control characters, separator lines, "check" characters settled by the spell checker | 82,025 decisions (47.4 million no-break spaces) |
-| 18 | Quotation signs | "«" → '"' (it closes the inner quotation »…«, and "»" became '"'), "‘" → "'" (pairs with "’"), "‚" → "," ("barátját‚ majd"); first held back, as removing them would unbalance quotation marks or drop a comma | 4,162 replacements in 1,503 decisions |
-| 19 | Letter-spaced words and whitespace | spaced-out headings joined when Hunspell knows the word ("I n d o k o l á s" → "Indokolás", "A  M A G Y A R   K Ö Z T Á R S A S Á G" → "A MAGYAR KÖZTÁRSASÁG"); spaces at line ends and runs of spaces and tabs collapsed | 425,992 words joined in 174,755 decisions; 15.3 million lines tidied in 224,968 decisions |
+| 18 | Quotation signs (normalisation) | "«" → '"' (it closes the inner quotation »…«, and "»" became '"'), "‘" → "'" (pairs with "’"), "‚" → "," ("barátját‚ majd"); first held back, as removing them would unbalance quotation marks or drop a comma | 4,162 replacements in 1,503 decisions |
+| 19 | Letter-spaced words and whitespace (normalisation) | spaced-out headings joined when Hunspell knows the word ("I n d o k o l á s" → "Indokolás", "A  M A G Y A R   K Ö Z T Á R S A S Á G" → "A MAGYAR KÖZTÁRSASÁG"); spaces at line ends and runs of spaces and tabs collapsed | 425,992 words joined in 174,755 decisions; 15.3 million lines tidied in 224,968 decisions |
 | 20 | Damaged spaced headings | what step 19 left: "I N D OKOL Á S" → "INDOKOLÁS", "I n d o k o 1 á s" → "Indokolás", "n d o k o l á s" → "Indokolás", "b ü n ö s" → "bűnös" | 2,096 headings in 1,918 decisions |
 | 21 | Letterhead residue | runs of accented letters left over from anonymised letterhead words, glued to the court name on the first line ("őáÍéőá... Ítélőtábla" → "... Ítélőtábla", "íööáóVAS MEGYEI BÍRÓSÁG"); found by the character language model pilot, as every character is a valid Hungarian letter | 3,020 decisions (2,091 runs of four or more letters) |
 | 22 | Page numbers and running headers | page numbers ("- 2 -", "3 / 6 oldal", bare numbers) and repeated case-number lines ("Pf.III.20.106/2013/8. szám") removed; sentences split by a page break rejoined | 22,285 page numbers and 11,650 case numbers in 4,448 decisions; 9,730 sentences rejoined |
 | 23 | Hard-wrapped decisions | sentences wrapped at a fixed width of about 90-115 characters joined back into one line each; headings, verdict words, list items, signatures and table rows kept on their own lines | 39,393 joins in 201 decisions |
 | 24 | Text lost in conversion | the converter's two bugs (see "Text lost in conversion" below) fixed and the recovered text carried into the cleaned copy: "Dr" before judges' names, "Budapest" in date lines, first words of numbered paragraphs ("[44]ár" → "[44] Bár"), digits and cells of table rows, and tabs between paragraph numbers and text ("[5]Terhelt1" → "[5] Terhelt1") | 312,438 insertions and 272 table rows in 65,311 decisions; 15,545 already put back by earlier steps; 783 left (see open points) |
-| 25 | Fixed-pattern leftovers | defendant labels glued to the word before them ("neveI. r." → "neve I. r."), compounds joined by step 19 split again, legal-database link code and empty table rows removed, "�h" turned back into a closing quotation mark | 30,127 labels, 5,057 empty rows, 225 link tags, 53 compounds and 20 quotation marks in 3,972 decisions |
+| 25 | Fixed-pattern leftovers | defendant labels glued to the word before them ("neveI. r." → "neve I. r."; normalisation, as the anonymiser glued them), compounds joined by step 19 split again, legal-database link code and empty table rows removed, "�h" turned back into a closing quotation mark | 30,127 labels, 5,057 empty rows, 225 link tags, 53 compounds and 20 quotation marks in 3,972 decisions |
+
+Most steps correct errors: they bring the text back to what the published decision says,
+undoing damage from conversion, code pages, OCR or page layout. The steps marked
+*normalisation* correct nothing; they choose one standard form where the source was
+consistent in its own way: composed accents (7), one set of quotation marks (18),
+letter-spaced headings written as ordinary words and tidy whitespace (19), and a space
+before a glued party label (25). They are kept in the cleaned copy because every use of
+the text benefits from them and each can be undone from the logs, but they are choices,
+not corrections. Task-specific changes, such as sentence splitting, placeholder tokens or
+lowercasing, are not part of the cleaned copy at all (see the
+[pipeline principles](pipeline.md#principles)).
 
 Steps 4 and 5 together changed 2,649 files. The correction table of step 3 (step 11) was
 applied afterwards.

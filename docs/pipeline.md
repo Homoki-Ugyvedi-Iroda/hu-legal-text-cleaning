@@ -16,6 +16,14 @@ and the commands that carry it out.
    years (see [BHGY findings](bhgy-findings.md)).
 5. **Flag rather than delete.** A document with damage stays in the corpus with a flag;
    whether to leave it out is the decision of each analysis.
+6. **Keep cleaning apart from preprocessing.** Cleaning corrects errors, so that the text
+   says what the source document says; its result is the published cleaned copy and does
+   not depend on any task. Preprocessing shapes the text for one use (sentence splitting,
+   placeholder tokens for NER, lowercasing or deduplication for training) and goes into
+   derived copies built by code from the cleaned copy, never edited by hand. A few
+   normalisations sit in between: they correct nothing but help every use (composed
+   accents, one set of quotation marks, tidy whitespace). They may stay in the cleaned
+   copy, but are marked as normalisation and logged so they can be undone.
 
 ## Stages
 
