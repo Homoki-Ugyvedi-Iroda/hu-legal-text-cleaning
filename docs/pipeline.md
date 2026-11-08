@@ -31,6 +31,7 @@ and the commands that carry it out.
 | 6c | Letter-spaced words, then whitespace | library only: `spacing.join_letter_spaced`, then `spacing.normalise_whitespace` | copy + log |
 | 6e | Page numbers and running case-number headers | library only: `page_furniture.remove_page_furniture`; inventory and review pages first | patterns, answers, copy + log |
 | 6f | Hard-wrapped decisions | library only: `unwrap.unwrap_lines` | copy + log |
+| 6g | Fixed-pattern leftovers: glued labels, joined compounds, link code, empty table rows | library only: `leftovers.fix_leftovers` | copy + log |
 | 7 | Word-level OCR errors | `check-words` → review → `apply --corrections`; corrections inside quoted lay writing are left out and listed (see [Protected text](protected-text.md)) | word list, correction table, copy, list of corrections left out |
 | 8 | Abbreviations for sentence splitting | `audit-abbreviations` → review | abbreviation list |
 | 9 | Sentences | `split`, `evaluate-splitter` | segments with flags |
@@ -290,6 +291,24 @@ adjacent line pairs only, and in files with blank lines between paragraphs the f
 adjacent pairs are mostly signature blocks. Counting only breaks the sentence splitter
 would join, over all text lines, and adding the long-line test, left 201 decisions
 (about 0.1%).
+
+### Stage 6g: fixed-pattern leftovers
+
+`fix_leftovers` handles a few fixed patterns that the earlier steps did not cover:
+
+- A party or defendant label glued to the word before it ("vádlott neveI. r. vádlott",
+  "ésII.rendű") gets a space before the roman numeral. Only after a word the spell checker
+  knows, and a word of at least three letters or a common short word ("a", "az", "és"):
+  otherwise the anonymiser wrote the label into the middle of a word ("terjeI. rendű
+  alperesi érdekelttt elő" for "terjesztett elő"), which a space would not repair, and
+  Hunspell accepts every single letter. "Il" or "Xl" before the label is a roman numeral
+  with "l" misread for "I" and is left alone.
+- Compounds written as one word by the letter-spacing step are split again
+  ("KÖZTÁRSASÁGNEVÉBEN", "kijavítóvégzést").
+- Link code left by a legal database (`<cdp://…>`, `<javascript:LinkUgrik(…)>`) is removed,
+  even when the tag is broken over two lines.
+- Empty rows of a flattened table ("| | |") are removed.
+- "�h" after a word is a closing quotation mark in a wrong code page and becomes "”".
 
 ### Stage 7: word-level errors
 

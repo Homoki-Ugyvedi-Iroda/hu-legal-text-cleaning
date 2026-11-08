@@ -33,6 +33,7 @@ into a cleaned copy, with a log of every change.
 | 22 | Page numbers and running headers | page numbers ("- 2 -", "3 / 6 oldal", bare numbers) and repeated case-number lines ("Pf.III.20.106/2013/8. szám") removed; sentences split by a page break rejoined | 22,285 page numbers and 11,650 case numbers in 4,448 decisions; 9,730 sentences rejoined |
 | 23 | Hard-wrapped decisions | sentences wrapped at a fixed width of about 90-115 characters joined back into one line each; headings, verdict words, list items, signatures and table rows kept on their own lines | 39,393 joins in 201 decisions |
 | 24 | Text lost in conversion | the converter's two bugs (see "Text lost in conversion" below) fixed and the recovered text carried into the cleaned copy: "Dr" before judges' names, "Budapest" in date lines, first words of numbered paragraphs ("[44]ár" → "[44] Bár"), digits and cells of table rows, and tabs between paragraph numbers and text ("[5]Terhelt1" → "[5] Terhelt1") | 312,438 insertions and 272 table rows in 65,311 decisions; 15,545 already put back by earlier steps; 783 left (see open points) |
+| 25 | Fixed-pattern leftovers | defendant labels glued to the word before them ("neveI. r." → "neve I. r."), compounds joined by step 19 split again, legal-database link code and empty table rows removed, "�h" turned back into a closing quotation mark | 30,127 labels, 5,057 empty rows, 225 link tags, 53 compounds and 20 quotation marks in 3,972 decisions |
 
 Steps 4 and 5 together changed 2,649 files. The correction table of step 3 (step 11) was
 applied afterwards.
@@ -224,28 +225,26 @@ first letters and words of paragraphs, and table cells.
   repaired to "lakóhelye", spaced headings joined, running headers removed) or where a
   table repeats the same cells ("000 | 373.§(3)b"). They are listed as "unresolved" in the
   step's log; the raw copy has the full text.
-- Found in the same sample, not yet handled: anonymisation labels written into words at
-  the source ("büIII.rsi" for "büntetési"; 886 places in 323 decisions), legal-database
-  link code (`LinkUgrik('…')>`, `<cdp://…TV/>`; 245 in 29 decisions), filler placeholders
-  ("yyyy", "zzzz", "oooo", ",,,,,"; 408 in 138 decisions) and U+FFFD characters (191 in
-  42 decisions).
-- About ten decisions keep a letterhead residue run, because the heading after it lost a
-  letter too ("...áővárosi Közigazgatási") or the run is not on the first line; these need
-  a person. Runs of one repeated letter ("ÉÉÉÉ tanú", "öööö") are placeholders and stay.
-- Empty table rows ("| | | |"): 5,534 rows in 1,490 decisions, from flattened tables.
-- "gatlan" stays "check" in the correction table: it needs a different fix per occurrence.
+- Labels written into the middle of a word by the anonymiser ("terjeI. rendű alperesi
+  érdekelttt elő" for "terjesztett elő", "büIII.rsi" for "büntetési"): left by step 25 and
+  listed in its dry-run log; they need a person or the original wording.
+- U+FFFD: 171 characters in about 40 decisions remain after step 25 fixed the "�h" form;
+  they stay "�", as an unrecoverable letter is not guessed.
+- About a dozen decisions keep a letterhead residue run glued to the court name
+  ("ööööFővárosi Bíróság", "íóááúíóáhelység neve 2 Törvényszék"); these need a person. Runs
+  of one repeated letter on their own ("öööö", "ÁÁÁÁ") are placeholders and stay.
+- "gatlan" stays "check" in the correction table: 2 places left, to be fixed by hand.
 - False spaces were reviewed on a sample of 300 decisions; the full corpus still needs a
   run of `find-false-spaces` and a review.
-- 54 soft hyphens at line ends (50 decisions) mark split words that the line-break step
-  does not yet recognise.
 - 22 joins were applied with a spelling the spell checker does not know (mostly typos in
   the source, e.g. "tárgyalá-" / "lon"); the word check will list them.
-- Some 2012 decisions (Esztergom, Budakörnyék, Fővárosi Törvényszék) are damaged at the
-  source: "búŹóság" for "bíróság", "munkadú‡" for "munkadíj" (see "The most garbled
-  files"); they need a repair table or a new copy from the publisher.
+- Some 2012 decisions are damaged at the source ("munkadú‡" for "munkadíj"); 7 places in
+  5 decisions are left, small enough for a hand-made correction list.
 - Letter-spaced runs left as they are: acronyms after an article ("a K H P") and
-  decorative rows ("o o o o o"); the misspelt and broken headings were repaired in step 20. About 80 joins wrote as one word a compound that is
-  normally written apart ("KÖZTÁRSASÁGNEVÉBEN" 45, "kijavítóvégzést" 8), because Hunspell
-  accepts the compound and the run had no double space to mark the boundary.
-- Greek symbols next to Latin letters ("μg/ml", "Δ9-THC") and the Cyrillic "Н" in "Нarketan"
-  (which may stand for H or N) are left as they are.
+  decorative rows ("o o o o o"). About 30 compounds joined by step 19 other than the two
+  split in step 25 may remain.
+
+Closed since the last review: the 54 soft hyphens at line ends (none are left in the
+copy), the Greek and Cyrillic letters next to Latin ones ("μg/ml", "Нarketan"; kept by
+decision), and the filler placeholders ("yyyy", "zzzz", ",,,,"), which stand for anonymised
+numbers and names and belong to the placeholder plan before NER.
