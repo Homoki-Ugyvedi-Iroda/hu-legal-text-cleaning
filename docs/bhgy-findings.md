@@ -34,6 +34,7 @@ into a cleaned copy, with a log of every change.
 | 23 | Hard-wrapped decisions | sentences wrapped at a fixed width of about 90-115 characters joined back into one line each; headings, verdict words, list items, signatures and table rows kept on their own lines | 39,393 joins in 201 decisions |
 | 24 | Text lost in conversion | the converter's two bugs (see "Text lost in conversion" below) fixed and the recovered text carried into the cleaned copy: "Dr" before judges' names, "Budapest" in date lines, first words of numbered paragraphs ("[44]ár" → "[44] Bár"), digits and cells of table rows, and tabs between paragraph numbers and text ("[5]Terhelt1" → "[5] Terhelt1") | 312,438 insertions and 272 table rows in 65,311 decisions; 15,545 already put back by earlier steps; 783 left (see open points) |
 | 25 | Fixed-pattern leftovers | defendant labels glued to the word before them ("neveI. r." → "neve I. r."; normalisation, as the anonymiser glued them), compounds joined by step 19 split again, legal-database link code and empty table rows removed, "�h" turned back into a closing quotation mark | 30,127 labels, 5,057 empty rows, 225 link tags, 53 compounds and 20 quotation marks in 3,972 decisions |
+| 26 | False spaces, whole corpus | words split by a space inside, from typing or OCR in the source ("magy ar", "s zámú", "I ndokolás", "felel ősség", "ítélet et"); picked from 9,577 candidate pairs as those whose joined word is common in the corpus, without the families kept apart ("euro alapú", "néhai id.", "három féle", "AB a") | 7,260 joins (3,721 pairs) in 3,383 decisions; 9 left in quoted lay writing |
 
 Most steps correct errors: they bring the text back to what the published decision says,
 undoing damage from conversion, code pages, OCR or page layout. The steps marked
@@ -245,8 +246,9 @@ first letters and words of paragraphs, and table cells.
   ("ööööFővárosi Bíróság", "íóááúíóáhelység neve 2 Törvényszék"); these need a person. Runs
   of one repeated letter on their own ("öööö", "ÁÁÁÁ") are placeholders and stay.
 - "gatlan" stays "check" in the correction table: 2 places left, to be fixed by hand.
-- False spaces were reviewed on a sample of 300 decisions; the full corpus still needs a
-  run of `find-false-spaces` and a review.
+- False spaces (step 26): about 5,600 candidate pairs were left because their joined form is
+  rare in the corpus. Most are two real words, but rare words split by a space are among
+  them too ("kiegyenlítőtartál yhoz"); they would need a person, pair by pair.
 - 22 joins were applied with a spelling the spell checker does not know (mostly typos in
   the source, e.g. "tárgyalá-" / "lon"); the word check will list them.
 - Some 2012 decisions are damaged at the source ("munkadú‡" for "munkadíj"); 7 places in

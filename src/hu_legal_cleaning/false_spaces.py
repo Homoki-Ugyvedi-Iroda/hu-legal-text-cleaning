@@ -8,12 +8,14 @@ and lines made of single letters ("k e r ü l e t") are skipped, because the aut
 spaced them out on purpose.
 
 The candidates are counted as pairs, so a person decides once per pair, not once per
-occurrence; the pairs go into the correction table, which `apply` already knows.
+occurrence. A few reviewed pairs can go into the correction table, which `apply` already
+knows; a long list of approved pairs is applied with `join_false_spaces`, which also skips
+a pair after a digit or hyphen ("PN10-es és") and before a closing bracket ("pont ba)").
 """
 
 import re
 from collections import Counter
-from collections.abc import Callable, Iterable
+from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass
 
 from hu_legal_cleaning.corrections import LETTERS
@@ -130,3 +132,41 @@ def joined_forms(pairs: dict[tuple[str, str], PairStats]) -> set[str]:
     return {
         first + second for first, second in (s.forms.most_common(1)[0][0] for s in pairs.values())
     }
+
+
+# A pair to join: two words separated by spaces on one line. Like WORD_PAIR, the first piece
+# must not follow a digit, hyphen, dash, slash or dot ("PN10-es és"), and the second must
+# not run on into a hyphen, a digit or a closing bracket ("pont ba)" is a sub-point label).
+JOINABLE_PAIR = re.compile(
+    rf"(?<![{LETTERS}0-9\-–/.])([{LETTERS}]+)( +)(?=([{LETTERS}]+)(?![{LETTERS}0-9\-)\]]))"
+)
+
+
+def join_false_spaces(
+    text: str, joins: set[str], protected_spans: Sequence[tuple[int, int]] = ()
+) -> tuple[str, int]:
+    """Remove the false space inside each listed pair, keeping the letters as written.
+
+    Args:
+        text: The text.
+        joins: Lowercase pairs to join, written with one space ("magy ar").
+        protected_spans: (start, end) ranges that stay as written, e.g. quoted lay writing.
+
+    Returns:
+        The new text and the number of joins.
+    """
+    joined = 0
+
+    def join(match: re.Match[str]) -> str:
+        nonlocal joined
+        pair = f"{match.group(1)} {match.group(3)}".lower()
+        is_protected = any(start <= match.start() < end for start, end in protected_spans)
+        # An abbreviation in capitals before a lowercase word ("AB a", "PR és") is two words.
+        first = match.group(1)
+        is_abbreviation = len(first) > 1 and first.isupper() and match.group(3)[:1].islower()
+        if pair not in joins or is_protected or is_abbreviation:
+            return match.group(0)
+        joined += 1
+        return match.group(1)
+
+    return JOINABLE_PAIR.sub(join, text), joined

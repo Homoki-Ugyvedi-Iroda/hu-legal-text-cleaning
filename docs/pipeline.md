@@ -205,6 +205,19 @@ table, which `apply --corrections` already applies. On a sample of 300 files the
 takes about 20 seconds and lists about 33 pairs; roughly two thirds are real splits, the rest
 are foreign words ("euro alapú") and need a "keep" decision.
 
+On a whole corpus the candidate list is too long to review pair by pair (9,577 pairs in
+BHGY), so the real splits are picked out first. A pair is kept when the joined word is
+common in the corpus, written correctly at least ten times as often as the split form and
+at least 20 times: a split of a common word ("magy ar", "s zámú") passes, while two real
+words that Hunspell does not know ("euro alapú", "a domain", "néhai id.") do not, because
+their joined form hardly exists. The families a person kept apart stay out: compounds the
+source writes apart ("mikro vállalkozás", "három féle"), a bare suffix as first piece (part
+of a word cut in three), initials before a suffix. `join_false_spaces` then removes the
+space, keeping the letters as written ("MAGY AR" -> "MAGYAR"). It never joins after a digit
+or hyphen ("PN10-es és"), before a closing bracket ("pont ba)"), across a line end, or an
+abbreviation in capitals before a lowercase word ("AB a"), and it leaves quoted lay writing
+as written.
+
 ### Stage 6c: letter-spaced words and whitespace
 
 Headings are often spaced out letter by letter ("I n d o k o l á s", "í t é l e t e t",
