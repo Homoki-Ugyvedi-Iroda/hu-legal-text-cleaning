@@ -8,10 +8,15 @@ instructions.
 Review these when you create a project from this template.
 
 - **Repository visibility:** public
-- **Efficiency thresholds:** a single operation over 30 seconds or 2 GB memory on realistic data
+- **Project size:** simple
 
-If a setting is missing, treat the repository as **public**, use the threshold above, and say
-in your summary that the setting was missing.
+If a setting is missing, treat the repository as **public** and the project as **simple**,
+and say in your summary that the setting was missing.
+
+A project is **major** if most readers will come from outside GitHub, the docs will grow
+beyond about 15 pages, they need reference pages generated from the code, more than one
+version must be documented at once, or the docs must be public while the code is private.
+Only the user changes the project size; section 7 says what each size means.
 
 **Language:** English, British spelling in prose, comments, docstrings and docs.
 Do not change identifiers, library APIs or established technical terms
@@ -19,21 +24,20 @@ Do not change identifiers, library APIs or established technical terms
 
 ## 2. Audience and priority
 
-- Readers are **junior developers who know Python but may not know the libraries used**.
+- Readers of the code and the docs are **junior developers who know Python but may not know
+  the libraries used**. Readers of `README.md` may not be developers at all (section 7).
 - **Explainability takes priority over efficiency.** Write the simplest readable solution.
 - **Efficiency exception:** use a more efficient but less readable approach only if the user
-  has reported a performance problem, or a measured run exceeds the thresholds in section 1.
-  When you use it, write a decision record (section 6) and add a one-line comment stating why
+  has reported a performance problem. When you use it, write a decision record (section 6) and add a one-line comment stating why
   that cites the record's ID (e.g. `# Vectorised for speed; see ADR-2026-10-30-vectorised-fees`).
-- If you suspect a performance problem but it has not been reported or measured, write the
-  simple version and mention the concern in your summary.
+- If you suspect a performance problem but it has not been reported, write the simple
+  version and mention the concern in your summary.
 - Do not explain standard algorithms or textbook techniques. Do explain any choice a junior
   reader could not work out from the code alone.
 
 ## 3. Code style
 
-- Follow PEP 8. Run `ruff format` first, then `ruff check`. You may apply `ruff check --fix`
-  for safe fixes; review what it changed.
+- Follow PEP 8. Format and check the code with the tools in section 9.
 - Use descriptive names (`invoice_due_date`, not `d`). Booleans read as questions (`is_active`).
 - Keep functions short and focused on one task. Prefer early returns to deep nesting.
 - Use named constants instead of magic numbers or strings.
@@ -105,15 +109,32 @@ is governed by a contract. If unsure, treat it as a business rule and flag it in
 - Never rewrite an accepted record. If a decision changes, write a new one and set the old
   one's status to `Superseded by <new ID>`.
 
-## 7. Documentation (MkDocs)
+## 7. Repository layout and documentation
 
-- Docs are Markdown files in `docs/`, built with MkDocs (`mkdocs.yml`). Leave `nav` out of
-  `mkdocs.yml` so MkDocs generates navigation from the folder structure. Do not add a `nav`
-  section or edit index pages by hand.
-- Keep the `_template.md` files out of the built site with `exclude_docs` in `mkdocs.yml`.
-- `docs/index.md`: what the project does. `docs/getting-started.md`: install, configure and run,
-  written for a junior developer.
-- `README.md` stays short: a one-paragraph description, install and run steps, and a link to the docs.
+Keep the repository easy to browse on GitHub: nothing a reader needs is more than two
+folders deep, and every file in the root has a reason a reader can be told in one line.
+
+| | Simple project (default) | Major project |
+|---|---|---|
+| Code | `<package_name>/` in the root | `src/<package_name>/` |
+| Data files shipped with the code | `<package_name>/data/` | `src/<package_name>/data/` |
+| Tests | `tests/` | `tests/` |
+| Docs | Markdown in `docs/`, read on GitHub | Markdown in `docs/`, built with MkDocs |
+| Overview | `README.md` in the root only | `README.md`, and `docs/index.md` for the site |
+| Extra root file | none | `mkdocs.yml` |
+
+- **`README.md`** is the only overview of a simple project, written so that a reader who is
+  not a developer can follow it: a plain-language description, a short "What's in this
+  folder" table that says what each item is and who it is for, then install and run steps
+  under a "For developers" heading.
+- **`docs/`** holds `getting-started.md` (install, configure and run, written for a junior
+  developer), `business-rules/` and `decisions/`. A simple project has no `docs/README.md`
+  or `docs/index.md`.
+- Use only Markdown that GitHub displays: relative links, tables, footnotes, Mermaid
+  diagrams. Every relative link must point to a file that exists; a test checks this.
+- **Major projects only:** build the docs with MkDocs. Leave `nav` out of `mkdocs.yml` so
+  MkDocs generates navigation from the folder structure, and keep the `_template.md` files
+  out of the site with `exclude_docs`. The built `site/` folder is never committed.
 
 ## 8. Confidentiality
 
@@ -128,16 +149,21 @@ is governed by a contract. If unsure, treat it as a business rule and flag it in
 - Write tests with `pytest` in `tests/`. Every new public function gets at least one test,
   and every business-rule example gets one (section 5). Tests use synthetic data only.
 - Declare dependencies in `pyproject.toml`: runtime dependencies under `dependencies`,
-  development-only tools (ruff, pytest, mkdocs) under a `dev` optional-dependency group.
-  Keep tool settings (ruff, pytest) in `pyproject.toml` too, not in separate config files.
-- Run `ruff format`, `ruff check`, `pytest` and `mkdocs build --strict` if they are available.
-  If a tool is missing or fails, say so in your summary. Do not skip it silently.
+  development-only tools (ruff, pytest; mkdocs for major projects) under a `dev`
+  optional-dependency group. Keep tool settings (ruff, pytest) in `pyproject.toml` too, not
+  in separate config files.
+- Run `python -m ruff format`, `python -m ruff check` and `python -m pytest`, and for major
+  projects also `python -m mkdocs build --strict`. Always use `python -m`, never the bare
+  command, so the tool runs in the same Python environment as the project. If a tool is
+  missing or fails, say so in your summary. Do not skip it silently.
+- The same checks run on GitHub for every push and pull request
+  (`.github/workflows/checks.yml`). Keep its commands in step with this section.
 
 ## 10. Missing scaffolding
 
-If `docs/business-rules/_template.md`, `docs/decisions/_template.md`, `mkdocs.yml` or
-`docs/index.md` is missing when you need it, create it using the defaults below and
-mention this in your summary.
+If `docs/business-rules/_template.md` or `docs/decisions/_template.md` is missing when you
+need it, or, in a major project, `mkdocs.yml` or `docs/index.md`, create it using the
+defaults below and mention this in your summary.
 
 `docs/business-rules/_template.md`:
 
@@ -177,7 +203,7 @@ mention this in your summary.
 <Trade-offs and anything readers should watch out for.>
 ```
 
-`mkdocs.yml` (minimum):
+`mkdocs.yml` (major projects only, minimum):
 
 ```yaml
 site_name: <Project name>
@@ -195,7 +221,7 @@ exclude_docs: |
 - [ ] Business rules tagged; register files current; each rule example has a test
 - [ ] Efficiency exception (if used) commented with its decision record's ID
 - [ ] New decision records left as `Proposed`
-- [ ] Docs build
+- [ ] Doc links valid (simple projects) or docs build (major projects)
 - [ ] No secrets, personal data or (public repos) confidential client details
 - [ ] Summary lists: unconfirmed sources, possible business rules, missing project settings,
       created scaffolding, missing tools, performance concerns

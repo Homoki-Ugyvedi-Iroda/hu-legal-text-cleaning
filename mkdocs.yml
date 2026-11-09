@@ -1,5 +1,0 @@
-site_name: Hungarian legal text cleaning
-# No `nav` section: MkDocs builds the navigation from the folders in docs/.
-# The templates are for copying, not for the published site.
-exclude_docs: |
-  _template.md

@@ -65,15 +65,15 @@ and pass the approved list to `apply`. The full order is in [the pipeline](pipel
 
 ## Check your work
 
-```bash
-ruff format
-ruff check
-pytest
-mkdocs build --strict
-```
-
-To read the documentation in your browser while you edit it:
+The same checks run automatically on GitHub for every push and pull request (see
+`.github/workflows/checks.yml`).
 
 ```bash
-mkdocs serve
+python -m ruff format
+python -m ruff check
+python -m pytest
 ```
+
+Every tool is run with `python -m` so that it uses the Python of the active virtual
+environment, where the project is installed. The tests also check that every link between
+the Markdown files points to a file that exists.

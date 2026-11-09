@@ -12,8 +12,5 @@ dist/
 .pytest_cache/
 .ruff_cache/
 
-# MkDocs output
-site/
-
 # Secrets: never commit these
 .env

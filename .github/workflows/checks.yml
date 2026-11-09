@@ -1,0 +1,30 @@
+# Runs the checks listed in AGENTS.md, section 9, on every push and pull request.
+# Keep the commands below in step with that section.
+name: Checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install the project and development tools
+        run: python -m pip install -e ".[dev]"
+      # --check reports files that need formatting instead of rewriting them.
+      - name: Check formatting
+        run: python -m ruff format --check
+      - name: Lint
+        run: python -m ruff check
+      # Includes the check that links between the Markdown files are not broken.
+      - name: Test
+        run: python -m pytest
+      # Only major projects have mkdocs.yml (AGENTS.md, section 7); simple projects skip this.
+      - name: Build the documentation
+        if: hashFiles('mkdocs.yml') != ''
+        run: python -m mkdocs build --strict

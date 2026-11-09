@@ -21,7 +21,6 @@ hu-legal-clean = "hu_legal_cleaning.cli:main"
 dev = [
     "ruff",
     "pytest",
-    "mkdocs",
 ]
 
 [tool.ruff]
@@ -51,7 +50,8 @@ convention = "google"
 "tests/**" = ["D", "ANN"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/hu_legal_cleaning"]
+# The code folder is named after the import name, not the project name, so it is listed here.
+packages = ["hu_legal_cleaning"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

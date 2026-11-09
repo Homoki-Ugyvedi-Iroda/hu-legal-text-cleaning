@@ -1,28 +1,61 @@
 # Hungarian legal text cleaning
 
-Tools and reviewed word lists for cleaning Hungarian court decisions and other legal
-texts: RTF/DOCX conversion that keeps Hungarian accents and table cells, character
-clean-up (NUL padding, Unicode NFC), detection of OCR and layout damage (words split at
-line ends, lines that lost their first letter, typos found with Hunspell), keyboard-driven
-review pages for a person to approve each fix. Built on the about 225,000 decisions of the
-Hungarian Collection of Court Decisions (BHGY).
+Tools and reviewed word lists for cleaning the text of Hungarian court decisions, so that
+they can be searched, counted and analysed reliably. The work grew out of cleaning the
+about 225,000 decisions of the Collection of Court Decisions (Bírósági Határozatok
+Gyűjteménye, BHGY), but the tools and word lists work for any Hungarian legal texts:
+decisions of courts and authorities, published contracts, statutes.
 
-## Install and run
+Some steps correct errors (wrong characters, typos, letters lost in conversion); others
+bring layout and writing variants into one form (letter-spaced words, page numbers, hard
+line breaks). Whether the second kind is wanted depends on what the text is used for; see
+the terms in [the pipeline](docs/pipeline.md).
+
+Every step writes a copy and a log, and the original files are never changed. Automatic
+rules only propose changes; a person approves them before they are applied.
+
+## What's in this folder
+
+| Item | What it is | Who it is for |
+|---|---|---|
+| `README.md` | This overview | Everyone |
+| [`docs/word-lists.md`](docs/word-lists.md) | What the reviewed word lists contain and how they were made | Anyone who wants to use the lists |
+| [`hu_legal_cleaning/data/`](hu_legal_cleaning/data/) | The word lists themselves: a correction table of OCR errors and typos, words a spell checker does not know but that are correct in legal texts, abbreviations found in court decisions with their meaning, and the reviewed fixes for damaged line starts and split words | Anyone who wants to use the lists |
+| [`docs/pipeline.md`](docs/pipeline.md) | The cleaning steps in order, what each fixes and what it found in BHGY | Readers who want the details |
+| [`docs/protected-text.md`](docs/protected-text.md) | Why quoted lay writing is not corrected | Readers who want the details |
+| [`docs/decisions/`](docs/decisions/) | The main technical decisions and their reasons | Readers who want the details, developers |
+| [`docs/getting-started.md`](docs/getting-started.md) | How to install and run the tools | Developers |
+| `hu_legal_cleaning/` | The program code | Developers |
+| `tests/` | Automatic checks that the code does what it should | Developers |
+| `pyproject.toml` | The project's name, version and the tools it needs | Developers |
+| [`AGENTS.md`](AGENTS.md), `CLAUDE.md` | Coding and documentation rules for people and AI assistants | Developers, AI assistants |
+| `.github/`, `.gitignore` | Settings for GitHub's automatic checks and for Git | Developers |
+| [`LICENSE`](LICENSE) | The licence (CC0: free to use for any purpose) | Everyone |
+
+## What the tools do
+
+| Step | What it fixes | Module |
+|---|---|---|
+| Convert | RTF and DOCX to plain text, keeping table cells, Central European code pages and anonymisation symbols | `convert` |
+| Clean characters | NUL padding, Unicode NFC, õ/û written for ő/ű | `normalise` |
+| Line breaks | words split by a hyphen at a line end ("sze-" / "rint") | `linebreaks` |
+| Line starts | lines that lost their first letter ("értett" for "Sértett") | `line_starts` |
+| Word check | OCR damage and typos, after filtering names, abbreviations and anonymisation leftovers | `dictionary`, `hunspell`, `corrections` |
+| Abbreviations | measures which dotted words are abbreviations in your corpus | `abbreviations` |
+| Review | keyboard-driven review pages for every list of candidates | `review_page` |
+
+## For developers
 
 ```bash
 python -m venv .venv
-.venv\Scripts\activate        # macOS/Linux: source .venv/bin/activate
-pip install -e ".[dev]"
+.venv\Scripts\activate        # Linux: source .venv/bin/activate
+python -m pip install -e ".[dev]"
 hu-legal-clean --help
-pytest
+python -m pytest
 ```
 
 The word check needs Hunspell with the Hungarian dictionary (`hunspell`, `hunspell-hu`;
-on Windows inside WSL).
-
-Full documentation is in [`docs/`](docs/index.md); build it with `mkdocs serve`.
-
-Coding and documentation rules for people and AI assistants are in [`AGENTS.md`](AGENTS.md).
+on Windows inside WSL). The full steps are in [getting started](docs/getting-started.md).
 
 ## Authorship and licence
 
@@ -33,4 +66,4 @@ and test data were reviewed by a person.
 No copyright is claimed. To the extent that copyright or related rights, including the
 sui generis database right, exist in this work, they are waived under
 [CC0 1.0 Universal](LICENSE). The work is provided as is, without warranty. This applies
-to the code, the documentation and the data files in `src/hu_legal_cleaning/data/`.
+to the code, the documentation and the data files in `hu_legal_cleaning/data/`.

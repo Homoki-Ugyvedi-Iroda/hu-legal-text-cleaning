@@ -1,6 +1,6 @@
 # Word lists
 
-The lists are in `src/hu_legal_cleaning/data/`, so they are installed with the package.
+The lists are in [`hu_legal_cleaning/data/`](../hu_legal_cleaning/data/), so they are installed with the package.
 All were built from the BHGY court decisions. "Reviewed" means a person checked every
 row; "draft" means the rows were sorted automatically or by an AI assistant and still need
 a person's check.
